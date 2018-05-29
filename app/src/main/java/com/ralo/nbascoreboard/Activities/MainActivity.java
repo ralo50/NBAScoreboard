@@ -1,13 +1,18 @@
 package com.ralo.nbascoreboard.Activities;
 
+import android.app.DatePickerDialog;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,82 +21,97 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ralo.nbascoreboard.Adapters.GameAdapter;
 import com.ralo.nbascoreboard.R;
+import com.ralo.nbascoreboard.Utils.CardsCreater;
+import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
 import com.ralo.nbascoreboard.Utils.Game;
-import com.ralo.nbascoreboard.Utils.JsonParser;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     public TextView textView;
     public String url;
-    public String dateUrl;
-    public DatePicker datePicker;
-    public JsonParser gameStats;
+    public TextView noteTextView;
     RecyclerView myView;
     ArrayList<String> myValues;
     ArrayList<Game> gameArrayList;
+    CardsCreater cardsCreater;
+    static Calendar myCalendar;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setViews();
-        setUrl();
-
-
-
-
+        setUrl(getYesterdayDate());
+        setDatePicker();
+        myCalendar = getYesterdaysCalendar();
 
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setViews(){
         textView = findViewById(R.id.textView);
+        textView.setText(getCurrentTextViewDate(getYesterdaysCalendar()));
         myView =  findViewById(R.id.recyclerview);
+        noteTextView = findViewById(R.id.note);
         myValues = new ArrayList<>();
+    }
+
+
+
+    private void setUrl(String dateUrl){
+
+
+        url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                noteTextView.setText("");
+                cardsCreater = new CardsCreater(response);
+                if(cardsCreater.isGameNight()) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cardsCreater.populateCards();
+                                    setCardsCreater();
+                                    myView.setEnabled(true);
+                                    myView.setAlpha(1);
+                                }
+                            });
+                        }
+                    }).start();
+                }
+                else{
+                    myView.setEnabled(false);
+                    myView.setAlpha(0.1f);
+                    noteTextView.setText("No games on this day");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                myView.setEnabled(false);
+                myView.setAlpha(0.1f);
+                noteTextView.setText("Date out of reach");
+            }
+        });
+        requestQueue.add(objectRequest);
+    }
+
+
+    public void setCardsCreater(){
         gameArrayList = new ArrayList<>();
-
-        Game game = new Game();
-        game.setAwayTeamImage(R.drawable.gsw);
-        game.setAwayTeamName("gsw");
-        game.setAwayTeamScore(105);
-        game.setAwayTeamWins(4);
-
-        game.setHomeTeamImage(R.drawable.hou);
-        game.setHomeTeamName("hou");
-        game.setHomeTeamScore(127);
-        game.setHomeTeamWins(2);
-        game.setNugget("This actually works");
-
-
-        gameArrayList.add(game);
-
-        game = new Game();
-        game.setAwayTeamImage(R.drawable.hou);
-        game.setAwayTeamName("lal");
-        game.setAwayTeamScore(92);
-        game.setAwayTeamWins(4);
-
-        game.setHomeTeamImage(R.drawable.gsw);
-        game.setHomeTeamName("dal");
-        game.setHomeTeamScore(88);
-        game.setHomeTeamWins(2);
-
-        gameArrayList.add(game);
-        gameArrayList.add(game);
-        gameArrayList.add(game);
-
-
-        //Toast.makeText(this, gameArrayList.get(0).getAwayTeamName(), Toast.LENGTH_SHORT).show();
-
-        myValues.add("Golden State");
-        myValues.add("Houston");
-        myValues.add("Los Angeles");
-        myValues.add("Dalas");
-
+        gameArrayList = cardsCreater.getGameArrayList();
 
         GameAdapter adapter = new GameAdapter(gameArrayList);
         myView.setHasFixedSize(true);
@@ -102,30 +122,121 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setUrl(){
-        dateUrl = "20180516";
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setDatePicker() {
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
 
 
-
-
-        url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONObject response) {
-                gameStats = new JsonParser(response);
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                MainActivity.myCalendar.set(Calendar.YEAR, year);
+                MainActivity.myCalendar.set(Calendar.MONTH, monthOfYear);
+                MainActivity.myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
-                textView.setText(gameStats.getHomeTeamScore() +  gameStats.getHomeTeamName());
+
+                String myFormat = "yyyyMMdd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                setUrl(sdf.format(MainActivity.myCalendar.getTime()));
+
+                myFormat = "dd/MMM/yyyy";
+                sdf = new SimpleDateFormat(myFormat, Locale.US);
+                String textViewText = "Date: " + (sdf.format(MainActivity.myCalendar.getTime()));
+                textView.setText(textViewText);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+        };
+
+
+        textView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                final DatePickerWithReset datePickerWithReset = new DatePickerWithReset(MainActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), MainActivity.myCalendar.get(Calendar.MONTH), MainActivity.myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerWithReset.show();
+
+                datePickerWithReset.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                myCalendar = Calendar.getInstance();
+                                String myFormat = "yyyyMMdd";
+                                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                                setUrl(sdf.format(MainActivity.myCalendar.getTime()));
+
+                                myFormat = "dd/MMM/yyyy";
+                                sdf = new SimpleDateFormat(myFormat, Locale.US);
+                                String textViewText = "Date: " + (sdf.format(MainActivity.myCalendar.getTime()));
+                                textView.setText(textViewText);
+                                datePickerWithReset.dismiss();
+                            }
+                        });
             }
         });
-        requestQueue.add(objectRequest);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String getCurrentDate() {
+        Calendar myCalendar = Calendar.getInstance();
+
+        String myFormat = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        return sdf.format(myCalendar.getTime());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String getYesterdayDate() {
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.add(Calendar.DAY_OF_YEAR, -1);
+        String myFormat = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        return sdf.format(myCalendar.getTime());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String getCurrentTextViewDate(Calendar calendar){
+        String myFormat = "dd/MMM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        return "Date: " + sdf.format(calendar.getTime());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private Calendar getYesterdaysCalendar(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
+        return calendar;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void changeDate(View view) {
+        switch (view.getId()){
+            case (R.id.leftArrow):
+
+                myCalendar.add(Calendar.DAY_OF_YEAR, -1);
+                String myFormat = "yyyyMMdd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                textView.setText(getCurrentTextViewDate(myCalendar));
+                setUrl(sdf.format(myCalendar.getTime()));
+                break;
+
+            case (R.id.rightArrow):
+                myCalendar.add(Calendar.DAY_OF_YEAR, 1);
+                myFormat = "yyyyMMdd";
+                sdf = new SimpleDateFormat(myFormat, Locale.US);
+                textView.setText(getCurrentTextViewDate(myCalendar));
+                setUrl(sdf.format(myCalendar.getTime()));
+                break;
+        }
     }
 }

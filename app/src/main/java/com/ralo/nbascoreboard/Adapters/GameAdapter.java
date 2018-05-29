@@ -7,9 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Game;
 
@@ -18,16 +15,14 @@ import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
-    public ArrayList<Game> gameList;
+    private ArrayList<Game> gameList;
 
 
     public GameAdapter(ArrayList<Game> myValues){
         this.gameList = myValues;
-
-
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView homeTeamNameTextView;
         private TextView awayTeamNameTextView;
         private ImageView awayTeamLogoImageView;
@@ -37,8 +32,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         private TextView awayTeamWinsTextView;
         private TextView homeTeamWinsTextView;
         private TextView nuggetTextView;
+        private TextView gameTimeTextView;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             awayTeamNameTextView = itemView.findViewById(R.id.awayteamname);
             homeTeamNameTextView = itemView.findViewById(R.id.hometeamname);
@@ -49,11 +45,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
             awayTeamWinsTextView = itemView.findViewById(R.id.awayteamwins);
             homeTeamWinsTextView = itemView.findViewById(R.id.hometeamwins);
             nuggetTextView = itemView.findViewById(R.id.nuggettext);
+            gameTimeTextView = itemView.findViewById(R.id.gameTime);
         }
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         return new MyViewHolder(listItem);
     }
@@ -71,13 +69,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.awayTeamWinsTextView.setText(game.getAwayTeamWins());
         holder.homeTeamWinsTextView.setText(game.getHomeTeamWins());
         holder.nuggetTextView.setText(game.getNugget());
+        holder.gameTimeTextView.setText(game.getGameTime());
     }
 
     @Override
     public int getItemCount() {
         return gameList.size();
     }
-
-
-
 }
