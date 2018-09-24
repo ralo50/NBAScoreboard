@@ -7,4 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.ralo.nbascoreboard.Activities.BaseActivity"
     tools:showIn="@layout/activity_base">
+
+
 </FrameLayout>

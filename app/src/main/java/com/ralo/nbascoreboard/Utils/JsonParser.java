@@ -322,6 +322,7 @@ public class JsonParser {
                 jsonString = this.jsonObject.getString("games");
                 JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
                 JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
+                jsonString = ":";
                 jsonString = jsonObject2.getString("startTimeEastern");
             } catch (JSONException e) {
                 e.printStackTrace();

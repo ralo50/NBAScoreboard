@@ -7,17 +7,21 @@
     android:orientation="vertical"
     tools:context=".Activities.MainActivity">
 
-    <TextView
-        android:id="@+id/note"
-        android:layout_gravity="center"
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/leftArrow"
@@ -26,6 +30,8 @@
             android:layout_weight="1"
             android:onClick="changeDate"
             android:text="@string/left_arrow"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -50,14 +56,40 @@
             android:id="@+id/rightArrow"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             app:layout_constraintRight_toRightOf="parent"
             android:text="@string/right_arrow"/>
 
     </android.support.constraint.ConstraintLayout>
 
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/note"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
+
 
 </LinearLayout>

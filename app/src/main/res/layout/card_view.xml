@@ -20,12 +20,9 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             card_view:layout_constraintBottom_toTopOf="@+id/awayteamlogo"
             card_view:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
-            card_view:layout_constraintStart_toStartOf="@+id/awayteamlogo"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="1.0" />
+            card_view:layout_constraintStart_toStartOf="@+id/awayteamlogo" />
 
         <TextView
             android:id="@+id/hometeamname"
@@ -91,7 +88,6 @@
             card_view:layout_constraintTop_toTopOf="@+id/hometeamlogo" />
 
 
-
         <TextView
             android:id="@+id/awayteamwins"
             android:layout_width="wrap_content"
@@ -137,6 +133,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:textAlignment="center"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"

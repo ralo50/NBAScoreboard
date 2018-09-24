@@ -33,7 +33,6 @@ public class CardsCreater {
             game.setNugget(jsonParser.getNugget());
             game.setGameTime(jsonParser.getGameTime());
 
-
             gameArrayList.add(game);
         }
     }

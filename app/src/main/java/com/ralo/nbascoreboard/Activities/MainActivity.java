@@ -19,6 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.Adapters.GameAdapter;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CardsCreater;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Game> gameArrayList;
     CardsCreater cardsCreater;
     static Calendar myCalendar;
-
+    AdView adView;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -50,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         setDatePicker();
         myCalendar = getYesterdaysCalendar();
 
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("8623F0A041C7A59B4C3BA8CAD7B28F64").build();
+        adView.loadAd(adRequest);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,13 +67,12 @@ public class MainActivity extends AppCompatActivity {
         myView =  findViewById(R.id.recyclerview);
         noteTextView = findViewById(R.id.note);
         myValues = new ArrayList<>();
+
     }
 
 
 
     private void setUrl(String dateUrl){
-
-
         url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 noteTextView.setText("");
                 cardsCreater = new CardsCreater(response);
                 if(cardsCreater.isGameNight()) {
+                    noteTextView.setVisibility(View.GONE);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -92,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     myView.setEnabled(false);
-                    myView.setAlpha(0.1f);
+                    myView.setAlpha(0f);
+                    noteTextView.setVisibility(View.VISIBLE);
                     noteTextView.setText("No games on this day");
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 }
 
             }
@@ -101,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 myView.setEnabled(false);
-                myView.setAlpha(0.1f);
+                myView.setAlpha(0f);
+                noteTextView.setVisibility(View.VISIBLE);
                 noteTextView.setText("Date out of reach");
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
         requestQueue.add(objectRequest);
@@ -110,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setCardsCreater(){
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         gameArrayList = new ArrayList<>();
         gameArrayList = cardsCreater.getGameArrayList();
 
@@ -120,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myView.setLayoutManager(llm);
 
+
     }
 
 
@@ -129,15 +143,12 @@ public class MainActivity extends AppCompatActivity {
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-
-
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 MainActivity.myCalendar.set(Calendar.YEAR, year);
                 MainActivity.myCalendar.set(Calendar.MONTH, monthOfYear);
                 MainActivity.myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
 
 
                 String myFormat = "yyyyMMdd";
@@ -158,10 +169,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 final DatePickerWithReset datePickerWithReset = new DatePickerWithReset(MainActivity.this, date, myCalendar
                         .get(Calendar.YEAR), MainActivity.myCalendar.get(Calendar.MONTH), MainActivity.myCalendar.get(Calendar.DAY_OF_MONTH));
                 datePickerWithReset.show();
-
+              //datePickerWithReset.getDatePicker().setMinDate();
+              //datePickerWithReset.getDatePicker().setMaxDate();
                 datePickerWithReset.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
                         new View.OnClickListener() {
                             @Override
@@ -221,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
     public void changeDate(View view) {
         switch (view.getId()){
             case (R.id.leftArrow):
-
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                myView.setAlpha(0);
                 myCalendar.add(Calendar.DAY_OF_YEAR, -1);
                 String myFormat = "yyyyMMdd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -231,6 +245,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case (R.id.rightArrow):
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                myView.setAlpha(0);
                 myCalendar.add(Calendar.DAY_OF_YEAR, 1);
                 myFormat = "yyyyMMdd";
                 sdf = new SimpleDateFormat(myFormat, Locale.US);
