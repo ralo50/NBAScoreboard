@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 myView.setEnabled(false);
                 myView.setAlpha(0f);
                 noteTextView.setVisibility(View.VISIBLE);
-                noteTextView.setText("Date out of reach");
+                noteTextView.setText("Unable to show information");
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });

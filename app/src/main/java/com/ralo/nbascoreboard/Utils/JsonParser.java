@@ -317,7 +317,7 @@ public class JsonParser {
     }
 
     public String getGameTime(){
-        if(isGameOver()) {
+        if(isGameOver() && !isGameActivated()) {
             try {
                 jsonString = this.jsonObject.getString("games");
                 JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -334,6 +334,19 @@ public class JsonParser {
 
     public boolean isGameNight(){
         return getNumberOfGames() >= 1;
+    }
+
+    private boolean isGameActivated(){
+        boolean isGameActive = false;
+        try {
+            jsonString = this.jsonObject.getString("games");
+            JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
+            JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
+            isGameActive = jsonObject2.getBoolean("isGameActivated");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return isGameActive;
     }
 
 
