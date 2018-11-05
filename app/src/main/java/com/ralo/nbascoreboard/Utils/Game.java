@@ -4,8 +4,8 @@ public class Game {
 
     private String homeTeamName;
     private String awayTeamName;
-    private String homeTeamScore = "0";
-    private String awayTeamScore= "0";
+    private String homeTeamScore = "";
+    private String awayTeamScore= "";
     private String homeTeamWins= "0";
     private String awayTeamWins= "0";
     private int homeTeamImage;

@@ -53,11 +53,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setViews();
         setUrl(getYesterdayDate());
         setDatePicker();
-        myCalendar = getYesterdaysCalendar();
+        initAd();
+    }
+
+    private void initAd() {
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("8623F0A041C7A59B4C3BA8CAD7B28F64").build();
         adView.loadAd(adRequest);
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setViews(){
+        myCalendar = getYesterdaysCalendar();
         adView = findViewById(R.id.adView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         textView = findViewById(R.id.textView);
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     myView.setEnabled(false);
                     myView.setAlpha(0f);
                     noteTextView.setVisibility(View.VISIBLE);
-                    noteTextView.setText("No games on this day");
+                    noteTextView.setText(R.string.no_games_tonight);
                     loadingPanel.setVisibility(View.GONE);
                 }
 
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 myView.setEnabled(false);
                 myView.setAlpha(0f);
                 noteTextView.setVisibility(View.VISIBLE);
-                noteTextView.setText("Unable to show information");
+                noteTextView.setText(R.string.error_getting_info);
                 loadingPanel.setVisibility(View.GONE);
             }
         });

@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="left_arrow">    &lt;    </string>
     <string name="right_arrow">    &gt;    </string>
+    <string name="no_games_tonight">No games on this day</string>
+    <string name="error_getting_info">Unable to show information</string>
 </resources>

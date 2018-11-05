@@ -183,13 +183,13 @@ public class JsonParser {
                 return R.drawable.atl;
 
             case "MIN":
-                return R.drawable.min;
+                return R.drawable.min; //Todo: change image
 
             case "BOS":
                 return R.drawable.bos;
 
             case "PHI":
-                return R.drawable.philadelphia;
+                return R.drawable.philadelphia; //Todo: change image
 
             case "MIL":
                 return R.drawable.mil;
@@ -201,13 +201,13 @@ public class JsonParser {
                 return R.drawable.bulls;
 
             case "MIA":
-                return R.drawable.mia;
+                return R.drawable.mia; //Todo: change image
 
             case "MEM":
                 return R.drawable.mem;
 
             case "SAC":
-                return R.drawable.sac;
+                return R.drawable.sac; //Todo: change image
 
             case "OKC":
                 return R.drawable.okc;
@@ -222,13 +222,13 @@ public class JsonParser {
                 return R.drawable.gsw;
 
             case "HOU":
-                return R.drawable.hou;
+                return R.drawable.hou; //Todo: change image
 
             case "SAS":
                 return R.drawable.sanantonio;
 
             case "DET":
-                return R.drawable.pistons;
+                return R.drawable.pistons; //Todo: change image
 
             case "PHX":
                 return R.drawable.phx;
@@ -243,10 +243,10 @@ public class JsonParser {
                 return R.drawable.brooklyn;
 
             case "DEN":
-                return R.drawable.nuggets;
+                return R.drawable.nuggets; //Todo: change image
 
             case "IND":
-                return R.drawable.pacers;
+                return R.drawable.pacers; //Todo: change image
 
             case "NYK":
                 return R.drawable.knicks;
@@ -255,13 +255,13 @@ public class JsonParser {
                 return R.drawable.hornets;
 
             case "UTA":
-                return R.drawable.utah;
+                return R.drawable.utah; //Todo: change image
 
             case "CLE":
-                return R.drawable.clevelend;
+                return R.drawable.clevelend; //Todo: change image
 
             case "LAC":
-                return R.drawable.clippers;
+                return R.drawable.clippers; //Todo: change image
 
             case "LAL":
                 return R.drawable.lal;

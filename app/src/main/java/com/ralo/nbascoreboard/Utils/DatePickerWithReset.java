@@ -11,7 +11,7 @@ public class DatePickerWithReset extends DatePickerDialog {
         super(context, 0, callBack, year, monthOfYear, dayOfMonth);
 
         setButton(BUTTON_POSITIVE, ("Ok"), this);
-        setButton(BUTTON_NEUTRAL, ("Today"), this); // ADD THIS
+        setButton(BUTTON_NEUTRAL, ("Today"), this);
         setButton(BUTTON_NEGATIVE, ("Cancel"), this);
     }
 }
