@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class JsonParser {
 
     private JSONObject jsonObject;
-    private String jsonString = "failed";
+    private String jsonString = "";
     private int imageId;
     private int currentGame;
     private int homeTeamPoint = 0;
@@ -21,13 +21,17 @@ public class JsonParser {
 
     public String getHomeTeamScore(){
         try {
+            if(!getGameTime().equals(":")){
+                jsonString = "";
+                return jsonString;
+            }
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
             JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
             JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
             jsonString = jsonObject3.getString("score");
-            if(!jsonString.isEmpty())
+            if(!jsonString.isEmpty() )
                 homeTeamPoint = Integer.valueOf(jsonString);
 
         } catch (JSONException e) {
@@ -38,6 +42,10 @@ public class JsonParser {
 
     public String getAwayTeamScore(){
         try {
+            if(!getGameTime().equals(":")){
+                jsonString = "";
+                return jsonString;
+            }
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
             JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
