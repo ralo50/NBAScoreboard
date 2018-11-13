@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUrl(String dateUrl){
+        //retrofit //TODO
         url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
