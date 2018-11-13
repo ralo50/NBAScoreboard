@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-public class OnSwipeTouchListener implements OnTouchListener {
+public class OnSwipeTouchListener implements OnTouchListener, CustomItemClickListener {
 
     private final GestureDetector gestureDetector;
 
@@ -23,6 +23,11 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public void onItemClick(View v, int position) {
+
     }
 
     private final class GestureListener extends SimpleOnGestureListener {

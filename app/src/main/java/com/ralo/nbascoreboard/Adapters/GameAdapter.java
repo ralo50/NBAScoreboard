@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Game;
 
@@ -15,11 +17,13 @@ import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
+    private final CustomItemClickListener listener;
     private ArrayList<Game> gameList;
 
 
-    public GameAdapter(ArrayList<Game> myValues){
+    public GameAdapter(ArrayList<Game> myValues, CustomItemClickListener listener){
         this.gameList = myValues;
+        this.listener = listener;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -53,7 +57,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
-        return new MyViewHolder(listItem);
+        final MyViewHolder myViewHolder = new MyViewHolder(listItem);
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, myViewHolder.getAdapterPosition());
+
+            }
+        });
+
+        return myViewHolder;
     }
 
 

@@ -12,6 +12,8 @@ public class Game {
     private int awayTeamImage;
     private String nugget;
     private String gameTime = ":";
+    private String gameDate;
+    private String gameId;
 
     public void setHomeTeamName(String homeTeamName) {
         this.homeTeamName = homeTeamName;
@@ -91,5 +93,21 @@ public class Game {
 
     public String getGameTime(){
         return gameTime;
+    }
+
+    public String getGameDate() {
+        return gameDate;
+    }
+
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

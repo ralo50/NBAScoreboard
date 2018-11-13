@@ -21,7 +21,7 @@ public class JsonParser {
 
     public String getHomeTeamScore(){
         try {
-            if(!getGameTime().equals(":")){
+            if(!isGameOver() && !isGameActivated()){
                 jsonString = "";
                 return jsonString;
             }
@@ -42,7 +42,7 @@ public class JsonParser {
 
     public String getAwayTeamScore(){
         try {
-            if(!getGameTime().equals(":")){
+            if(!isGameOver() && !isGameActivated()){
                 jsonString = "";
                 return jsonString;
             }
@@ -316,7 +316,7 @@ public class JsonParser {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
             JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
-            if(!jsonObject2.has("endTimeUTC"))
+            if(jsonObject2.has("endTimeUTC"))
                 return true;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -325,7 +325,7 @@ public class JsonParser {
     }
 
     public String getGameTime(){
-        if(isGameOver() && !isGameActivated()) {
+        if(!isGameOver() && !isGameActivated()) {
             try {
                 jsonString = this.jsonObject.getString("games");
                 JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -338,6 +338,32 @@ public class JsonParser {
             return jsonString;
         }
         return ":";
+    }
+
+    public String getGameDate(){
+        try {
+            jsonString = this.jsonObject.getString("games");
+            JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
+            JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
+            jsonString = "";
+            jsonString = jsonObject2.getString("startDateEastern");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
+    }
+
+    public String getGameId(){
+        try {
+            jsonString = this.jsonObject.getString("games");
+            JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
+            JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
+            jsonString = "";
+            jsonString = jsonObject2.getString("gameId");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
     }
 
     public boolean isGameNight(){

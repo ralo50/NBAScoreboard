@@ -2,6 +2,7 @@ package com.ralo.nbascoreboard.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -25,7 +26,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.Adapters.GameAdapter;
-import com.ralo.nbascoreboard.Listeners.OnSwipeTouchListener;
+import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CardsCreater;
 import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
@@ -135,7 +136,18 @@ public class MainActivity extends AppCompatActivity {
         gameArrayList = new ArrayList<>();
         gameArrayList = cardsCreater.getGameArrayList();
 
-        GameAdapter adapter = new GameAdapter(gameArrayList);
+        GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("gameDate",gameArrayList.get(position).getGameDate());
+                extras.putString("gameId",gameArrayList.get(position).getGameId());
+                myIntent.putExtras(extras);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -254,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setListeners() {
-        myView.setOnTouchListener(new OnSwipeTouchListener(this) {
+     /*   myView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSwipeLeft() {
@@ -266,12 +278,11 @@ public class MainActivity extends AppCompatActivity {
                 changeDateYesterday();
             }
         });
-
+    */
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onRefresh() {
-                // Your recyclerview reload logic function will be here!!!
                 swipeRefreshLayout.setRefreshing(false);
                 String myFormat = "yyyyMMdd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
