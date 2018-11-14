@@ -16,6 +16,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         adView = findViewById(R.id.adView);
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String gameDate = extras.getString("gameDate");

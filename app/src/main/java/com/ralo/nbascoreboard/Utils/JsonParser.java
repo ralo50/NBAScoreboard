@@ -21,7 +21,7 @@ public class JsonParser {
 
     public String getHomeTeamScore(){
         try {
-            if(!isGameOver() && !isGameActivated()){
+            if(!isGameOverHelper() && !isGameActivated()){
                 jsonString = "";
                 return jsonString;
             }
@@ -42,7 +42,7 @@ public class JsonParser {
 
     public String getAwayTeamScore(){
         try {
-            if(!isGameOver() && !isGameActivated()){
+            if(!isGameOverHelper() && !isGameActivated()){
                 jsonString = "";
                 return jsonString;
             }
@@ -325,7 +325,7 @@ public class JsonParser {
     }
 
     public String getGameTime(){
-        if(!isGameOver() && !isGameActivated()) {
+        if(!isGameOverHelper() && !isGameActivated()) {
             try {
                 jsonString = this.jsonObject.getString("games");
                 JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -381,6 +381,25 @@ public class JsonParser {
             e.printStackTrace();
         }
         return isGameActive;
+    }
+
+    private boolean isGameOverHelper(){
+        boolean isGameOverBool = true;
+        try {
+            jsonString = this.jsonObject.getString("games");
+            JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
+            JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
+            JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
+
+            jsonString = jsonObject3.getString("score");
+            if(jsonString.isEmpty() || jsonString.equals("0") || isGameActivated() || !isGameOver()){
+                isGameOverBool = false;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return isGameOverBool;
     }
 
 
