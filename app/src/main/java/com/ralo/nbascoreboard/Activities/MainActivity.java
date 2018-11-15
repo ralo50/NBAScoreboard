@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -81,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUrl(String dateUrl){
+        loadingPanel.setVisibility(View.VISIBLE);
         //retrofit //TODO
+
         url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                     setCardsCreater();
                                     myView.setEnabled(true);
                                     myView.setAlpha(1);
+                                    loadingPanel.setVisibility(View.GONE);
                                 }
                             });
                         }
@@ -132,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     public void setCardsCreater(){
-        loadingPanel.setVisibility(View.GONE);
         gameArrayList = new ArrayList<>();
         gameArrayList = cardsCreater.getGameArrayList();
 
@@ -182,11 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                loadingPanel.setVisibility(View.VISIBLE);
                 final DatePickerWithReset datePickerWithReset = new DatePickerWithReset(MainActivity.this, date, myCalendar
                         .get(Calendar.YEAR), MainActivity.myCalendar.get(Calendar.MONTH), MainActivity.myCalendar.get(Calendar.DAY_OF_MONTH));
                 datePickerWithReset.show();
-              //datePickerWithReset.getDatePicker().setMinDate();
+                datePickerWithReset.getDatePicker().setMinDate(1477346400000L);
               //datePickerWithReset.getDatePicker().setMaxDate();
                 datePickerWithReset.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
                         new View.OnClickListener() {
@@ -209,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                     new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadingPanel.setVisibility(View.GONE);
                         datePickerWithReset.dismiss();
                     }
                 });
@@ -287,7 +288,6 @@ public class MainActivity extends AppCompatActivity {
                 String myFormat = "yyyyMMdd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 setUrl(sdf.format(MainActivity.myCalendar.getTime()));
-                loadingPanel.setVisibility(View.VISIBLE);
                 myView.setAlpha(0);
             }
         });
@@ -295,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateYesterday(){
-        loadingPanel.setVisibility(View.VISIBLE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
         String myFormat = "yyyyMMdd";
@@ -306,7 +305,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateTomorrow(){
-        loadingPanel.setVisibility(View.VISIBLE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);
         String myFormat = "yyyyMMdd";
