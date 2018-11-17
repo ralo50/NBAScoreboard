@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -20,8 +23,7 @@ import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GameFragment extends Fragment {
-
+public class GameFragment extends Fragment implements View.OnClickListener{
     AdView adView;
     String gameDate;
     String gameId;
@@ -43,6 +45,9 @@ public class GameFragment extends Fragment {
         gameId = getArguments().getString("gameId");
         Log.d("hi", "gamedate:" + gameDate);
         Log.d("hi", "gameid:" + gameId);
+
+
+
         return inflater.inflate(R.layout.fragment_game, container, false);
 
     }
@@ -71,12 +76,29 @@ public class GameFragment extends Fragment {
         SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
         ViewPager pager = getView().findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(1);
 
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
+
+        ImageView awayTeamLogo =  getView().findViewById(R.id.awayteamlogo);
+        awayTeamLogo.setOnClickListener(this);
+
+        ImageView homeTeamLogo =  getView().findViewById(R.id.hometeamlogo);
+        homeTeamLogo.setOnClickListener(this);
+
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.awayteamlogo:
+                Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+                break;
 
-
-
+            case R.id.hometeamlogo:
+                Toast.makeText(getActivity(), "Hello", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 }
