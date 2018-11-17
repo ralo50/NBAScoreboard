@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/awayteamname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/awayteamlogo"
+        app:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
+        app:layout_constraintStart_toStartOf="@+id/awayteamlogo" />
+
+    <TextView
+        android:id="@+id/hometeamname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/hometeamlogo"
+        app:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
+        app:layout_constraintStart_toStartOf="@+id/hometeamlogo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/awayteamlogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/gsw"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.40" />
+
+
+    <ImageView
+        android:id="@+id/hometeamlogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/hou"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.40" />
+
+
+    <TextView
+        android:id="@+id/awayteamscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/awayteamlogo"
+        app:layout_constraintStart_toEndOf="@+id/awayteamlogo"
+        app:layout_constraintTop_toTopOf="@+id/awayteamlogo" />
+
+    <TextView
+        android:id="@+id/hometeamscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hometeamlogo"
+        app:layout_constraintEnd_toStartOf="@+id/hometeamlogo"
+        app:layout_constraintTop_toTopOf="@+id/hometeamlogo" />
+
+
+    <TextView
+        android:id="@+id/awayteamwins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
+        app:layout_constraintStart_toStartOf="@+id/awayteamlogo"
+        app:layout_constraintTop_toBottomOf="@+id/awayteamlogo" />
+
+    <TextView
+        android:id="@+id/hometeamwins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
+        app:layout_constraintStart_toStartOf="@+id/hometeamlogo"
+        app:layout_constraintTop_toBottomOf="@+id/hometeamlogo" />
+
+
+    <TextView
+        android:id="@+id/gameTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text=":"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/hometeamscore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hometeamscore" />
+
+</android.support.constraint.ConstraintLayout>
