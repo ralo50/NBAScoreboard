@@ -10,25 +10,27 @@
         android:id="@+id/awayteamname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/awayteamlogo"
         app:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
-        app:layout_constraintStart_toStartOf="@+id/awayteamlogo" />
+        app:layout_constraintStart_toStartOf="@+id/awayteamlogo"
+        android:text="Warrors"/>
 
     <TextView
         android:id="@+id/hometeamname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/hometeamlogo"
         app:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
         app:layout_constraintStart_toStartOf="@+id/hometeamlogo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:text="Rockets"/>
 
     <ImageView
         android:id="@+id/awayteamlogo"
@@ -68,7 +70,8 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/awayteamlogo"
         app:layout_constraintStart_toEndOf="@+id/awayteamlogo"
-        app:layout_constraintTop_toTopOf="@+id/awayteamlogo" />
+        app:layout_constraintTop_toTopOf="@+id/awayteamlogo"
+        android:text="102"/>
 
     <TextView
         android:id="@+id/hometeamscore"
@@ -80,7 +83,8 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/hometeamlogo"
         app:layout_constraintEnd_toStartOf="@+id/hometeamlogo"
-        app:layout_constraintTop_toTopOf="@+id/hometeamlogo" />
+        app:layout_constraintTop_toTopOf="@+id/hometeamlogo"
+        android:text="96"/>
 
 
     <TextView
@@ -92,7 +96,8 @@
         android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
         app:layout_constraintStart_toStartOf="@+id/awayteamlogo"
-        app:layout_constraintTop_toBottomOf="@+id/awayteamlogo" />
+        app:layout_constraintTop_toBottomOf="@+id/awayteamlogo"
+        android:text="12-5"/>
 
     <TextView
         android:id="@+id/hometeamwins"
@@ -103,7 +108,8 @@
         android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
         app:layout_constraintStart_toStartOf="@+id/hometeamlogo"
-        app:layout_constraintTop_toBottomOf="@+id/hometeamlogo" />
+        app:layout_constraintTop_toBottomOf="@+id/hometeamlogo"
+        android:text="8-8"/>
 
 
     <TextView
@@ -112,8 +118,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text=":"
-        android:textSize="20sp"
+        android:text="Final"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/hometeamscore"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
