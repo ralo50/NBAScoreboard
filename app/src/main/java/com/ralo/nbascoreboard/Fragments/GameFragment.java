@@ -5,18 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.R;
+import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +57,7 @@ public class GameFragment extends Fragment {
         gameIdTextView.setText(gameId);
         adView = getView().findViewById(R.id.adView);
         initAd();
+        setupFragments();
     }
 
 
@@ -66,5 +66,17 @@ public class GameFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("8623F0A041C7A59B4C3BA8CAD7B28F64").build();
         adView.loadAd(adRequest);
     }
+
+    private void setupFragments(){
+        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
+        ViewPager pager = getView().findViewById(R.id.pager);
+        pager.setAdapter(pagerAdapter);
+
+        TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(pager);
+    }
+
+
+
 
 }
