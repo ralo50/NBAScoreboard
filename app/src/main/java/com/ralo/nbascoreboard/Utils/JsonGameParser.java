@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonParser {
+public class JsonGameParser {
 
     private JSONObject jsonObject;
     private String jsonString = "";
@@ -14,7 +14,7 @@ public class JsonParser {
     private int homeTeamPoint = 0;
     private int awayTeamPoints = 0;
 
-    JsonParser(JSONObject object){
+    JsonGameParser(JSONObject object){
          this.jsonObject =  object;
          imageId = R.drawable.nba;
     }
@@ -185,7 +185,7 @@ public class JsonParser {
         return imageId;
     }
 
-    private int getImageId(String jsonString) {
+    public static int getImageId(String jsonString) {
         switch (jsonString){
             case "ATL":
                 return R.drawable.atl;

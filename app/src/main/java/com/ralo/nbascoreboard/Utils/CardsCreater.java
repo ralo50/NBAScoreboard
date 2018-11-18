@@ -6,35 +6,35 @@ import java.util.ArrayList;
 public class CardsCreater {
 
     private ArrayList<Game> gameArrayList;
-    private JsonParser jsonParser;
+    private JsonGameParser jsonGameParser;
 
     public CardsCreater (JSONObject response){
-        this.jsonParser = new JsonParser(response);
+        this.jsonGameParser = new JsonGameParser(response);
         gameArrayList = new ArrayList<>();
     }
 
 
     private int getNumberOfGames(){
-        return this.jsonParser.getNumberOfGames();
+        return this.jsonGameParser.getNumberOfGames();
     }
 
     public void populateCards(){
         for(int i = 0; i < getNumberOfGames(); i++){
             Game game = new Game();
-            this.jsonParser.setCurrentGame(i);
-            game.setHomeTeamName(jsonParser.getHomeTeamName());
-            game.setAwayTeamName(jsonParser.getAwayTeamName());
-            game.setHomeTeamScore(jsonParser.getHomeTeamScore());
-            game.setAwayTeamScore(jsonParser.getAwayTeamScore());
-            game.setHomeTeamWins(jsonParser.getHomeTeamWins());
-            game.setAwayTeamWins(jsonParser.getAwayTeamWins());
-            game.setHomeTeamImage(jsonParser.getHomeTeamImage());
-            game.setAwayTeamImage(jsonParser.getAwayTeamImage());
-            game.setNugget(jsonParser.getNugget());
-            game.setGameTime(jsonParser.getGameTime());
+            this.jsonGameParser.setCurrentGame(i);
+            game.setHomeTeamName(jsonGameParser.getHomeTeamName());
+            game.setAwayTeamName(jsonGameParser.getAwayTeamName());
+            game.setHomeTeamScore(jsonGameParser.getHomeTeamScore());
+            game.setAwayTeamScore(jsonGameParser.getAwayTeamScore());
+            game.setHomeTeamWins(jsonGameParser.getHomeTeamWins());
+            game.setAwayTeamWins(jsonGameParser.getAwayTeamWins());
+            game.setHomeTeamImage(jsonGameParser.getHomeTeamImage());
+            game.setAwayTeamImage(jsonGameParser.getAwayTeamImage());
+            game.setNugget(jsonGameParser.getNugget());
+            game.setGameTime(jsonGameParser.getGameTime());
 
-            game.setGameId(jsonParser.getGameId());
-            game.setGameDate(jsonParser.getGameDate());
+            game.setGameId(jsonGameParser.getGameId());
+            game.setGameDate(jsonGameParser.getGameDate());
 
             gameArrayList.add(game);
         }
@@ -45,6 +45,6 @@ public class CardsCreater {
     }
 
     public boolean isGameNight(){
-        return jsonParser.isGameNight();
+        return jsonGameParser.isGameNight();
     }
 }
