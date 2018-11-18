@@ -7,13 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Game;
-
 import java.util.ArrayList;
-
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 

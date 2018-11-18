@@ -1,7 +1,7 @@
 package com.ralo.nbascoreboard.Utils;
 
 public class Player {
-    
+
     private String fistName;
     private String lastName;
     private int jerseyNumber;
