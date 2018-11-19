@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.ralo.nbascoreboard.Utils.CardsCreater;
 import com.ralo.nbascoreboard.Utils.JsonGameParser;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
+import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 
 import org.json.JSONObject;
 
@@ -49,6 +51,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     TextView awayTeamWinsTextView;
     TextView homeTeamWinsTextView;
     TextView gameTimeTextView;
+    String homeTeamStringId;
+    String awayTeamStringId;
 
 
     public GameFragment() {
@@ -166,6 +170,17 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.awayteamlogo:
+                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(R.id.awayteamlogo);
+                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+                teamDetailFragment.setEnterTransition(new Fade());
+                setExitTransition(new Fade());
+                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
+                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+
+
                 Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
                 break;
 
