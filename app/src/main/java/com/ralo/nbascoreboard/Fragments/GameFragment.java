@@ -68,7 +68,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         gameDate = getArguments().getString("gameDate");
         gameId = getArguments().getString("gameId");
-        Log.d("view created", "created");
 
         return inflater.inflate(R.layout.fragment_game, container, false);
 
@@ -131,8 +130,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamLogoImageView.setImageResource(parser.getHomeTeamImage());
         awayTeamNameTextView.setText(parser.getAwayTeamName());
         homeTeamNameTextView.setText(parser.getHomeTeamName());
-        awayTeamScoreTextView.setText(parser.getAwayTeamScore());
-        homeTeamScoreTextView.setText(parser.getHomeTeamScore());
+        awayTeamScoreTextView.setText(String.valueOf(parser.getAwayTeamScore()));
+        homeTeamScoreTextView.setText(String.valueOf(parser.getHomeTeamScore()));
     }
 
 
@@ -145,9 +144,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     private void setupFragments(){
         SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
         ViewPager pager = getView().findViewById(R.id.pager);
-//        pager.setOffscreenPageLimit(2);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
+
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 

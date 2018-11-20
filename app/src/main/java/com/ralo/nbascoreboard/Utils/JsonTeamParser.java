@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonTeamParser {
+public class    JsonTeamParser {
 
     private JSONObject jsonObject;
     private JSONObject newJasonObject;
@@ -68,28 +68,40 @@ public class JsonTeamParser {
         return "";
     }
 
-    public String getAwayTeamScore(){
+    public int getAwayTeamScore(){
         try {
             newJasonObject = this.getBaseJsonObject().getJSONObject("visitor");
             newJasonObject = newJasonObject.getJSONObject("stats");
-            return newJasonObject.getString("points");
+            return newJasonObject.getInt("points");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "";
+        return 0;
     }
 
-    public String getHomeTeamScore(){
+    public int getHomeTeamScore(){
         try {
             newJasonObject = this.getBaseJsonObject().getJSONObject("home");
             newJasonObject = newJasonObject.getJSONObject("stats");
-            return newJasonObject.getString("points");
+            return newJasonObject.getInt("points");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "";
+        return 0;
+    }
+
+    public int getAwayTeamFieldGoalsMade(){
+        try {
+            newJasonObject = this.getBaseJsonObject().getJSONObject("home");
+            newJasonObject = newJasonObject.getJSONObject("stats");
+            return newJasonObject.getInt("points");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 
