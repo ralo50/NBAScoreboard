@@ -3,10 +3,12 @@ package com.ralo.nbascoreboard.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 
 import org.json.JSONObject;
 
+import javax.xml.datatype.Duration;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -40,8 +44,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     AdView adView;
     String gameDate;
     String gameId;
-    TextView gameDateTextView;
-    TextView gameIdTextView;
     TextView homeTeamNameTextView;
     TextView awayTeamNameTextView;
     ImageView awayTeamLogoImageView;
@@ -51,8 +53,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     TextView awayTeamWinsTextView;
     TextView homeTeamWinsTextView;
     TextView gameTimeTextView;
-    String homeTeamStringId;
-    String awayTeamStringId;
+    int homeTeamStringId;
+    int awayTeamStringId;
 
 
     public GameFragment() {
@@ -64,14 +66,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         gameDate = getArguments().getString("gameDate");
         gameId = getArguments().getString("gameId");
-        Log.d("hi", "gamedate:" + gameDate);
-        Log.d("hi", "gameid:" + gameId);
-
-
+        Log.d("view created", "created");
 
         return inflater.inflate(R.layout.fragment_game, container, false);
 
@@ -81,10 +78,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews();
-
-
-        gameDateTextView.setText(gameDate);
-        gameIdTextView.setText(gameId);
         adView = getView().findViewById(R.id.adView);
         initAd();
         setupFragments();
@@ -92,8 +85,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findViews() {
-        gameDateTextView = getView().findViewById(R.id.gameDate);
-        gameIdTextView = getView().findViewById(R.id.gameId);
         homeTeamNameTextView = getView().findViewById(R.id.hometeamname);
         awayTeamNameTextView = getView().findViewById(R.id.awayteamname);
         homeTeamScoreTextView = getView().findViewById(R.id.hometeamscore);
@@ -135,6 +126,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     }
     private void setViewData(JsonTeamParser parser){
         awayTeamLogoImageView.setImageResource(parser.getAwayTeamImage());
+        awayTeamStringId = (parser.getAwayTeamImage());
+        homeTeamStringId = (parser.getHomeTeamImage());
         homeTeamLogoImageView.setImageResource(parser.getHomeTeamImage());
         awayTeamNameTextView.setText(parser.getAwayTeamName());
         homeTeamNameTextView.setText(parser.getHomeTeamName());
@@ -152,9 +145,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     private void setupFragments(){
         SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
         ViewPager pager = getView().findViewById(R.id.pager);
+//        pager.setOffscreenPageLimit(2);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
-
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 
@@ -170,9 +163,12 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.awayteamlogo:
-                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(R.id.awayteamlogo);
+
+
+                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
                 teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-                teamDetailFragment.setEnterTransition(new Fade());
+                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+
                 setExitTransition(new Fade());
                 teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
 
@@ -181,12 +177,22 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                         replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
 
 
-                Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.hometeamlogo:
-                Toast.makeText(getActivity(), "Hello", Toast.LENGTH_SHORT).show();
+
+                teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
+                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+
+                setExitTransition(new Fade());
+                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
+                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
                 break;
         }
     }
+
 }

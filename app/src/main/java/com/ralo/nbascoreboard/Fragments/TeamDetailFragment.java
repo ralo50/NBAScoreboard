@@ -16,14 +16,15 @@ import com.ralo.nbascoreboard.R;
  */
 public class TeamDetailFragment extends Fragment {
 
-
+    ImageView imageView;
     public TeamDetailFragment() {
         // Required empty public constructor
     }
 
-    public static TeamDetailFragment newInstance(int teamId){
+    public static TeamDetailFragment newInstance(int teamId, boolean isHomeTeam){
         Bundle args = new Bundle();
         args.putInt("teamId", teamId);
+        args.putBoolean("homeTeam", isHomeTeam);
 
         TeamDetailFragment fragment = new TeamDetailFragment();
         fragment.setArguments(args);
@@ -41,14 +42,16 @@ public class TeamDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-
-
-        ImageView imageView = getView().findViewById(R.id.teamLogo);
-
         Bundle args = getArguments();
-        Log.d("teamId", String.valueOf(args.getInt("teamId")));
-        Log.d("R.drawable.gsw", String.valueOf(R.drawable.gsw));
-        imageView.setImageResource(R.drawable.gsw);
+
+        if(args.getBoolean("homeTeam")){
+            imageView = getView().findViewById(R.id.teamLogoHome);
+            imageView.setImageResource(args.getInt("teamId"));
+        }
+        else{
+            imageView = getView().findViewById(R.id.teamLogoAway);
+            imageView.setImageResource(args.getInt("teamId"));
+        }
     }
 
 }
