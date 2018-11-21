@@ -100,7 +100,7 @@ public class JsonGameParser {
                 JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
                 jsonString = jsonObject3.getString("win");
-                jsonString += " : ";
+                jsonString += "-";
                 jsonString += jsonObject3.getString("loss");
             }
             else {
@@ -131,7 +131,7 @@ public class JsonGameParser {
                 JSONObject jsonObject3 = jsonObject2.getJSONObject("vTeam");
 
                 jsonString = jsonObject3.getString("win");
-                jsonString += " : ";
+                jsonString += "-";
                 jsonString += jsonObject3.getString("loss");
 
 

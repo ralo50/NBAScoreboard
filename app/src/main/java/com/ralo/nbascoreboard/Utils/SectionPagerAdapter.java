@@ -9,9 +9,13 @@ import com.ralo.nbascoreboard.Fragments.BoxscoreFragment;
 import com.ralo.nbascoreboard.Fragments.MatchupFragment;
 import com.ralo.nbascoreboard.Fragments.PlaybyplayFragment;
 
+
 public class SectionPagerAdapter extends FragmentPagerAdapter {
-    public SectionPagerAdapter(FragmentManager fm) {
+    JsonTeamParser parser;
+
+    public SectionPagerAdapter(FragmentManager fm, JsonTeamParser parser) {
         super(fm);
+        this.parser = parser;
     }
 
     @Override
@@ -20,7 +24,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new MatchupFragment();
             case 1:
-                return new BoxscoreFragment();
+                return new BoxscoreFragment(this.parser);
             case 2:
                 return new PlaybyplayFragment();
         }

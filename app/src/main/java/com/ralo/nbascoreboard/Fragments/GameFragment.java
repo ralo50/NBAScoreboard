@@ -1,22 +1,16 @@
 package com.ralo.nbascoreboard.Fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.transition.Fade;
-import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,15 +21,13 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.CardsCreater;
-import com.ralo.nbascoreboard.Utils.JsonGameParser;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
 import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 
 import org.json.JSONObject;
 
-import javax.xml.datatype.Duration;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,10 +69,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews();
+        setupJsonTeamParser();
         adView = getView().findViewById(R.id.adView);
         initAd();
-        setupFragments();
-        setupJsonTeamParser();
     }
 
     private void findViews() {
@@ -110,6 +101,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                                 @Override
                                 public void run() {
                                     setViewData(parser);
+                                    setupFragments(parser);
                                 }
                             });
                         }
@@ -141,8 +133,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         adView.loadAd(adRequest);
     }
 
-    private void setupFragments(){
-        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
+    private void setupFragments(JsonTeamParser parser){
+        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), parser);
         ViewPager pager = getView().findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
@@ -161,36 +153,36 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.awayteamlogo:
-
-
-                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
-                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-
-                setExitTransition(new Fade());
-                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
-                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-
-
-                break;
-
-            case R.id.hometeamlogo:
-
-                teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
-                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-
-                setExitTransition(new Fade());
-                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
-                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-                break;
+//            case R.id.awayteamlogo:
+//
+//
+//                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
+//                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+//                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+//
+//                setExitTransition(new Fade());
+//                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+//
+//                getActivity().getSupportFragmentManager().beginTransaction().
+//                        addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
+//                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+//
+//
+//                break;
+//
+//            case R.id.hometeamlogo:
+//
+//                teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
+//                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+//                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+//
+//                setExitTransition(new Fade());
+//                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+//
+//                getActivity().getSupportFragmentManager().beginTransaction().
+//                        addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
+//                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+//                break;
         }
     }
 

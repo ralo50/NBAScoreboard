@@ -83,18 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUrl(String dateUrl){
         loadingPanel.setVisibility(View.VISIBLE);
-        //retrofit //TODO
+        noteTextView.setVisibility(View.GONE);
 
         url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                noteTextView.setText("");
                 cardsCreater = new CardsCreater(response);
                 if(cardsCreater.isGameNight()) {
-                    noteTextView.setVisibility(View.GONE);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -295,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateYesterday(){
+        noteTextView.setVisibility(View.GONE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
         String myFormat = "yyyyMMdd";
@@ -305,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateTomorrow(){
+        noteTextView.setVisibility(View.GONE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);
         String myFormat = "yyyyMMdd";
