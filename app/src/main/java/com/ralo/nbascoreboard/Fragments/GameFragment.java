@@ -100,13 +100,11 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            final JsonTeamParser parser = new JsonTeamParser(response);
-                            playerParser = new JsonPlayerParser(response);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    setViewData(parser);
-                                    setupFragments(parser);
+                                    setViewData(response);
+                                    setupFragments(response);
                                 }
                             });
                         }
@@ -120,15 +118,17 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         });
         requestQueue.add(objectRequest);
     }
-    private void setViewData(JsonTeamParser parser){
-        awayTeamLogoImageView.setImageResource(parser.getAwayTeamImage());
-        awayTeamStringId = (parser.getAwayTeamImage());
-        homeTeamStringId = (parser.getHomeTeamImage());
-        homeTeamLogoImageView.setImageResource(parser.getHomeTeamImage());
-        awayTeamNameTextView.setText(parser.getAwayTeamName());
-        homeTeamNameTextView.setText(parser.getHomeTeamName());
-        awayTeamScoreTextView.setText(String.valueOf(parser.getAwayTeamScore()));
-        homeTeamScoreTextView.setText(String.valueOf(parser.getHomeTeamScore()));
+    private void setViewData(JSONObject jsonObject){
+        JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+        playerParser = new JsonPlayerParser(jsonObject);
+        awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
+        awayTeamStringId = (teamParser.getAwayTeamImage());
+        homeTeamStringId = (teamParser.getHomeTeamImage());
+        homeTeamLogoImageView.setImageResource(teamParser.getHomeTeamImage());
+        awayTeamNameTextView.setText(teamParser.getAwayTeamName());
+        homeTeamNameTextView.setText(teamParser.getHomeTeamName());
+        awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
+        homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
         homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStats("points", 1)));
     }
 
@@ -139,8 +139,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         adView.loadAd(adRequest);
     }
 
-    private void setupFragments(JsonTeamParser parser){
-        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), parser);
+    private void setupFragments(JSONObject jsonObject){
+        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
         ViewPager pager = getView().findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);

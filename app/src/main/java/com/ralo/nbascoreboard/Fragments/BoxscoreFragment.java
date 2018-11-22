@@ -14,19 +14,21 @@ import android.widget.TextView;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 
+import org.json.JSONObject;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BoxscoreFragment extends Fragment {
 
     TextView view;
-    JsonTeamParser parser;
+    JSONObject jsonObject;
 
 
     public BoxscoreFragment(){}
     @SuppressLint("ValidFragment")
-    public BoxscoreFragment(JsonTeamParser parser) {
-        this.parser = parser;
+    public BoxscoreFragment(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 
 
@@ -43,7 +45,7 @@ public class BoxscoreFragment extends Fragment {
     }
 
     private void setupViews(){
-
+        JsonTeamParser parser = new JsonTeamParser(jsonObject);
         view = getView().findViewById(R.id.foreignText);
         view.setText(parser.getAwayTeamName());
     }

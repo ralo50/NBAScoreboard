@@ -46,7 +46,8 @@ public class JsonPlayerParser {
             baseJsonObject = baseJsonObject.getJSONObject("game");
             baseJsonObject = baseJsonObject.getJSONObject("home");
             baseJsonObject = baseJsonObject.getJSONObject("players");
-            visitorJsonArray = baseJsonObject.getJSONArray("player");
+            homeJsonArray = baseJsonObject.getJSONArray("player");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,11 +56,11 @@ public class JsonPlayerParser {
 
     public int getHomePlayerTeamStats(String playerStat, int playerIndex){
         newJasonObject = new JSONObject();
-        int currentPlayerStat = 5;
+        int currentPlayerStat = 0;
         try {
+
             newJasonObject = this.getHomeBaseJsonArray().getJSONObject(playerIndex);
             currentPlayerStat = newJasonObject.getInt(playerStat);
-            Log.d("Testing", "TESTING!");
 
         } catch (JSONException e) {
             e.printStackTrace();
