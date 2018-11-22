@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.R;
+import com.ralo.nbascoreboard.Utils.JsonPlayerParser;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
 import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
@@ -47,6 +49,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     TextView gameTimeTextView;
     int homeTeamStringId;
     int awayTeamStringId;
+    JsonPlayerParser playerParser;
 
 
     public GameFragment() {
@@ -80,6 +83,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamScoreTextView = getView().findViewById(R.id.hometeamscore);
         awayTeamScoreTextView = getView().findViewById(R.id.awayteamscore);
         homeTeamWinsTextView = getView().findViewById(R.id.hometeamwins);
+        Log.d("Testing", "TESTING!");
         awayTeamWinsTextView = getView().findViewById(R.id.awayteamwins);
         awayTeamLogoImageView = getView().findViewById(R.id.awayteamlogo);
         homeTeamLogoImageView = getView().findViewById(R.id.hometeamlogo);
@@ -97,6 +101,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                         @Override
                         public void run() {
                             final JsonTeamParser parser = new JsonTeamParser(response);
+                            playerParser = new JsonPlayerParser(response);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -124,6 +129,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamNameTextView.setText(parser.getHomeTeamName());
         awayTeamScoreTextView.setText(String.valueOf(parser.getAwayTeamScore()));
         homeTeamScoreTextView.setText(String.valueOf(parser.getHomeTeamScore()));
+        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStats("points", 1)));
     }
 
 
