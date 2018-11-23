@@ -68,4 +68,19 @@ public class JsonPlayerParser {
 
         return currentPlayerStat;
     }
+
+    public int getAwayPlayerTeamStats(String playerStat, int playerIndex){
+        newJasonObject = new JSONObject();
+        int currentPlayerStat = 0;
+        try {
+
+            newJasonObject = this.getAwayBaseJsonArray().getJSONObject(playerIndex);
+            currentPlayerStat = newJasonObject.getInt(playerStat);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return currentPlayerStat;
+    }
 }
