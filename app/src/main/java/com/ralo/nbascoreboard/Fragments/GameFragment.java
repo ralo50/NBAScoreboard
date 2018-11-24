@@ -129,7 +129,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamNameTextView.setText(teamParser.getHomeTeamName());
         awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
         homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
-        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStats("points", 1)));
+        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStatsInt("points", 1)));
     }
 
 

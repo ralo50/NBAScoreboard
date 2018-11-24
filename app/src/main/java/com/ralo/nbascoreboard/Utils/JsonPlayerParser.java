@@ -54,7 +54,7 @@ public class JsonPlayerParser {
         return homeJsonArray;
     }
 
-    public int getHomePlayerTeamStats(String playerStat, int playerIndex){
+    public int getHomePlayerTeamStatsInt(String playerStat, int playerIndex){
         newJasonObject = new JSONObject();
         int currentPlayerStat = 0;
         try {
@@ -69,13 +69,44 @@ public class JsonPlayerParser {
         return currentPlayerStat;
     }
 
-    public int getAwayPlayerTeamStats(String playerStat, int playerIndex){
+    public int getAwayPlayerTeamStatsInt(String playerStat, int playerIndex){
         newJasonObject = new JSONObject();
         int currentPlayerStat = 0;
         try {
 
             newJasonObject = this.getAwayBaseJsonArray().getJSONObject(playerIndex);
             currentPlayerStat = newJasonObject.getInt(playerStat);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return currentPlayerStat;
+    }
+
+
+    public String getHomePlayerTeamStatsIntString(String playerStat, int playerIndex){
+        newJasonObject = new JSONObject();
+        String currentPlayerStat = "";
+        try {
+
+            newJasonObject = this.getHomeBaseJsonArray().getJSONObject(playerIndex);
+            currentPlayerStat = newJasonObject.getString(playerStat);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return currentPlayerStat;
+    }
+
+    public String getAwayPlayerTeamStatsString(String playerStat, int playerIndex){
+        newJasonObject = new JSONObject();
+        String currentPlayerStat = "";
+        try {
+
+            newJasonObject = this.getAwayBaseJsonArray().getJSONObject(playerIndex);
+            currentPlayerStat = newJasonObject.getString(playerStat);
 
         } catch (JSONException e) {
             e.printStackTrace();
