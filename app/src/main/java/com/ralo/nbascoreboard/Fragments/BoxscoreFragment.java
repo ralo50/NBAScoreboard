@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class BoxscoreFragment extends Fragment {
 
     TextView view;
     JSONObject jsonObject;
+    ListView detailsListView;
 
 
     public BoxscoreFragment(){}
@@ -48,5 +50,7 @@ public class BoxscoreFragment extends Fragment {
         JsonTeamParser parser = new JsonTeamParser(jsonObject);
         view = getView().findViewById(R.id.foreignText);
         view.setText(parser.getAwayTeamName());
+        detailsListView = getView().findViewById(R.id.detailsListView);
+
     }
 }

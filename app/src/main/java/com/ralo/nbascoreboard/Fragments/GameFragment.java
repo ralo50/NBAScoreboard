@@ -83,7 +83,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamScoreTextView = getView().findViewById(R.id.hometeamscore);
         awayTeamScoreTextView = getView().findViewById(R.id.awayteamscore);
         homeTeamWinsTextView = getView().findViewById(R.id.hometeamwins);
-        Log.d("Testing", "TESTING!");
         awayTeamWinsTextView = getView().findViewById(R.id.awayteamwins);
         awayTeamLogoImageView = getView().findViewById(R.id.awayteamlogo);
         homeTeamLogoImageView = getView().findViewById(R.id.hometeamlogo);
