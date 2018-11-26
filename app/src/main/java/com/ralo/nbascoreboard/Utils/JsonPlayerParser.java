@@ -18,8 +18,6 @@ public class JsonPlayerParser {
 
     public JsonPlayerParser(JSONObject object){
         this.jsonObject =  object;
-        Log.d("Testing", "TESTING!");
-
     }
 
     public JSONArray getAwayBaseJsonArray() {

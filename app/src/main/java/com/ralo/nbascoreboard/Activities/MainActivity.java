@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 extras.putString("gameDate",gameArrayList.get(position).getGameDate());
                 extras.putString("gameId",gameArrayList.get(position).getGameId());
+                extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
+                extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
                 myIntent.putExtras(extras);
                 MainActivity.this.startActivity(myIntent);
             }

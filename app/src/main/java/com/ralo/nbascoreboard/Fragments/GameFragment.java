@@ -35,9 +35,12 @@ import org.json.JSONObject;
  * A simple {@link Fragment} subclass.
  */
 public class GameFragment extends Fragment implements View.OnClickListener{
+
     AdView adView;
     String gameDate;
     String gameId;
+    String homeTeamWins;
+    String awayTeamWins;
     TextView homeTeamNameTextView;
     TextView awayTeamNameTextView;
     ImageView awayTeamLogoImageView;
@@ -63,6 +66,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         gameDate = getArguments().getString("gameDate");
         gameId = getArguments().getString("gameId");
+        homeTeamWins = getArguments().getString("homeTeamWins");
+        awayTeamWins = getArguments().getString("awayTeamWins");
+
 
         return inflater.inflate(R.layout.fragment_game, container, false);
 
@@ -128,7 +134,9 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamNameTextView.setText(teamParser.getHomeTeamName());
         awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
         homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
-        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStatsInt("points", 1)));
+        awayTeamWinsTextView.setText(awayTeamWins);
+        homeTeamWinsTextView.setText(homeTeamWins);
+//        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStatsInt("points", 1)));
     }
 
 
