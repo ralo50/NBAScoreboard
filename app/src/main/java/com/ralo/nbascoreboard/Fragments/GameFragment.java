@@ -166,36 +166,36 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.awayteamlogo:
-//
-//
-//                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
-//                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-//                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-//
-//                setExitTransition(new Fade());
-//                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-//
-//                getActivity().getSupportFragmentManager().beginTransaction().
-//                        addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
-//                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-//
-//
-//                break;
-//
-//            case R.id.hometeamlogo:
-//
-//                teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
-//                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-//                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-//
-//                setExitTransition(new Fade());
-//                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-//
-//                getActivity().getSupportFragmentManager().beginTransaction().
-//                        addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
-//                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-//                break;
+            case R.id.awayteamlogo:
+
+
+                TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
+                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+
+                setExitTransition(new Fade());
+                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
+                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+
+
+                break;
+
+            case R.id.hometeamlogo:
+
+                teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
+                teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
+                teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
+
+                setExitTransition(new Fade());
+                teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
+                        replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+                break;
         }
     }
 
