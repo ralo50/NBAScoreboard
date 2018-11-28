@@ -24,7 +24,6 @@ public class BoxscoreFragment extends Fragment {
 
     TextView view;
     JSONObject jsonObject;
-    ListView detailsListView;
 
 
     public BoxscoreFragment(){}
@@ -50,7 +49,5 @@ public class BoxscoreFragment extends Fragment {
         JsonTeamParser parser = new JsonTeamParser(jsonObject);
         view = getView().findViewById(R.id.foreignText);
         view.setText(parser.getAwayTeamName());
-        detailsListView = getView().findViewById(R.id.detailsListView);
-
     }
 }
