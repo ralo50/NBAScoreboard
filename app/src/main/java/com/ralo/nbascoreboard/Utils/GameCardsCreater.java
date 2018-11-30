@@ -3,12 +3,12 @@ package com.ralo.nbascoreboard.Utils;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class CardsCreater {
+public class GameCardsCreater {
 
     private ArrayList<Game> gameArrayList;
     private JsonGameParser jsonGameParser;
 
-    public CardsCreater (JSONObject response){
+    public GameCardsCreater(JSONObject response){
         this.jsonGameParser = new JsonGameParser(response);
         gameArrayList = new ArrayList<>();
     }

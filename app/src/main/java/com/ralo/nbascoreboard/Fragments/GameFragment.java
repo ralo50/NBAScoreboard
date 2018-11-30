@@ -24,6 +24,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonPlayerParser;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
+import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
 import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
 import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 
@@ -53,7 +54,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     int homeTeamStringId;
     int awayTeamStringId;
     JsonPlayerParser playerParser;
-
 
     public GameFragment() {
         // Required empty public constructor
@@ -136,7 +136,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
         awayTeamWinsTextView.setText(awayTeamWins);
         homeTeamWinsTextView.setText(homeTeamWins);
-//        homeTeamScoreTextView.setText(String.valueOf(playerParser.getHomePlayerTeamStatsInt("points", 1)));
+//        awayTeamWinsTextView.setText(gameDate);
+//        homeTeamWinsTextView.setText(gameId);
     }
 
 
@@ -147,19 +148,20 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setupFragments(JSONObject jsonObject){
-        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
         ViewPager pager = getView().findViewById(R.id.pager);
-        pager.setAdapter(pagerAdapter);
-        pager.setCurrentItem(1);
-
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 
-        ImageView awayTeamLogo =  getView().findViewById(R.id.awayteamlogo);
+        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
+        pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(1);
+
+        ImageView awayTeamLogo = getView().findViewById(R.id.awayteamlogo);
         awayTeamLogo.setOnClickListener(this);
 
-        ImageView homeTeamLogo =  getView().findViewById(R.id.hometeamlogo);
+        ImageView homeTeamLogo = getView().findViewById(R.id.hometeamlogo);
         homeTeamLogo.setOnClickListener(this);
+
 
     }
 

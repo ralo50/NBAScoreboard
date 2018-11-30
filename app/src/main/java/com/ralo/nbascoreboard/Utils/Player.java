@@ -14,7 +14,7 @@ public class Player {
     private int reboundsOffensive;
     private int reboundsDefensive;
     private int reboundsTotal;
-    private int fieldGoalsMake;
+    private int fieldGoalsMade;
     private int fieldGoalsAttempted;
     private float fieldGoalsPercentage;
     private int threePointersMade;
@@ -80,8 +80,8 @@ public class Player {
         return reboundsTotal;
     }
 
-    public int getFieldGoalsMake() {
-        return fieldGoalsMake;
+    public int getFieldGoalsMade() {
+        return fieldGoalsMade;
     }
 
     public int getFieldGoalsAttempted() {
@@ -196,8 +196,8 @@ public class Player {
         this.reboundsTotal = reboundsTotal;
     }
 
-    public void setFieldGoalsMake(int fieldGoalsMake) {
-        this.fieldGoalsMake = fieldGoalsMake;
+    public void setFieldGoalsMade(int fieldGoalsMade) {
+        this.fieldGoalsMade = fieldGoalsMade;
     }
 
     public void setFieldGoalsAttempted(int fieldGoalsAttempted) {

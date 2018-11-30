@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.Adapters.GameAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.CardsCreater;
+import com.ralo.nbascoreboard.Utils.GameCardsCreater;
 import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
 import com.ralo.nbascoreboard.Utils.Game;
 import org.json.JSONObject;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView myView;
     ArrayList<String> myValues;
     ArrayList<Game> gameArrayList;
-    CardsCreater cardsCreater;
+    GameCardsCreater gameCardsCreater;
     static Calendar myCalendar;
     AdView adView;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -90,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                cardsCreater = new CardsCreater(response);
-                if(cardsCreater.isGameNight()) {
+                gameCardsCreater = new GameCardsCreater(response);
+                if(gameCardsCreater.isGameNight()) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    cardsCreater.populateCards();
+                                    gameCardsCreater.populateCards();
                                     setCardsCreater();
                                     myView.setEnabled(true);
                                     myView.setAlpha(1);
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     public void setCardsCreater(){
         gameArrayList = new ArrayList<>();
-        gameArrayList = cardsCreater.getGameArrayList();
+        gameArrayList = gameCardsCreater.getGameArrayList();
 
         GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
             @Override

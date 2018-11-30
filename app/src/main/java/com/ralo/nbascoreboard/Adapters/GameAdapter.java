@@ -53,7 +53,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_card_view, parent, false);
         final MyViewHolder myViewHolder = new MyViewHolder(listItem);
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
