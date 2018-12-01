@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
-import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Player;
@@ -99,12 +98,8 @@ public class BoxscoreFragment extends Fragment {
         playerArrayList = new ArrayList<>();
         playerArrayList = playerCardsCreater.getPlayerArrayList();
 
-        PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-
-            }
-        });
+        PlayerAdapter adapter = new PlayerAdapter(playerArrayList);
+        myRecyclerView.setClickable(false);
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

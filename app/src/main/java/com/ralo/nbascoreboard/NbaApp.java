@@ -2,6 +2,7 @@ package com.ralo.nbascoreboard;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -29,5 +30,9 @@ public class NbaApp extends Application {
 
     public static Context getInstance(){
         return appContext;
+    }
+
+    public static FragmentManager getFragmentSupportManager() {
+        return currentActivity.getSupportFragmentManager();
     }
 }

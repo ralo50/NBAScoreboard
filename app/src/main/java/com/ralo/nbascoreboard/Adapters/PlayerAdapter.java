@@ -8,20 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Player;
 
 import java.util.ArrayList;
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHolder>{
-    private final CustomItemClickListener listener;
     private ArrayList<Player> playerList;
 
 
-    public PlayerAdapter(ArrayList<Player> myPlayers, CustomItemClickListener listener){
+    public PlayerAdapter(ArrayList<Player> myPlayers){
         this.playerList = myPlayers;
-        this.listener = listener;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -52,14 +49,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     public PlayerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_card_view, parent, false);
         final PlayerAdapter.MyViewHolder myViewHolder = new PlayerAdapter.MyViewHolder(listItem);
-        listItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(v, myViewHolder.getAdapterPosition());
-
-            }
-        });
-
         return myViewHolder;
     }
 
@@ -82,5 +71,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     public int getItemCount() {
         return playerList.size();
     }
+
 }
 

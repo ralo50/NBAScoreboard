@@ -1,6 +1,7 @@
 package com.ralo.nbascoreboard.Fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
@@ -54,6 +55,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
     int homeTeamStringId;
     int awayTeamStringId;
     JsonPlayerParser playerParser;
+    SectionPagerAdapter pagerAdapter;
+    JSONObject jsonObject;
 
     public GameFragment() {
         // Required empty public constructor
@@ -110,6 +113,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                                 public void run() {
                                     setViewData(response);
                                     setupFragments(response);
+                                    jsonObject = response;
                                 }
                             });
                         }
@@ -152,7 +156,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 
-        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
+        pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
 
@@ -161,7 +165,6 @@ public class GameFragment extends Fragment implements View.OnClickListener{
 
         ImageView homeTeamLogo = getView().findViewById(R.id.hometeamlogo);
         homeTeamLogo.setOnClickListener(this);
-
 
     }
 
