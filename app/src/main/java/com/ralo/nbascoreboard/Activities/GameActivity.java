@@ -28,6 +28,8 @@ public class GameActivity extends BaseActivity {
 
         gameDate = extras.getString("gameDate","");
         gameId = extras.getString("gameId","");
+        Log.d("gameDate", gameDate);
+        Log.d("gameId", gameId);
         homeTeamWins = extras.getString("homeTeamWins");
         awayTeamWins = extras.getString("awayTeamWins");
 

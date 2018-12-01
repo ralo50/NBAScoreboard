@@ -27,7 +27,6 @@ public class PlayerCardsCreater {
         for(int i = 0; i < numberOfPlayers; i++){
             Player player = new Player();
             if(jsonPlayerParser.hasPlayerPlayed(homeOrAway, i)){
-                Log.d(jsonPlayerParser.getPlayerTeamStatsString("minutes", i, homeOrAway), String.valueOf(i));
                 player.setLastName(jsonPlayerParser.getPlayerTeamStatsString("last_name", i, homeOrAway));
                 player.setPoints(jsonPlayerParser.getPlayerTeamStatsInt("points", i, homeOrAway));
                 player.setReboundsTotal(jsonPlayerParser.getPlayerTeamStatsInt("rebounds_offensive", i, homeOrAway) +
