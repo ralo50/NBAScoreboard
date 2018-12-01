@@ -1,9 +1,6 @@
 package com.ralo.nbascoreboard.Utils;
 
-import android.util.Log;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class PlayerCardsCreater {
