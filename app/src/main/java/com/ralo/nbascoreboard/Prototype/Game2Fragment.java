@@ -66,7 +66,6 @@ public class Game2Fragment extends Fragment {
 
     private void setup() {
         tabFragmentContainer = gameFragmentView.findViewById(R.id.tab_fragment_container);
-        tabFragmentContainer.setOnClickListener(onSwipe);
         tabGameDetails = gameFragmentView.findViewById(R.id.tab_game_details);
         homeTeamNameTextView = gameFragmentView.findViewById(R.id.hometeamname);
         awayTeamNameTextView = gameFragmentView.findViewById(R.id.awayteamname);
@@ -181,11 +180,4 @@ public class Game2Fragment extends Fragment {
         }
     };
 
-    private View.OnClickListener onSwipe = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(gameActivity, "toast", Toast.LENGTH_SHORT).show();
-        }
-        
-    };
 }

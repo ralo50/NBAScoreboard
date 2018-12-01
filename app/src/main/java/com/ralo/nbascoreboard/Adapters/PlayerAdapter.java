@@ -60,8 +60,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.playerRebounds.setText(String.valueOf(player.getReboundsTotal()));
         myViewHolder.playerAssists.setText(String.valueOf(player.getAssists()));
         myViewHolder.playerFieldGoals.setText(String.valueOf(player.getFieldGoalsMade() + "-" + player.getFieldGoalsAttempted()));
-        myViewHolder.playerThreePointers.setText(String.valueOf(player.getThreePointersMade()));
-        myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade()));
+        myViewHolder.playerThreePointers.setText(String.valueOf(player.getThreePointersMade() + "-" + player.getThreePointersAttempted()));
+        myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade() + "-" + player.getFreeThrowsAttempted()));
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
 
     }
