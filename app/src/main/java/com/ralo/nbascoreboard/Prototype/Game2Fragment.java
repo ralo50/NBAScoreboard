@@ -58,7 +58,7 @@ public class Game2Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        gameFragmentView = inflater.inflate(R.layout.fragment_game2,container,false);
+        gameFragmentView = inflater.inflate(R.layout.fragment_game2, container, false);
         gameActivity = (GameActivity) getActivity();
         setup();
         return gameFragmentView;
@@ -66,6 +66,7 @@ public class Game2Fragment extends Fragment {
 
     private void setup() {
         tabFragmentContainer = gameFragmentView.findViewById(R.id.tab_fragment_container);
+        tabFragmentContainer.setOnClickListener(onSwipe);
         tabGameDetails = gameFragmentView.findViewById(R.id.tab_game_details);
         homeTeamNameTextView = gameFragmentView.findViewById(R.id.hometeamname);
         awayTeamNameTextView = gameFragmentView.findViewById(R.id.awayteamname);
@@ -117,7 +118,7 @@ public class Game2Fragment extends Fragment {
         requestQueue.add(objectRequest);
     }
 
-    private void setViewData(JSONObject jsonObject){
+    private void setViewData(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         playerParser = new JsonPlayerParser(jsonObject);
         awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
@@ -178,6 +179,13 @@ public class Game2Fragment extends Fragment {
                     break;
             }
         }
+    };
+    private View.OnClickListener onSwipe = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(gameActivity, "toast", Toast.LENGTH_SHORT).show();
+        }
+
     };
 
 }

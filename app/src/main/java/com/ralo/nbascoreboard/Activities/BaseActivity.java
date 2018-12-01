@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = getLayoutInflater().inflate(R.layout.activity_base,null,false);
+        View view = getLayoutInflater().inflate(R.layout.activity_base, null, false);
         setContentView(view);
         mainContainer = view.findViewById(R.id.main_container);
         setup();
@@ -36,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
-        child = getLayoutInflater().inflate(layoutResID,null,false);
+        child = getLayoutInflater().inflate(layoutResID, null, false);
         mainContainer.addView(child);
     }
 

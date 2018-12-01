@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,7 +32,9 @@ import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.GameCardsCreater;
 import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
 import com.ralo.nbascoreboard.Utils.Game;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -67,20 +70,20 @@ public class MainActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setViews(){
+    private void setViews() {
         myCalendar = getYesterdaysCalendar();
         adView = findViewById(R.id.adView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         textView = findViewById(R.id.textView);
         textView.setText(getCurrentTextViewDate(getYesterdaysCalendar()));
-        myView =  findViewById(R.id.recyclerview);
+        myView = findViewById(R.id.recyclerview);
         noteTextView = findViewById(R.id.note);
         myValues = new ArrayList<>();
         loadingPanel = findViewById(R.id.loadingPanel);
         setListeners();
     }
 
-    private void setUrl(String dateUrl){
+    private void setUrl(String dateUrl) {
         loadingPanel.setVisibility(View.VISIBLE);
         noteTextView.setVisibility(View.GONE);
 
@@ -90,7 +93,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(JSONObject response) {
                 gameCardsCreater = new GameCardsCreater(response);
-                if(gameCardsCreater.isGameNight()) {
+                if (gameCardsCreater.isGameNight()) {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -106,8 +109,7 @@ public class MainActivity extends BaseActivity {
                             });
                         }
                     }).start();
-                }
-                else{
+                } else {
                     myView.setEnabled(false);
                     myView.setAlpha(0f);
                     noteTextView.setVisibility(View.VISIBLE);
@@ -131,7 +133,7 @@ public class MainActivity extends BaseActivity {
 
 
     @SuppressLint("ClickableViewAccessibility")
-    public void setCardsCreater(){
+    public void setCardsCreater() {
         gameArrayList = new ArrayList<>();
         gameArrayList = gameCardsCreater.getGameArrayList();
 
@@ -141,8 +143,8 @@ public class MainActivity extends BaseActivity {
 
                 Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString("gameDate",gameArrayList.get(position).getGameDate());
-                extras.putString("gameId",gameArrayList.get(position).getGameId());
+                extras.putString("gameDate", gameArrayList.get(position).getGameDate());
+                extras.putString("gameId", gameArrayList.get(position).getGameId());
                 extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
                 extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
                 myIntent.putExtras(extras);
@@ -187,7 +189,7 @@ public class MainActivity extends BaseActivity {
                         .get(Calendar.YEAR), MainActivity.myCalendar.get(Calendar.MONTH), MainActivity.myCalendar.get(Calendar.DAY_OF_MONTH));
                 datePickerWithReset.show();
                 datePickerWithReset.getDatePicker().setMinDate(1477346400000L);
-              //datePickerWithReset.getDatePicker().setMaxDate();
+                //datePickerWithReset.getDatePicker().setMaxDate();
                 datePickerWithReset.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(
                         new View.OnClickListener() {
                             @Override
@@ -206,12 +208,12 @@ public class MainActivity extends BaseActivity {
                             }
                         });
                 datePickerWithReset.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(
-                    new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        datePickerWithReset.dismiss();
-                    }
-                });
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                datePickerWithReset.dismiss();
+                            }
+                        });
             }
         });
     }
@@ -235,7 +237,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private String getCurrentTextViewDate(Calendar calendar){
+    private String getCurrentTextViewDate(Calendar calendar) {
         String myFormat = "dd/MMM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -243,7 +245,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private Calendar getYesterdaysCalendar(){
+    private Calendar getYesterdaysCalendar() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         return calendar;
@@ -252,7 +254,7 @@ public class MainActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDate(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case (R.id.leftArrow):
                 changeDateYesterday();
                 break;
@@ -292,7 +294,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void changeDateYesterday(){
+    public void changeDateYesterday() {
         noteTextView.setVisibility(View.GONE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
@@ -303,7 +305,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void changeDateTomorrow(){
+    public void changeDateTomorrow() {
         noteTextView.setVisibility(View.GONE);
         myView.setAlpha(0);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);

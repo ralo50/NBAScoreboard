@@ -1,6 +1,7 @@
 package com.ralo.nbascoreboard.Utils;
 
 import com.ralo.nbascoreboard.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,14 +15,14 @@ public class JsonGameParser {
     private int homeTeamPoint = 0;
     private int awayTeamPoints = 0;
 
-    JsonGameParser(JSONObject object){
-         this.jsonObject =  object;
-         imageId = R.drawable.nba;
+    JsonGameParser(JSONObject object) {
+        this.jsonObject = object;
+        imageId = R.drawable.nba;
     }
 
-    public String getHomeTeamScore(){
+    public String getHomeTeamScore() {
         try {
-            if(!isGameOverHelper() && !isGameActivated()){
+            if (!isGameOverHelper() && !isGameActivated()) {
                 jsonString = "";
                 return jsonString;
             }
@@ -31,7 +32,7 @@ public class JsonGameParser {
             JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
             jsonString = jsonObject3.getString("score");
-            if(!jsonString.isEmpty() )
+            if (!jsonString.isEmpty())
                 homeTeamPoint = Integer.valueOf(jsonString);
 
         } catch (JSONException e) {
@@ -40,9 +41,9 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public String getAwayTeamScore(){
+    public String getAwayTeamScore() {
         try {
-            if(!isGameOverHelper() && !isGameActivated()){
+            if (!isGameOverHelper() && !isGameActivated()) {
                 jsonString = "";
                 return jsonString;
             }
@@ -52,7 +53,7 @@ public class JsonGameParser {
             JSONObject jsonObject3 = jsonObject2.getJSONObject("vTeam");
 
             jsonString = jsonObject3.getString("score");
-            if(!jsonString.isEmpty())
+            if (!jsonString.isEmpty())
                 awayTeamPoints = Integer.valueOf(jsonString);
 
         } catch (JSONException e) {
@@ -61,7 +62,7 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public String getHomeTeamName(){
+    public String getHomeTeamName() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -76,7 +77,7 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public String getAwayTeamName(){
+    public String getAwayTeamName() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -91,24 +92,23 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public String getHomeTeamWins(){
+    public String getHomeTeamWins() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
             JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
-            if(!jsonObject2.has("playoffs")){
+            if (!jsonObject2.has("playoffs")) {
                 JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
                 jsonString = jsonObject3.getString("win");
                 jsonString += "-";
                 jsonString += jsonObject3.getString("loss");
-            }
-            else {
+            } else {
                 JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
                 jsonString = jsonObject3.getString("seriesWin");
                 int wins;
-                if(homeTeamPoint > awayTeamPoints && homeTeamPoint != 0 && awayTeamPoints != 0) {
+                if (homeTeamPoint > awayTeamPoints && homeTeamPoint != 0 && awayTeamPoints != 0) {
                     wins = Integer.valueOf(jsonString);
                     wins++;
                     jsonString = String.valueOf(wins);
@@ -140,7 +140,7 @@ public class JsonGameParser {
 
                 jsonString = jsonObject3.getString("seriesWin");
                 int wins;
-                if(homeTeamPoint < awayTeamPoints && homeTeamPoint != 0 && awayTeamPoints != 0) {
+                if (homeTeamPoint < awayTeamPoints && homeTeamPoint != 0 && awayTeamPoints != 0) {
                     wins = Integer.valueOf(jsonString);
                     wins++;
                     jsonString = String.valueOf(wins);
@@ -155,7 +155,7 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public int getHomeTeamImage(){
+    public int getHomeTeamImage() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -170,7 +170,7 @@ public class JsonGameParser {
         return imageId;
     }
 
-    public int getAwayTeamImage(){
+    public int getAwayTeamImage() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -186,7 +186,7 @@ public class JsonGameParser {
     }
 
     public static int getImageId(String jsonString) {
-        switch (jsonString){
+        switch (jsonString) {
             case "ATL":
                 return R.drawable.atl;
 
@@ -286,10 +286,10 @@ public class JsonGameParser {
     }
 
 
-    public int getNumberOfGames(){
+    public int getNumberOfGames() {
         String numOfGames;
         try {
-            numOfGames =  this.jsonObject.getString("numGames");
+            numOfGames = this.jsonObject.getString("numGames");
             return Integer.valueOf(numOfGames);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -297,7 +297,7 @@ public class JsonGameParser {
         return 0;
     }
 
-    public String getNugget(){
+    public String getNugget() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -311,12 +311,12 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    private boolean isGameOver(){
+    private boolean isGameOver() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
             JSONObject jsonObject2 = jsonObject1.getJSONObject(currentGame);
-            if(jsonObject2.has("endTimeUTC"))
+            if (jsonObject2.has("endTimeUTC"))
                 return true;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -324,8 +324,8 @@ public class JsonGameParser {
         return false;
     }
 
-    public String getGameTime(){
-        if(!isGameOverHelper() && !isGameActivated()) {
+    public String getGameTime() {
+        if (!isGameOverHelper() && !isGameActivated()) {
             try {
                 jsonString = this.jsonObject.getString("games");
                 JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -340,7 +340,7 @@ public class JsonGameParser {
         return ":";
     }
 
-    public String getGameDate(){
+    public String getGameDate() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -353,7 +353,7 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public String getGameId(){
+    public String getGameId() {
         try {
             jsonString = this.jsonObject.getString("games");
             JSONArray jsonObject1 = this.jsonObject.getJSONArray("games");
@@ -366,11 +366,11 @@ public class JsonGameParser {
         return jsonString;
     }
 
-    public boolean isGameNight(){
+    public boolean isGameNight() {
         return getNumberOfGames() >= 1;
     }
 
-    private boolean isGameActivated(){
+    private boolean isGameActivated() {
         boolean isGameActive = false;
         try {
             jsonString = this.jsonObject.getString("games");
@@ -383,7 +383,7 @@ public class JsonGameParser {
         return isGameActive;
     }
 
-    private boolean isGameOverHelper(){
+    private boolean isGameOverHelper() {
         boolean isGameOverBool = true;
         try {
             jsonString = this.jsonObject.getString("games");
@@ -392,7 +392,7 @@ public class JsonGameParser {
             JSONObject jsonObject3 = jsonObject2.getJSONObject("hTeam");
 
             jsonString = jsonObject3.getString("score");
-            if(jsonString.isEmpty() || jsonString.equals("0") || isGameActivated() || !isGameOver()){
+            if (jsonString.isEmpty() || jsonString.equals("0") || isGameActivated() || !isGameOver()) {
                 isGameOverBool = false;
             }
 
@@ -403,7 +403,7 @@ public class JsonGameParser {
     }
 
 
-    public JSONObject getBaseJsonObject(){
+    public JSONObject getBaseJsonObject() {
 
         return null;
     }
