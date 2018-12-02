@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,11 +33,10 @@ import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 import org.json.JSONObject;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GameFragment extends Fragment implements View.OnClickListener{
+public class GameFragment extends Fragment implements View.OnClickListener {
 
     AdView adView;
     String gameDate;
@@ -105,19 +105,19 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(final JSONObject response) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setViewData(response);
-                                    setupFragments(response);
-                                    jsonObject = response;
-                                }
-                            });
-                        }
-                    }).start();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setViewData(response);
+                                setupFragments(response);
+                                jsonObject = response;
+                            }
+                        });
+                    }
+                }).start();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -127,7 +127,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         });
         requestQueue.add(objectRequest);
     }
-    private void setViewData(JSONObject jsonObject){
+
+    private void setViewData(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         playerParser = new JsonPlayerParser(jsonObject);
         awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
@@ -151,7 +152,7 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         adView.loadAd(adRequest);
     }
 
-    private void setupFragments(JSONObject jsonObject){
+    private void setupFragments(JSONObject jsonObject) {
         ViewPager pager = getView().findViewById(R.id.pager);
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
@@ -173,19 +174,14 @@ public class GameFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.awayteamlogo:
 
-
                 TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
                 teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
                 teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-
                 setExitTransition(new Fade());
                 teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-
                 getActivity().getSupportFragmentManager().beginTransaction().
                         addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
                         replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-
-
                 break;
 
             case R.id.hometeamlogo:
@@ -193,10 +189,8 @@ public class GameFragment extends Fragment implements View.OnClickListener{
                 teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
                 teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
                 teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-
                 setExitTransition(new Fade());
                 teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-
                 getActivity().getSupportFragmentManager().beginTransaction().
                         addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
                         replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();

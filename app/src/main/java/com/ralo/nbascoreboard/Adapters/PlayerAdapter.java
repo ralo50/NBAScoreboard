@@ -1,23 +1,25 @@
 package com.ralo.nbascoreboard.Adapters;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Player;
 
 import java.util.ArrayList;
 
-public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHolder>{
+public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHolder> {
     private ArrayList<Player> playerList;
 
 
-    public PlayerAdapter(ArrayList<Player> myPlayers){
+    public PlayerAdapter(ArrayList<Player> myPlayers) {
         this.playerList = myPlayers;
     }
 
@@ -33,6 +35,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
 
         MyViewHolder(View itemView) {
             super(itemView);
+            itemView.setBackgroundColor(Color.parseColor("#282828"));
             playerName = itemView.findViewById(R.id.player_name);
             playerPoints = itemView.findViewById(R.id.player_points);
             playerRebounds = itemView.findViewById(R.id.player_rebounds);
@@ -63,7 +66,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.playerThreePointers.setText(String.valueOf(player.getThreePointersMade() + "-" + player.getThreePointersAttempted()));
         myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade() + "-" + player.getFreeThrowsAttempted()));
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
-
     }
 
 

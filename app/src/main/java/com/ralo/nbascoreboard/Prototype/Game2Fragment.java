@@ -41,8 +41,6 @@ public class Game2Fragment extends Fragment {
     private TextView awayTeamNameTextView;
     private ImageView awayTeamLogoImageView;
     private ImageView homeTeamLogoImageView;
-    private TextView awayTeamScoreTextView;
-    private TextView homeTeamScoreTextView;
     private TextView awayTeamWinsTextView;
     private TextView homeTeamWinsTextView;
     private TextView gameTimeTextView;
@@ -52,6 +50,8 @@ public class Game2Fragment extends Fragment {
     private JSONObject jsonObject;
     private FrameLayout tabFragmentContainer;
     public MatchupFragment matchupFragment;
+    public static TextView awayTeamScoreTextView;
+    public static TextView homeTeamScoreTextView;
     public BoxscoreFragment boxscoreFragment;
     public PlaybyplayFragment playbyplayFragment;
 
@@ -66,7 +66,6 @@ public class Game2Fragment extends Fragment {
 
     private void setup() {
         tabFragmentContainer = gameFragmentView.findViewById(R.id.tab_fragment_container);
-        tabFragmentContainer.setOnClickListener(onSwipe);
         tabGameDetails = gameFragmentView.findViewById(R.id.tab_game_details);
         homeTeamNameTextView = gameFragmentView.findViewById(R.id.hometeamname);
         awayTeamNameTextView = gameFragmentView.findViewById(R.id.awayteamname);
@@ -149,7 +148,6 @@ public class Game2Fragment extends Fragment {
             switch (v.getId()) {
                 case R.id.awayteamlogo:
 
-
                     TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
                     teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
                     teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
@@ -160,8 +158,6 @@ public class Game2Fragment extends Fragment {
                     getActivity().getSupportFragmentManager().beginTransaction().
                             addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
                             replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
-
-
                     break;
 
                 case R.id.hometeamlogo:
@@ -179,13 +175,6 @@ public class Game2Fragment extends Fragment {
                     break;
             }
         }
-    };
-    private View.OnClickListener onSwipe = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(gameActivity, "toast", Toast.LENGTH_SHORT).show();
-        }
-
     };
 
 }

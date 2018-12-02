@@ -2,9 +2,14 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,13 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.ralo.nbascoreboard.Activities.MainActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
+import com.ralo.nbascoreboard.NbaApp;
+import com.ralo.nbascoreboard.Prototype.Game2Fragment;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Player;
 import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,42 +45,47 @@ public class BoxscoreFragment extends Fragment {
     PlayerCardsCreater playerCardsCreater;
     RadioButton homeRadioButton;
     RadioButton awayRadioButton;
+    ConstraintLayout constraintLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
 
+    public BoxscoreFragment() {
+    }
 
-    public BoxscoreFragment(){}
     @SuppressLint("ValidFragment")
     public BoxscoreFragment(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_boxscore, container, false);
     }
+
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews();
         setupPlayerDetails();
-
     }
 
-    private void setupViews(){
+    private void setupViews() {
         teamRadioGroup = getView().findViewById(R.id.toggle);
         myRecyclerView = getView().findViewById(R.id.myRecyclerView);
         homeRadioButton = getView().findViewById(R.id.homeTeamRadioButton);
         awayRadioButton = getView().findViewById(R.id.awayTeamRadioButton);
+        constraintLayout = getView().findViewById(R.id.constraint_layout);
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshLayout);
+        setRefreshLayoutListener();
         getTeamNames();
         setupAwayPlayersDetails();
     }
+
 
     private void setupPlayerDetails() {
         teamRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.awayTeamRadioButton:
                         setupAwayPlayersDetails();
                         //something
@@ -94,25 +112,34 @@ public class BoxscoreFragment extends Fragment {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void setCardsCreater(){
+    public void setCardsCreater() {
         playerArrayList = new ArrayList<>();
         playerArrayList = playerCardsCreater.getPlayerArrayList();
-
         PlayerAdapter adapter = new PlayerAdapter(playerArrayList);
-        myRecyclerView.setClickable(false);
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
-
     }
-    private void getTeamNames(){
+
+    private void getTeamNames() {
         JsonTeamParser jsonTeamParser = new JsonTeamParser(jsonObject);
         homeRadioButton.setText(jsonTeamParser.getHomeTeamName());
         awayRadioButton.setText(jsonTeamParser.getAwayTeamName());
-
     }
 
-
+    private void setRefreshLayoutListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onRefresh() {
+                setupPlayerDetails();
+                JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
+                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
 }
