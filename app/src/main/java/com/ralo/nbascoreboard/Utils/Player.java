@@ -2,7 +2,7 @@ package com.ralo.nbascoreboard.Utils;
 
 public class Player {
 
-    private String fistName;
+    private String firstName;
     private String lastName;
     private int jerseyNumber;
     private int personId;
@@ -32,8 +32,8 @@ public class Player {
     private boolean onCourt;
     private String startingPosition;
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {
@@ -148,8 +148,8 @@ public class Player {
         return startingPosition;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {

@@ -130,17 +130,17 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private void setViewData(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-        playerParser = new JsonPlayerParser(jsonObject);
-        awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
-        awayTeamStringId = (teamParser.getAwayTeamImage());
-        homeTeamStringId = (teamParser.getHomeTeamImage());
-        homeTeamLogoImageView.setImageResource(teamParser.getHomeTeamImage());
-        awayTeamNameTextView.setText(teamParser.getAwayTeamName());
-        homeTeamNameTextView.setText(teamParser.getHomeTeamName());
-        awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
-        homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
-        awayTeamWinsTextView.setText(awayTeamWins);
-        homeTeamWinsTextView.setText(homeTeamWins);
+//        playerParser = new JsonPlayerParser(jsonObject);
+//        awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
+//        awayTeamStringId = (teamParser.getAwayTeamImage());
+//        homeTeamStringId = (teamParser.getHomeTeamImage());
+//        homeTeamLogoImageView.setImageResource(teamParser.getHomeTeamImage());
+//        awayTeamNameTextView.setText(teamParser.getAwayTeamName());
+//        homeTeamNameTextView.setText(teamParser.getHomeTeamName());
+//        awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
+//        homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
+//        awayTeamWinsTextView.setText(awayTeamWins);
+//        homeTeamWinsTextView.setText(homeTeamWins);
 //        awayTeamWinsTextView.setText(gameDate);
 //        homeTeamWinsTextView.setText(gameId);
     }

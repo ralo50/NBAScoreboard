@@ -2,7 +2,6 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
-import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,20 +17,16 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.ralo.nbascoreboard.Activities.MainActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
-import com.ralo.nbascoreboard.NbaApp;
+import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.Prototype.Game2Fragment;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Player;
 import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -115,7 +110,13 @@ public class BoxscoreFragment extends Fragment {
     public void setCardsCreater() {
         playerArrayList = new ArrayList<>();
         playerArrayList = playerCardsCreater.getPlayerArrayList();
-        PlayerAdapter adapter = new PlayerAdapter(playerArrayList);
+        PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Toast.makeText(getContext(), String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
+                //TODO setup fragment for player information
+            }
+        });
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -125,8 +126,8 @@ public class BoxscoreFragment extends Fragment {
 
     private void getTeamNames() {
         JsonTeamParser jsonTeamParser = new JsonTeamParser(jsonObject);
-        homeRadioButton.setText(jsonTeamParser.getHomeTeamName());
-        awayRadioButton.setText(jsonTeamParser.getAwayTeamName());
+        homeRadioButton.setText(jsonTeamParser.getTeamName("home"));
+        awayRadioButton.setText(jsonTeamParser.getTeamName("visitor"));
     }
 
     private void setRefreshLayoutListener() {
@@ -136,8 +137,8 @@ public class BoxscoreFragment extends Fragment {
             public void onRefresh() {
                 setupPlayerDetails();
                 JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
-                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
+                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

@@ -120,14 +120,14 @@ public class Game2Fragment extends Fragment {
     private void setViewData(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         playerParser = new JsonPlayerParser(jsonObject);
-        awayTeamLogoImageView.setImageResource(teamParser.getAwayTeamImage());
-        awayTeamStringId = (teamParser.getAwayTeamImage());
-        homeTeamStringId = (teamParser.getHomeTeamImage());
-        homeTeamLogoImageView.setImageResource(teamParser.getHomeTeamImage());
-        awayTeamNameTextView.setText(teamParser.getAwayTeamName());
-        homeTeamNameTextView.setText(teamParser.getHomeTeamName());
-        awayTeamScoreTextView.setText(String.valueOf(teamParser.getAwayTeamScore()));
-        homeTeamScoreTextView.setText(String.valueOf(teamParser.getHomeTeamScore()));
+        awayTeamLogoImageView.setImageResource(teamParser.getTeamImage("visitor"));
+        homeTeamLogoImageView.setImageResource(teamParser.getTeamImage("home"));
+        awayTeamStringId = teamParser.getTeamImage("visitor");
+        homeTeamStringId = teamParser.getTeamImage("home");
+        awayTeamNameTextView.setText(teamParser.getTeamName("visitor"));
+        homeTeamNameTextView.setText(teamParser.getTeamName("home"));
+        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
         homeTeamWinsTextView.setText(GameActivity.homeTeamWins);
         awayTeamWinsTextView.setText(GameActivity.awayTeamWins);
     }

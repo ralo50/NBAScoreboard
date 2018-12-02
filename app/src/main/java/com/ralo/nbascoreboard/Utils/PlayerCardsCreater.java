@@ -1,6 +1,7 @@
 package com.ralo.nbascoreboard.Utils;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class PlayerCardsCreater {
@@ -8,22 +9,23 @@ public class PlayerCardsCreater {
     private JsonPlayerParser jsonPlayerParser;
     private String homeOrAway;
 
-    public PlayerCardsCreater(JSONObject response, String homeOrAway){
+    public PlayerCardsCreater(JSONObject response, String homeOrAway) {
         this.jsonPlayerParser = new JsonPlayerParser(response);
         playerArrayList = new ArrayList<>();
         this.homeOrAway = homeOrAway;
     }
 
 
-    private int getNumberOfPlayers(String homeOrAway){
+    private int getNumberOfPlayers(String homeOrAway) {
         return this.jsonPlayerParser.getNumberOfPlayers(homeOrAway);
     }
 
-    public void populateCards(){
+    public void populateCards() {
         int numberOfPlayers = getNumberOfPlayers(homeOrAway);
-        for(int i = 0; i < numberOfPlayers; i++){
+        for (int i = 0; i < numberOfPlayers; i++) {
             Player player = new Player();
-            if(jsonPlayerParser.hasPlayerPlayed(homeOrAway, i)){
+            if (jsonPlayerParser.hasPlayerPlayed(homeOrAway, i)) {
+                player.setFirstName(jsonPlayerParser.getPlayerTeamStatsString("first_name", i, homeOrAway));
                 player.setLastName(jsonPlayerParser.getPlayerTeamStatsString("last_name", i, homeOrAway));
                 player.setPoints(jsonPlayerParser.getPlayerTeamStatsInt("points", i, homeOrAway));
                 player.setReboundsTotal(jsonPlayerParser.getPlayerTeamStatsInt("rebounds_offensive", i, homeOrAway) +
@@ -36,6 +38,7 @@ public class PlayerCardsCreater {
                 player.setThreePointersMade(jsonPlayerParser.getPlayerTeamStatsInt("three_pointers_made", i, homeOrAway));
                 player.setThreePointersAttempted(jsonPlayerParser.getPlayerTeamStatsInt("three_pointers_attempted", i, homeOrAway));
                 player.setMinutesPlayed(jsonPlayerParser.getPlayerTeamStatsInt("minutes", i, homeOrAway));
+                player.setPersonId(jsonPlayerParser.getPlayerTeamStatsInt("person_id", i, homeOrAway));
 
                 playerArrayList.add(player);
 
@@ -43,7 +46,7 @@ public class PlayerCardsCreater {
         }
     }
 
-    public ArrayList<Player> getPlayerArrayList(){
+    public ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
     }
 
