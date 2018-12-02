@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity {
     AdView adView;
     SwipeRefreshLayout swipeRefreshLayout;
     View loadingPanel;
+    boolean isFirstTime;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -140,7 +141,7 @@ public class MainActivity extends BaseActivity {
         GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
+                isFirstTime = true;
                 Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("gameDate", gameArrayList.get(position).getGameDate());
@@ -315,4 +316,15 @@ public class MainActivity extends BaseActivity {
         setUrl(sdf.format(myCalendar.getTime()));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirstTime) {
+            String myFormat = "yyyyMMdd";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            setUrl(sdf.format(MainActivity.myCalendar.getTime()));
+            myView.setAlpha(0);
+        }
+    }
 }

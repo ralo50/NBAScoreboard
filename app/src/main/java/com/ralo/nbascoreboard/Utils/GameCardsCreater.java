@@ -32,9 +32,10 @@ public class GameCardsCreater {
             game.setAwayTeamImage(jsonGameParser.getAwayTeamImage());
             game.setNugget(jsonGameParser.getNugget());
             game.setGameTime(jsonGameParser.getGameTime());
-
             game.setGameId(jsonGameParser.getGameId());
             game.setGameDate(jsonGameParser.getGameDate());
+            game.setGameActive(jsonGameParser.isGameActivated());
+            game.setGameOver(jsonGameParser.isGameOverHelper());
 
             gameArrayList.add(game);
         }

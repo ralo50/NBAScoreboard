@@ -17,8 +17,16 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.ralo.nbascoreboard.Activities.GameActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
+import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.Prototype.Game2Fragment;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
@@ -42,6 +50,7 @@ public class BoxscoreFragment extends Fragment {
     RadioButton awayRadioButton;
     ConstraintLayout constraintLayout;
     SwipeRefreshLayout swipeRefreshLayout;
+    boolean homeTeamSelected;
 
     public BoxscoreFragment() {
     }
@@ -83,10 +92,12 @@ public class BoxscoreFragment extends Fragment {
                 switch (checkedId) {
                     case R.id.awayTeamRadioButton:
                         setupAwayPlayersDetails();
+                        homeTeamSelected = false;
                         //something
                         break;
                     case R.id.homeTeamRadioButton:
-                        setupHomePlayerDetails();
+                        setupHomePlayersDetails();
+                        homeTeamSelected = true;
                         //something
                         break;
                 }
@@ -100,7 +111,7 @@ public class BoxscoreFragment extends Fragment {
         setCardsCreater();
     }
 
-    private void setupHomePlayerDetails() {
+    private void setupHomePlayersDetails() {
         playerCardsCreater = new PlayerCardsCreater(jsonObject, "home");
         playerCardsCreater.populateCards();
         setCardsCreater();
@@ -135,12 +146,48 @@ public class BoxscoreFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onRefresh() {
-                setupPlayerDetails();
-                JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+                refreshFragment();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    private void refreshFragment() {
+        getNewGameStats();
+    }
+
+    private void getNewGameStats() {
+        String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/boxscore.json";
+        final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(final JSONObject response) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                jsonObject = response;
+                                if(homeTeamSelected)
+                                    setupHomePlayersDetails();
+                                else
+                                    setupAwayPlayersDetails();
+                                JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+                                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+                                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+                            }
+                        });
+                    }
+                }).start();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(objectRequest);
     }
 }

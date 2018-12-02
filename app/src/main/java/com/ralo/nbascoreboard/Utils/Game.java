@@ -14,6 +14,8 @@ public class Game {
     private String gameTime = ":";
     private String gameDate;
     private String gameId;
+    private boolean isGameActive;
+    private boolean isGameOver;
 
     public void setHomeTeamName(String homeTeamName) {
         this.homeTeamName = homeTeamName;
@@ -110,4 +112,21 @@ public class Game {
     public void setGameId(String gameId) {
         this.gameId = gameId;
     }
+
+    public boolean isGameActive() {
+        return isGameActive;
+    }
+
+    public void setGameActive(boolean gameActive) {
+        isGameActive = gameActive;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        isGameOver = gameOver;
+    }
+
 }

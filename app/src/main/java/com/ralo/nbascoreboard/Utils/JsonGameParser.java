@@ -325,6 +325,12 @@ public class JsonGameParser {
     }
 
     public String getGameTime() {
+        if (isGameActivated()){
+            return "LIVE";
+        }
+        if (isGameOverHelper()){
+            return "Final";
+        }
         if (!isGameOverHelper() && !isGameActivated()) {
             try {
                 jsonString = this.jsonObject.getString("games");
@@ -370,7 +376,7 @@ public class JsonGameParser {
         return getNumberOfGames() >= 1;
     }
 
-    private boolean isGameActivated() {
+    public boolean isGameActivated() {
         boolean isGameActive = false;
         try {
             jsonString = this.jsonObject.getString("games");
@@ -383,7 +389,7 @@ public class JsonGameParser {
         return isGameActive;
     }
 
-    private boolean isGameOverHelper() {
+    public boolean isGameOverHelper() {
         boolean isGameOverBool = true;
         try {
             jsonString = this.jsonObject.getString("games");

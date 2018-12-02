@@ -1,5 +1,6 @@
 package com.ralo.nbascoreboard.Adapters;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,6 +81,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.homeTeamWinsTextView.setText(game.getHomeTeamWins());
         holder.nuggetTextView.setText(game.getNugget());
         holder.gameTimeTextView.setText(game.getGameTime());
+        if(game.isGameActive()) {
+            holder.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
+        }
     }
 
     @Override
