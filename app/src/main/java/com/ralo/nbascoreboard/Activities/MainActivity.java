@@ -320,7 +320,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(isFirstTime) {
+        if (isFirstTime) {
             String myFormat = "yyyyMMdd";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             setUrl(sdf.format(MainActivity.myCalendar.getTime()));

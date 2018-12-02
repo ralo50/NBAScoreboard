@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,7 +33,9 @@ import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Player;
 import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -170,7 +173,7 @@ public class BoxscoreFragment extends Fragment {
                             @Override
                             public void run() {
                                 jsonObject = response;
-                                if(homeTeamSelected)
+                                if (homeTeamSelected)
                                     setupHomePlayersDetails();
                                 else
                                     setupAwayPlayersDetails();

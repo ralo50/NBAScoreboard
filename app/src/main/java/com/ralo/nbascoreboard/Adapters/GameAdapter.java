@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Game;
+
 import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
@@ -19,7 +21,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     private ArrayList<Game> gameList;
 
 
-    public GameAdapter(ArrayList<Game> myValues, CustomItemClickListener listener){
+    public GameAdapter(ArrayList<Game> myValues, CustomItemClickListener listener) {
         this.gameList = myValues;
         this.listener = listener;
     }
@@ -81,7 +83,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.homeTeamWinsTextView.setText(game.getHomeTeamWins());
         holder.nuggetTextView.setText(game.getNugget());
         holder.gameTimeTextView.setText(game.getGameTime());
-        if(game.isGameActive()) {
+        if (game.isGameActive()) {
             holder.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
         }
     }
