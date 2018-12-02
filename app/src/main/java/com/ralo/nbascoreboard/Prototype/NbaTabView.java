@@ -19,7 +19,7 @@ import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 
 public class NbaTabView extends FrameLayout {
-    private int SELECTOR_ANIMATION_DURATION = 200;
+    private int SELECTOR_ANIMATION_DURATION = 150;
 
     private View parentView;
     private Context context;
