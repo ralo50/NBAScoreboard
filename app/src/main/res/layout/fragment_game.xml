@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.GameFragment"
-    android:id="@+id/gameFragment">
+    tools:context=".Fragments.GameFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include
-            layout="@layout/game_header"
-            android:id="@+id/gameHeader"/>
+            android:id="@+id/gameHeader"
+            layout="@layout/game_header" />
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-                <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
-                    app:tabIndicatorGravity="top"
-                    android:layout_height="40dp"
-                    android:id="@+id/tabLayout"/>
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:tabIndicatorGravity="top" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </android.support.design.widget.AppBarLayout>
 
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
