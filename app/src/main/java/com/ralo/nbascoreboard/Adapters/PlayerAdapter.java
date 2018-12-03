@@ -54,11 +54,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     public PlayerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_card_view, parent, false);
         final PlayerAdapter.MyViewHolder myViewHolder = new PlayerAdapter.MyViewHolder(listItem);
-        listItem.setOnClickListener(new View.OnClickListener() {
+        listItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 listener.onItemClick(v, myViewHolder.getAdapterPosition());
-
+                return true;
             }
         });
         return myViewHolder;

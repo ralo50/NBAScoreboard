@@ -19,16 +19,20 @@ import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 
 public class NbaTabView extends FrameLayout {
-    private int SELECTOR_ANIMATION_DURATION = 150;
+    private static int SELECTOR_ANIMATION_DURATION = 150;
 
     private View parentView;
     private Context context;
 
-    private View viewSelector;
-    private TextView tab0, tab1, tab2;
-    private Fragment tabFragment0, tabFragment1, tabFragment2;
-    private TextView selectedTab;
-    private int currentIndex = -1;
+    private static View viewSelector;
+    private static TextView tab0;
+    private static TextView tab1;
+    private static TextView tab2;
+    private static Fragment tabFragment0;
+    private static Fragment tabFragment1;
+    private static Fragment tabFragment2;
+    private static TextView thisSelectedTab;
+    private static int currentIndex = -1;
 
     public NbaTabView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -47,7 +51,7 @@ public class NbaTabView extends FrameLayout {
         tab0.setOnClickListener(onTabClickListener);
         tab1.setOnClickListener(onTabClickListener);
         tab2.setOnClickListener(onTabClickListener);
-        selectedTab = tab1;
+        thisSelectedTab = tab1;
     }
 
     public void setTab0(Fragment fragment, String tabName) {
@@ -72,25 +76,25 @@ public class NbaTabView extends FrameLayout {
         }
     };
 
-    private void setupChangedTab(TextView selectedTab) {
-        this.selectedTab = selectedTab;
+    private static void setupChangedTab(TextView selectedTab) {
+        thisSelectedTab = selectedTab;
         loadFragmentBySelectedIndex();
     }
 
-    public int getSelectedTabIndex() {
-        if (selectedTab == tab0) {
+    public static int getSelectedTabIndex() {
+        if (thisSelectedTab == tab0) {
             return 0;
         }
-        if (selectedTab == tab1) {
+        if (thisSelectedTab == tab1) {
             return 1;
         }
-        if (selectedTab == tab2) {
+        if (thisSelectedTab == tab2) {
             return 2;
         }
         return -1;
     }
 
-    public void loadFragmentById(int index) {
+    public static void loadFragmentById(int index) {
         switch (index) {
             case 0:
                 loadFragment(tabFragment0, true, currentIndex < index);
@@ -106,12 +110,12 @@ public class NbaTabView extends FrameLayout {
         currentIndex = index;
     }
 
-    public void loadFragmentBySelectedIndex() {
+    public static void loadFragmentBySelectedIndex() {
         int selectedIndex = getSelectedTabIndex();
         loadFragmentById(selectedIndex);
     }
 
-    private void loadFragment(Fragment fragment, boolean animate, boolean forwardAnimation) {
+    private static void loadFragment(Fragment fragment, boolean animate, boolean forwardAnimation) {
         FragmentTransaction fragmentTransaction;
         if(animate) {
             fragmentTransaction = getAnimatedFragmentTransaction(forwardAnimation);
@@ -126,7 +130,21 @@ public class NbaTabView extends FrameLayout {
         //TODO move tabSelector animation using margins to match layout params of selectedTab
     }
 
-    private FragmentTransaction getAnimatedFragmentTransaction(boolean forwardAnimation) {
+    public static void setNextFragment(int currentFragment){
+        if(currentFragment == 0)
+            setupChangedTab(tab1);
+        else if(currentFragment == 1)
+            setupChangedTab(tab2);
+    }
+
+    public static void setPreviousFragment(int currentFragment){
+        if(currentFragment == 2)
+            setupChangedTab(tab1);
+        else if(currentFragment == 1)
+            setupChangedTab(tab0);
+    }
+
+    private static FragmentTransaction getAnimatedFragmentTransaction(boolean forwardAnimation) {
         if(forwardAnimation) {
             return NbaApp.getFragmentSupportManager().beginTransaction().setCustomAnimations(R.anim.push_left_forward, R.anim.push_right_forward);
         } else {
@@ -134,7 +152,7 @@ public class NbaTabView extends FrameLayout {
         }
     }
 
-    private void setSelectorToIndex(int index, int difference) {
+    private static void setSelectorToIndex(int index, int difference) {
         if(difference>0) {
             animateWidthForward(index, difference + 1);
         } else if(difference<0){
@@ -142,8 +160,8 @@ public class NbaTabView extends FrameLayout {
         }
     }
 
-    private void animateWidthForward(final int index, final int widthMultiplier) {
-        final int width = selectedTab.getWidth();
+    private static void animateWidthForward(final int index, final int widthMultiplier) {
+        final int width = thisSelectedTab.getWidth();
         ValueAnimator widthAnimator = ValueAnimator.ofInt(width, widthMultiplier*width);
         widthAnimator.setDuration(SELECTOR_ANIMATION_DURATION);
         widthAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -164,10 +182,10 @@ public class NbaTabView extends FrameLayout {
         widthAnimator.start();
     }
 
-    private void animateMarginForward(int index, final int widthMultiplier) {
+    private static void animateMarginForward(int index, final int widthMultiplier) {
         int beginMargin = ((LinearLayout.LayoutParams)viewSelector.getLayoutParams()).leftMargin;
-        int marginLeft = index * selectedTab.getWidth();
-        final int width = selectedTab.getWidth();
+        int marginLeft = index * thisSelectedTab.getWidth();
+        final int width = thisSelectedTab.getWidth();
 
         PropertyValuesHolder pvMarginLeft = PropertyValuesHolder.ofInt("marginLeft",beginMargin, marginLeft);
         PropertyValuesHolder pvWidth = PropertyValuesHolder.ofInt("width",widthMultiplier*width, width);
@@ -188,10 +206,10 @@ public class NbaTabView extends FrameLayout {
         widthAnimator.start();
     }
 
-    private void animateMarginBackward(final int index, final int widthMultiplier) {
+    private static void animateMarginBackward(final int index, final int widthMultiplier) {
         int beginMargin = ((LinearLayout.LayoutParams) viewSelector.getLayoutParams()).leftMargin;
-        int marginLeft = index * selectedTab.getWidth();
-        final int width = selectedTab.getWidth();
+        int marginLeft = index * thisSelectedTab.getWidth();
+        final int width = thisSelectedTab.getWidth();
 
         PropertyValuesHolder pvMarginLeft = PropertyValuesHolder.ofInt("marginLeft",beginMargin, marginLeft);
         PropertyValuesHolder pvWidth = PropertyValuesHolder.ofInt("width",width, widthMultiplier*width);
@@ -218,8 +236,8 @@ public class NbaTabView extends FrameLayout {
         widthAnimator.start();
     }
 
-    private void animateWidthBackward(final int widthMultiplier) {
-        final int width = selectedTab.getWidth();
+    private static void animateWidthBackward(final int widthMultiplier) {
+        final int width = thisSelectedTab.getWidth();
 
         PropertyValuesHolder pvWidth = PropertyValuesHolder.ofInt("width",widthMultiplier*width, width);
 

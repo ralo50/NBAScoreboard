@@ -4,6 +4,7 @@ package com.ralo.nbascoreboard.Fragments;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
@@ -12,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -29,6 +31,7 @@ import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.Prototype.Game2Fragment;
+import com.ralo.nbascoreboard.Prototype.NbaTabView;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Player;
@@ -54,6 +57,8 @@ public class BoxscoreFragment extends Fragment {
     ConstraintLayout constraintLayout;
     SwipeRefreshLayout swipeRefreshLayout;
     boolean homeTeamSelected;
+    private float x1,x2;
+    static final int MIN_DISTANCE = 150;
 
     public BoxscoreFragment() {
     }
@@ -133,6 +138,7 @@ public class BoxscoreFragment extends Fragment {
         });
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
+        setRecyclerViewSwipeListener(myRecyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
@@ -192,5 +198,35 @@ public class BoxscoreFragment extends Fragment {
             }
         });
         requestQueue.add(objectRequest);
+    }
+
+    private void setRecyclerViewSwipeListener(RecyclerView myRecyclerView) {
+        myRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+                switch(motionEvent.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        x1 = motionEvent.getX();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        x2 = motionEvent.getX();
+                        float deltaX = x2 - x1;
+                        if (Math.abs(deltaX) > MIN_DISTANCE)
+                        {
+                            if (x2 > x1)
+                                NbaTabView.setPreviousFragment(1);
+                            else
+                                NbaTabView.setNextFragment(1);
+                        }
+                        break;
+                }
+                return false;
+            }
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {}
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean b) {}
+        });
     }
 }
