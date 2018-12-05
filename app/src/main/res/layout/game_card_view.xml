@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     card_view:cardCornerRadius="8dp"
-    android:layout_margin="10dp">
+    android:layout_margin="8dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,25 +17,23 @@
             android:id="@+id/awayteamname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            card_view:layout_constraintBottom_toTopOf="@+id/awayteamlogo"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             card_view:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
-            card_view:layout_constraintStart_toStartOf="@+id/awayteamlogo" />
+            card_view:layout_constraintStart_toStartOf="@+id/awayteamlogo"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/hometeamname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            card_view:layout_constraintBottom_toTopOf="@+id/hometeamlogo"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             card_view:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
             card_view:layout_constraintStart_toStartOf="@+id/hometeamlogo"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="1.0" />
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/awayteamlogo"
@@ -44,23 +42,19 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/gsw"
-            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.40" />
+            card_view:layout_constraintTop_toBottomOf="@+id/awayteamname" />
 
 
         <ImageView
             android:id="@+id/hometeamlogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/hou"
-            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.40" />
+            card_view:layout_constraintTop_toBottomOf="@+id/hometeamname" />
 
 
         <TextView
@@ -92,9 +86,10 @@
             android:id="@+id/awayteamwins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             card_view:layout_constraintEnd_toEndOf="@+id/awayteamlogo"
             card_view:layout_constraintStart_toStartOf="@+id/awayteamlogo"
             card_view:layout_constraintTop_toBottomOf="@+id/awayteamlogo" />
@@ -103,9 +98,11 @@
             android:id="@+id/hometeamwins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            card_view:layout_constraintBottom_toTopOf="@+id/nuggettext"
             card_view:layout_constraintEnd_toEndOf="@+id/hometeamlogo"
             card_view:layout_constraintStart_toStartOf="@+id/hometeamlogo"
             card_view:layout_constraintTop_toBottomOf="@+id/hometeamlogo" />
@@ -117,7 +114,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:text=":"
             android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/hometeamscore"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -129,15 +125,14 @@
             android:id="@+id/nuggettext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="4dp"
             android:textAlignment="center"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/hometeamwins" />
+            card_view:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

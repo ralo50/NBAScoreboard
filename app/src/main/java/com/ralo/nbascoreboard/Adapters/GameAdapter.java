@@ -81,7 +81,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.homeTeamScoreTextView.setText(game.getHomeTeamScore());
         holder.awayTeamWinsTextView.setText(game.getAwayTeamWins());
         holder.homeTeamWinsTextView.setText(game.getHomeTeamWins());
-        holder.nuggetTextView.setText(game.getNugget());
+        if(game.getNugget().isEmpty())
+            holder.nuggetTextView.setVisibility(View.GONE);
+        else
+            holder.nuggetTextView.setText(game.getNugget());
         holder.gameTimeTextView.setText(game.getGameTime());
         if (game.isGameActive()) {
             holder.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
