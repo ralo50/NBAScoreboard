@@ -57,7 +57,7 @@ public class BoxscoreFragment extends Fragment {
     ConstraintLayout constraintLayout;
     SwipeRefreshLayout swipeRefreshLayout;
     boolean homeTeamSelected;
-    private float x1,x2;
+    private float x1, x2;
     static final int MIN_DISTANCE = 150;
 
     public BoxscoreFragment() {
@@ -132,8 +132,14 @@ public class BoxscoreFragment extends Fragment {
         PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Toast.makeText(getContext(), String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
-                //TODO setup fragment for player information
+                Toast.makeText(getContext(), "item click, player id: " + String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
+                //TODO setup fragment for player information in current game
+            }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+                Toast.makeText(getContext(), "long item click, player id: " + String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
+                //TODO setup fragment for player career information
             }
         });
         myRecyclerView.setHasFixedSize(true);
@@ -204,16 +210,14 @@ public class BoxscoreFragment extends Fragment {
         myRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-                switch(motionEvent.getAction())
-                {
+                switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         x1 = motionEvent.getX();
                         break;
                     case MotionEvent.ACTION_UP:
                         x2 = motionEvent.getX();
                         float deltaX = x2 - x1;
-                        if (Math.abs(deltaX) > MIN_DISTANCE)
-                        {
+                        if (Math.abs(deltaX) > MIN_DISTANCE) {
                             if (x2 > x1)
                                 NbaTabView.setPreviousFragment(1);
                             else
@@ -223,10 +227,14 @@ public class BoxscoreFragment extends Fragment {
                 }
                 return false;
             }
+
             @Override
-            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {}
+            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+            }
+
             @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean b) {}
+            public void onRequestDisallowInterceptTouchEvent(boolean b) {
+            }
         });
     }
 }

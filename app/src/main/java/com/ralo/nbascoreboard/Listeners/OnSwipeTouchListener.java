@@ -30,6 +30,11 @@ public class OnSwipeTouchListener implements OnTouchListener, CustomItemClickLis
 
     }
 
+    @Override
+    public void onItemLongClick(View v, int position) {
+
+    }
+
     private final class GestureListener extends SimpleOnGestureListener {
 
         private static final int SWIPE_DISTANCE_THRESHOLD = 100;

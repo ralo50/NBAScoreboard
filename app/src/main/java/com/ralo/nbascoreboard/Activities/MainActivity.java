@@ -151,6 +151,11 @@ public class MainActivity extends BaseActivity {
                 myIntent.putExtras(extras);
                 MainActivity.this.startActivity(myIntent);
             }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+
+            }
         });
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
