@@ -183,16 +183,8 @@ public class BoxscoreFragment extends Fragment {
         });
     }
 
-    private void refreshFragment() {
-        getNewGameStats();
-    }
-
-    private void getNewGameStats() {
-        myTask = new MyTask();
-        myTask.execute();
-    }
-
     private void startRefreshingGameStats() {
+        //TODO check if game is active
         mStatusChecker.run();
     }
 
@@ -207,8 +199,13 @@ public class BoxscoreFragment extends Fragment {
         }
     };
 
-    void stopRefreshingGameStats() {
-        mHandler.removeCallbacks(mStatusChecker);
+    private void refreshFragment() {
+        getNewGameStats();
+    }
+
+    private void getNewGameStats() {
+        myTask = new MyTask();
+        myTask.execute();
     }
 
     private class MyTask extends AsyncTask<String, Integer, String> {
@@ -285,6 +282,10 @@ public class BoxscoreFragment extends Fragment {
             public void onRequestDisallowInterceptTouchEvent(boolean b) {
             }
         });
+    }
+
+    void stopRefreshingGameStats() {
+        mHandler.removeCallbacks(mStatusChecker);
     }
 
     @Override
