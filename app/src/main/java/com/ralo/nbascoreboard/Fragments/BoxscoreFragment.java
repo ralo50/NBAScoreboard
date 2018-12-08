@@ -2,8 +2,10 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -59,6 +61,8 @@ public class BoxscoreFragment extends Fragment {
     boolean homeTeamSelected;
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
+    static final int REFRESH_TIME_DELAY = 15000;
+    private Handler mHandler;
 
     public BoxscoreFragment() {
     }
@@ -77,7 +81,7 @@ public class BoxscoreFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews();
-        setupPlayerDetails();
+        startRefreshingGameStats();
     }
 
     private void setupViews() {
@@ -87,6 +91,8 @@ public class BoxscoreFragment extends Fragment {
         awayRadioButton = getView().findViewById(R.id.awayTeamRadioButton);
         constraintLayout = getView().findViewById(R.id.constraint_layout);
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshLayout);
+        mHandler = new Handler();
+        setupPlayerDetails();
         setRefreshLayoutListener();
         getTeamNames();
         setupAwayPlayersDetails();
@@ -172,38 +178,40 @@ public class BoxscoreFragment extends Fragment {
     }
 
     private void getNewGameStats() {
-        String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/boxscore.json";
-        final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
-
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(final JSONObject response) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                jsonObject = response;
-                                if (homeTeamSelected)
-                                    setupHomePlayersDetails();
-                                else
-                                    setupAwayPlayersDetails();
-                                JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-                                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-                                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
-                            }
-                        });
-                    }
-                }).start();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(objectRequest);
+        new MyTask().execute();
+//
+//        String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/boxscore.json";
+//        final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
+//
+//        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(final JSONObject response) {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                jsonObject = response;
+//                                if (homeTeamSelected)
+//                                    setupHomePlayersDetails();
+//                                else
+//                                    setupAwayPlayersDetails();
+//                                JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+//                                Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+//                                Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+//                            }
+//                        });
+//                    }
+//                }).start();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        requestQueue.add(objectRequest);
     }
 
     private void setRecyclerViewSwipeListener(RecyclerView myRecyclerView) {
@@ -236,5 +244,82 @@ public class BoxscoreFragment extends Fragment {
             public void onRequestDisallowInterceptTouchEvent(boolean b) {
             }
         });
+    }
+
+    private void startRefreshingGameStats() {
+        mHandler.postDelayed( new Runnable() {
+            @Override
+            public void run() {
+                mStatusChecker.run();
+            }
+        }, REFRESH_TIME_DELAY);
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                refreshFragment();
+            } finally {
+                mHandler.postDelayed(mStatusChecker, REFRESH_TIME_DELAY);
+            }
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopRefreshingGameStats();
+    }
+
+    void stopRefreshingGameStats() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
+
+
+    private class MyTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/boxscore.json";
+            final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
+
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    jsonObject = response;
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Error updating stats", Toast.LENGTH_SHORT).show();
+                }
+            });
+            requestQueue.add(objectRequest);
+            return "";
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (homeTeamSelected)
+                setupHomePlayersDetails();
+            else
+                setupAwayPlayersDetails();
+            JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+            Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+            Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+            Toast.makeText(getContext(), "gameRefreshed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

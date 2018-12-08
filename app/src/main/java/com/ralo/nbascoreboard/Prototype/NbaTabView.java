@@ -157,7 +157,56 @@ public class NbaTabView extends FrameLayout {
             animateWidthForward(index, difference + 1);
         } else if(difference<0){
             animateMarginBackward(index,Math.abs(difference) + 1);
+        } else {
+            animateInPlace(index, difference);
         }
+    }
+
+    //TODO fix animation in place
+    private static void animateInPlace(final int index, final int difference) {
+        final int width = thisSelectedTab.getWidth();
+        ValueAnimator widthAnimator = ValueAnimator.ofInt(width, difference);
+        widthAnimator.setDuration(0);
+        widthAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewSelector.getLayoutParams();
+                params.width = animatedValue;
+                viewSelector.setLayoutParams(params);
+            }
+        });
+        widthAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animateWidthInPlace(index,difference);
+            }
+        });
+        widthAnimator.start();
+    }
+
+    private static void animateWidthInPlace(int index, final int widthMultiplier) {
+        int beginMargin = ((LinearLayout.LayoutParams)viewSelector.getLayoutParams()).leftMargin;
+        int marginLeft = index * thisSelectedTab.getWidth();
+        final int width = thisSelectedTab.getWidth();
+
+        PropertyValuesHolder pvMarginLeft = PropertyValuesHolder.ofInt("marginLeft",beginMargin, marginLeft);
+        PropertyValuesHolder pvWidth = PropertyValuesHolder.ofInt("width",width, width);
+
+        ValueAnimator widthAnimator = ValueAnimator.ofPropertyValuesHolder(pvMarginLeft,pvWidth);
+        widthAnimator.setDuration(SELECTOR_ANIMATION_DURATION);
+        widthAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedMargin = (int) animation.getAnimatedValue("marginLeft");
+                int animatedWidth = (int) animation.getAnimatedValue("width");
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewSelector.getLayoutParams();
+                params.width = animatedWidth;
+                params.leftMargin = animatedMargin;
+                viewSelector.setLayoutParams(params);
+            }
+        });
+        widthAnimator.start();
     }
 
     private static void animateWidthForward(final int index, final int widthMultiplier) {

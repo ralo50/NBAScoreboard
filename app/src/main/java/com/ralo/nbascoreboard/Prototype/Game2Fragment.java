@@ -139,7 +139,7 @@ public class Game2Fragment extends Fragment {
         tabGameDetails.setTab0(matchupFragment, "Matchup");
         tabGameDetails.setTab1(boxscoreFragment, "BoxScore");
         tabGameDetails.setTab2(playbyplayFragment, "PlayByPlay");
-        tabGameDetails.loadFragmentById(1);
+        NbaTabView.loadFragmentById(1);
     }
 
     private View.OnClickListener onLogoClicked = new View.OnClickListener() {
