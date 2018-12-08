@@ -2,9 +2,12 @@ package com.ralo.nbascoreboard.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +32,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.Adapters.GameAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
+import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.GameCardsCreater;
 import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
@@ -52,6 +57,7 @@ public class MainActivity extends BaseActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     View loadingPanel;
     boolean isFirstTime;
+    JSONObject jsonObject;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -93,7 +99,8 @@ public class MainActivity extends BaseActivity {
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                gameCardsCreater = new GameCardsCreater(response);
+                jsonObject = response;
+                gameCardsCreater = new GameCardsCreater(jsonObject);
                 if (gameCardsCreater.isGameNight()) {
                     new Thread(new Runnable() {
                         @Override
@@ -104,7 +111,7 @@ public class MainActivity extends BaseActivity {
                                     gameCardsCreater.populateCards();
                                     setCardsCreater();
                                     myView.setEnabled(true);
-                                    myView.setAlpha(1);
+                                    myView.setVisibility(View.VISIBLE);
                                     loadingPanel.setVisibility(View.GONE);
                                 }
                             });
@@ -112,7 +119,7 @@ public class MainActivity extends BaseActivity {
                     }).start();
                 } else {
                     myView.setEnabled(false);
-                    myView.setAlpha(0f);
+                    myView.setVisibility(View.GONE);
                     noteTextView.setVisibility(View.VISIBLE);
                     noteTextView.setText(R.string.no_games_tonight);
                     loadingPanel.setVisibility(View.GONE);
@@ -123,7 +130,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 myView.setEnabled(false);
-                myView.setAlpha(0f);
+                myView.setVisibility(View.GONE);
                 noteTextView.setVisibility(View.VISIBLE);
                 noteTextView.setText(R.string.error_getting_info);
                 loadingPanel.setVisibility(View.GONE);
@@ -141,15 +148,20 @@ public class MainActivity extends BaseActivity {
         GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                isFirstTime = true;
-                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("gameDate", gameArrayList.get(position).getGameDate());
-                extras.putString("gameId", gameArrayList.get(position).getGameId());
-                extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
-                extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
-                myIntent.putExtras(extras);
-                MainActivity.this.startActivity(myIntent);
+                if(isNetworkConnected()) {
+                    isFirstTime = true;
+                    Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString("gameDate", gameArrayList.get(position).getGameDate());
+                    extras.putString("gameId", gameArrayList.get(position).getGameId());
+                    extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
+                    extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
+                    myIntent.putExtras(extras);
+                    MainActivity.this.startActivity(myIntent);
+                }
+                else{
+                    Toast.makeText(NbaApp.getCurrentActivity(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -162,7 +174,6 @@ public class MainActivity extends BaseActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myView.setLayoutManager(llm);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -227,7 +238,6 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String getCurrentDate() {
         Calendar myCalendar = Calendar.getInstance();
-
         String myFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         return sdf.format(myCalendar.getTime());
@@ -246,7 +256,6 @@ public class MainActivity extends BaseActivity {
     private String getCurrentTextViewDate(Calendar calendar) {
         String myFormat = "dd/MMM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         return "Date: " + sdf.format(calendar.getTime());
     }
 
@@ -256,7 +265,6 @@ public class MainActivity extends BaseActivity {
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         return calendar;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDate(View view) {
@@ -294,7 +302,7 @@ public class MainActivity extends BaseActivity {
                 String myFormat = "yyyyMMdd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 setUrl(sdf.format(MainActivity.myCalendar.getTime()));
-                myView.setAlpha(0);
+                myView.setVisibility(View.GONE);
             }
         });
     }
@@ -302,7 +310,7 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateYesterday() {
         noteTextView.setVisibility(View.GONE);
-        myView.setAlpha(0);
+        myView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
         String myFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -313,7 +321,7 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateTomorrow() {
         noteTextView.setVisibility(View.GONE);
-        myView.setAlpha(0);
+        myView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);
         String myFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -329,7 +337,18 @@ public class MainActivity extends BaseActivity {
             String myFormat = "yyyyMMdd";
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
             setUrl(sdf.format(MainActivity.myCalendar.getTime()));
-            myView.setAlpha(0);
+            myView.setVisibility(View.GONE);
         }
+    }
+
+    public static boolean isNetworkConnected() {
+
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) NbaApp.getCurrentActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = null;
+        if (connectivityManager != null) {
+            activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

@@ -111,7 +111,10 @@ public class Game2Fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if(jsonObject != null) {
+                    setViewData(jsonObject);
+                    setupTabFragments();
+                }
             }
         });
         requestQueue.add(objectRequest);
