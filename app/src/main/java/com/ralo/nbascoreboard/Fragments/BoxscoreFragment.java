@@ -32,7 +32,6 @@ import com.ralo.nbascoreboard.Activities.GameActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
-import com.ralo.nbascoreboard.Prototype.Game2Fragment;
 import com.ralo.nbascoreboard.Prototype.NbaTabView;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
@@ -82,7 +81,7 @@ public class BoxscoreFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews();
-        startRefreshingGameStats();
+        initialGameRefresh();
     }
 
     private void setupViews() {
@@ -132,11 +131,10 @@ public class BoxscoreFragment extends Fragment {
         setCardsCreater();
     }
 
-    private void setupTeamDetails(JSONObject jsonObject){
+    private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-        Toast.makeText(NbaApp.getCurrentActivity(), "Team score updated", Toast.LENGTH_SHORT).show();
-        Game2Fragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-        Game2Fragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -165,7 +163,7 @@ public class BoxscoreFragment extends Fragment {
     }
 
     private void getTeamNames() {
-        if(jsonObject!= null) {
+        if (jsonObject != null) {
             JsonTeamParser jsonTeamParser = new JsonTeamParser(jsonObject);
             homeRadioButton.setText(jsonTeamParser.getTeamName("home"));
             awayRadioButton.setText(jsonTeamParser.getTeamName("visitor"));
@@ -183,9 +181,16 @@ public class BoxscoreFragment extends Fragment {
         });
     }
 
+    private void initialGameRefresh(){
+        if(GameActivity.isGameActivated)
+            startRefreshingGameStats();
+    }
+
     private void startRefreshingGameStats() {
-        //TODO check if game is active
-        mStatusChecker.run();
+        if(GameActivity.isGameActivated)
+            mStatusChecker.run();
+        else
+            refreshFragment();
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -248,6 +253,7 @@ public class BoxscoreFragment extends Fragment {
                 setupHomePlayersDetails();
             else
                 setupAwayPlayersDetails();
+            Toast.makeText(NbaApp.getCurrentActivity(), "Updated", Toast.LENGTH_SHORT).show();
             setupTeamDetails(jsonObject);
         }
     }

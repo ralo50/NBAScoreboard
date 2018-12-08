@@ -156,6 +156,7 @@ public class MainActivity extends BaseActivity {
                     extras.putString("gameId", gameArrayList.get(position).getGameId());
                     extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
                     extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
+                    extras.putBoolean("isGameActivated", gameArrayList.get(position).isGameActive());
                     myIntent.putExtras(extras);
                     MainActivity.this.startActivity(myIntent);
                 }
