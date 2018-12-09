@@ -1,6 +1,8 @@
 package com.ralo.nbascoreboard.Activities;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -56,7 +59,6 @@ public class MainActivity extends BaseActivity {
     AdView adView;
     SwipeRefreshLayout swipeRefreshLayout;
     View loadingPanel;
-    boolean isFirstTime;
     JSONObject jsonObject;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -151,7 +153,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemClick(View v, int position) {
                 if (isNetworkConnected()) {
-                    isFirstTime = true;
                     Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                     Bundle extras = new Bundle();
                     extras.putString("gameDate", gameArrayList.get(position).getGameDate());
@@ -159,6 +160,7 @@ public class MainActivity extends BaseActivity {
                     extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
                     extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
                     extras.putBoolean("isGameActivated", gameArrayList.get(position).isGameActive());
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     myIntent.putExtras(extras);
                     MainActivity.this.startActivity(myIntent);
                 } else {
@@ -329,17 +331,6 @@ public class MainActivity extends BaseActivity {
         setUrl(sdf.format(myCalendar.getTime()));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isFirstTime) {
-            String myFormat = "yyyyMMdd";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-            setUrl(sdf.format(MainActivity.myCalendar.getTime()));
-            myView.setVisibility(View.GONE);
-        }
-    }
 
     public static boolean isNetworkConnected() {
 
