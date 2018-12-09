@@ -146,6 +146,7 @@ public class BoxscoreFragment extends Fragment {
             public void onItemClick(View v, int position) {
                 Toast.makeText(NbaApp.getCurrentActivity(), "item click, player id: " + String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
                 //TODO setup fragment for player information in current game
+                //TODO maybe add player profile picture
             }
 
             @Override

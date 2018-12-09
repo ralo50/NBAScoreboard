@@ -1,13 +1,13 @@
 package com.ralo.nbascoreboard.Fragments;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
-import android.transition.Fade;
-import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,27 +24,20 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.ralo.nbascoreboard.Activities.GameActivity;
+import com.ralo.nbascoreboard.Activities.TeamActivity;
+import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CustomViewPager;
 import com.ralo.nbascoreboard.Utils.JsonPlayerParser;
 import com.ralo.nbascoreboard.Utils.JsonTeamParser;
-import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
 import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
-import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
 
 import org.json.JSONObject;
 
 public class GameFragmentOld extends Fragment {
 
     private View gameFragmentView;
-    private GameActivity gameActivity;
     private AdView adView;
-    private String gameDate;
-    private String gameId;
-    private String homeTeamWins;
-    private String awayTeamWins;
-    private ImageView homeTeamLogo;
-    private ImageView awayTeamLogo;
     private TextView homeTeamNameTextView;
     private TextView awayTeamNameTextView;
     private ImageView awayTeamLogoImageView;
@@ -63,7 +56,6 @@ public class GameFragmentOld extends Fragment {
     private TabLayout tabLayout;
 
     public GameFragmentOld() {
-        // Required empty public constructor
     }
 
 
@@ -71,7 +63,6 @@ public class GameFragmentOld extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         gameFragmentView = inflater.inflate(R.layout.fragment_game, container, false);
-        gameActivity = (GameActivity) getActivity();
         findViews();
         initAd();
         return gameFragmentView;
@@ -101,7 +92,7 @@ public class GameFragmentOld extends Fragment {
 
     private void getGameDetailsById() {
         String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/boxscore.json";
-        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -123,7 +114,7 @@ public class GameFragmentOld extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(jsonObject != null) {
+                if (jsonObject != null) {
                     setViewData(jsonObject);
                     setupFragments(jsonObject);
                 }
@@ -156,36 +147,31 @@ public class GameFragmentOld extends Fragment {
     }
 
     private View.OnClickListener onLogoClicked = new View.OnClickListener() {
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.awayteamlogo:
-
-                    TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance(awayTeamStringId, false);
-                    teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-                    teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-                    setExitTransition(new Fade());
-                    teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-                    getActivity().getSupportFragmentManager().beginTransaction().
-                            addSharedElement(awayTeamLogoImageView, "awayTeamLogoImageView").
-                            replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+                    Intent intent = new Intent(getActivity(), TeamActivity.class);
+                    intent.putExtra("isHome", false);
+                    intent.putExtra("awayTeamLogoImageView", awayTeamStringId);
+                    Pair[] pairs = new Pair[1];
+                    pairs[0] = new Pair<>(awayTeamLogoImageView, "awayTeamLogoImageView");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
+                    startActivity(intent, options.toBundle());
                     break;
-
                 case R.id.hometeamlogo:
-
-                    teamDetailFragment = TeamDetailFragment.newInstance(homeTeamStringId, true);
-                    teamDetailFragment.setSharedElementEnterTransition(new TeamDetailsTransition());
-                    teamDetailFragment.setEnterTransition(new Fade().setDuration(1));
-                    setExitTransition(new Fade());
-                    teamDetailFragment.setSharedElementReturnTransition(new TeamDetailsTransition());
-                    getActivity().getSupportFragmentManager().beginTransaction().
-                            addSharedElement(homeTeamLogoImageView, "homeTeamLogoImageView").
-                            replace(R.id.fragment_container, teamDetailFragment).addToBackStack(null).commit();
+                    intent = new Intent(getActivity(), TeamActivity.class);
+                    intent.putExtra("homeTeamLogoImageView", homeTeamStringId);
+                    intent.putExtra("isHome", true);
+                    pairs = new Pair[1];
+                    pairs[0] = new Pair<>(homeTeamLogoImageView, "homeTeamLogoImageView");
+                    options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
+                    startActivity(intent, options.toBundle());
                     break;
             }
         }
     };
-
 
     private void initAd() {
         MobileAds.initialize(getActivity(), "ca-app-pub-3940256099942544~3347511713");

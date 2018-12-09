@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setUrl(String dateUrl) {
+        myView.setAlpha(0.5f);
         loadingPanel.setVisibility(View.VISIBLE);
         noteTextView.setVisibility(View.GONE);
 
@@ -113,6 +114,7 @@ public class MainActivity extends BaseActivity {
                                     myView.setEnabled(true);
                                     myView.setVisibility(View.VISIBLE);
                                     loadingPanel.setVisibility(View.GONE);
+                                    myView.setAlpha(1);
                                 }
                             });
                         }
@@ -148,7 +150,7 @@ public class MainActivity extends BaseActivity {
         GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                if(isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     isFirstTime = true;
                     Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
                     Bundle extras = new Bundle();
@@ -159,8 +161,7 @@ public class MainActivity extends BaseActivity {
                     extras.putBoolean("isGameActivated", gameArrayList.get(position).isGameActive());
                     myIntent.putExtras(extras);
                     MainActivity.this.startActivity(myIntent);
-                }
-                else{
+                } else {
                     Toast.makeText(NbaApp.getCurrentActivity(), "Check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -311,7 +312,6 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateYesterday() {
         noteTextView.setVisibility(View.GONE);
-        myView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
         String myFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -322,7 +322,6 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateTomorrow() {
         noteTextView.setVisibility(View.GONE);
-        myView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);
         String myFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
