@@ -133,8 +133,8 @@ public class BoxscoreFragment extends Fragment {
 
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+//        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+//        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -156,7 +156,7 @@ public class BoxscoreFragment extends Fragment {
         });
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
-        setRecyclerViewSwipeListener(myRecyclerView);
+       // setRecyclerViewSwipeListener(myRecyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);

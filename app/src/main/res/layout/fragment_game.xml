@@ -16,22 +16,17 @@
             android:id="@+id/gameHeader"
             layout="@layout/game_header" />
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/colorPrimary"
                 app:tabIndicatorGravity="top" />
 
-            <android.support.v4.view.ViewPager
+            <com.ralo.nbascoreboard.Utils.CustomViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </android.support.design.widget.AppBarLayout>
 
     </LinearLayout>
 

@@ -34,7 +34,7 @@ public class GameActivity extends BaseActivity {
         homeTeamWins = extras.getString("homeTeamWins");
         awayTeamWins = extras.getString("awayTeamWins");
 
-        GameFragment gameFragment = new GameFragment();
+        GameFragmentOld gameFragment = new GameFragmentOld();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, gameFragment)
