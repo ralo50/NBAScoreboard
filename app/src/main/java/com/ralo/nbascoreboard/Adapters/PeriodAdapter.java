@@ -31,6 +31,7 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
             periodCount = itemView.findViewById(R.id.periodCount);
             awayTeamPeriodPoints = itemView.findViewById(R.id.awayTeamPeriodPoints);
             homeTeamPeriodPoints = itemView.findViewById(R.id.homeTeamPeriodPoints);
+            int i = itemView.getWidth();
         }
     }
 
@@ -39,7 +40,9 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
     public PeriodAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_period_scores_card_view, parent, false);
         final PeriodAdapter.MyViewHolder myViewHolder = new PeriodAdapter.MyViewHolder(listItem);
-
+        //TODO fix layout
+        myViewHolder.itemView.getLayoutParams().width = 150;
+        int j = parent.getLayoutParams().width;
         return myViewHolder;
     }
 

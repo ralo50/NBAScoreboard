@@ -68,6 +68,7 @@ public class MatchupFragment extends Fragment {
         periodArrayList = periodCardsCreater.getPeriodArrayList();
         PeriodAdapter adapter = new PeriodAdapter(periodArrayList);
         myRecyclerView.setHasFixedSize(true);
+        myRecyclerView.setNestedScrollingEnabled(false);
         myRecyclerView.setAdapter(adapter);
         // setRecyclerViewSwipeListener(myRecyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
