@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class PlayerCardsCreater {
+
     private ArrayList<Player> playerArrayList;
     private JsonPlayerParser jsonPlayerParser;
     private String homeOrAway;
