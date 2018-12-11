@@ -13,6 +13,8 @@ public class GameActivity extends BaseActivity {
     public static String gameId;
     public static String homeTeamWins;
     public static String awayTeamWins;
+    public static String homeTeamName;
+    public static String awayTeamName;
     public static boolean isGameActivated;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class GameActivity extends BaseActivity {
         Log.d("gameId", gameId);
         homeTeamWins = extras.getString("homeTeamWins");
         awayTeamWins = extras.getString("awayTeamWins");
+        homeTeamName = extras.getString("homeTeamName");
+        awayTeamName = extras.getString("awayTeamName");
 
         getSupportFragmentManager()
                 .beginTransaction()

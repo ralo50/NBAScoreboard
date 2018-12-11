@@ -2,6 +2,7 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -133,8 +136,8 @@ public class BoxscoreFragment extends Fragment {
 
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-//        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-//        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -161,6 +164,7 @@ public class BoxscoreFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
+        runLayoutAnimation(myRecyclerView);
     }
 
     private void getTeamNames() {
@@ -299,5 +303,15 @@ public class BoxscoreFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopRefreshingGameStats();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 }

@@ -17,7 +17,9 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
 
             <TextView
                 android:id="@+id/leftArrow"
@@ -75,7 +77,6 @@
                 android:layout_height="wrap_content"
                 android:indeterminate="true" />
 
-
         </RelativeLayout>
 
         <TextView
@@ -94,12 +95,11 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation_fall_down" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
-
     </LinearLayout>
-
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"

@@ -5,20 +5,24 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ralo.nbascoreboard.Activities.GameActivity;
 import com.ralo.nbascoreboard.Adapters.PeriodAdapter;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonPeriodParser;
+import com.ralo.nbascoreboard.Utils.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.Period;
 import com.ralo.nbascoreboard.Utils.PeriodCardsCreater;
 import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
@@ -34,6 +38,9 @@ public class MatchupFragment extends Fragment {
     PeriodCardsCreater periodCardsCreater;
     ArrayList<Period> periodArrayList;
     RecyclerView myRecyclerView;
+    TextView awayTeamPeriodname;
+    TextView homeTeamPeriodName;
+    JsonTeamParser teamParser;
 
     public MatchupFragment() {
     }
@@ -55,13 +62,18 @@ public class MatchupFragment extends Fragment {
     }
 
     private void setupViews() {
+        teamParser = new JsonTeamParser(jsonObject);
+        awayTeamPeriodname = getView().findViewById(R.id.awayTeamPeriodPoints);
+        homeTeamPeriodName = getView().findViewById(R.id.homeTeamPeriodPoints);
+        awayTeamPeriodname.setText(teamParser.getTeamName("visitor"));
+        homeTeamPeriodName.setText(teamParser.getTeamName("home"));
         myRecyclerView = getView().findViewById(R.id.periodRecyclerView);
         jsonPeriodParser = new JsonPeriodParser(jsonObject);
         periodCardsCreater = new PeriodCardsCreater(jsonObject, "visitor");
         periodCardsCreater.populateCards();
+
         setCardsCreater();
-        Log.d("hello", String.valueOf(jsonPeriodParser.getNumberOfPeriods()));
-    }
+        }
 
     public void setCardsCreater() {
         periodArrayList = new ArrayList<>();
@@ -71,9 +83,10 @@ public class MatchupFragment extends Fragment {
         myRecyclerView.setNestedScrollingEnabled(false);
         myRecyclerView.setAdapter(adapter);
         // setRecyclerViewSwipeListener(myRecyclerView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(NbaApp.getCurrentActivity(), periodArrayList.size());
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        myRecyclerView.setLayoutManager(llm);
+        myRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
 }

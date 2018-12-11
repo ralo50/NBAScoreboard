@@ -42,8 +42,8 @@ public class GameFragment extends Fragment {
     private TextView awayTeamNameTextView;
     private ImageView awayTeamLogoImageView;
     private ImageView homeTeamLogoImageView;
-    private TextView awayTeamScoreTextView;
-    private TextView homeTeamScoreTextView;
+    public static TextView awayTeamScoreTextView;
+    public static TextView homeTeamScoreTextView;
     private TextView awayTeamWinsTextView;
     private TextView homeTeamWinsTextView;
     private TextView gameTimeTextView;
@@ -156,7 +156,7 @@ public class GameFragment extends Fragment {
                     intent.putExtra("isHome", false);
                     intent.putExtra("awayTeamLogoImageView", awayTeamStringId);
                     Pair[] pairs = new Pair[1];
-                    pairs[0] = new Pair<>(awayTeamLogoImageView, "awayTeamLogoImageView");
+                    pairs[0] = new Pair<ImageView, String>(awayTeamLogoImageView, "awayTeamLogoImageView");
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
                     startActivity(intent, options.toBundle());
                     break;
@@ -165,7 +165,7 @@ public class GameFragment extends Fragment {
                     intent.putExtra("homeTeamLogoImageView", homeTeamStringId);
                     intent.putExtra("isHome", true);
                     pairs = new Pair[1];
-                    pairs[0] = new Pair<>(homeTeamLogoImageView, "homeTeamLogoImageView");
+                    pairs[0] = new Pair<ImageView, String>(homeTeamLogoImageView, "homeTeamLogoImageView");
                     options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
                     startActivity(intent, options.toBundle());
                     break;

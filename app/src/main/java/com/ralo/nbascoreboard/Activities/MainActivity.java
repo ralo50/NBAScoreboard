@@ -1,8 +1,6 @@
 package com.ralo.nbascoreboard.Activities;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +12,12 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +49,7 @@ public class MainActivity extends BaseActivity {
     public TextView textView;
     public String url;
     public TextView noteTextView;
-    RecyclerView myView;
+    RecyclerView myRecyclerView;
     ArrayList<String> myValues;
     ArrayList<Game> gameArrayList;
     GameCardsCreater gameCardsCreater;
@@ -85,7 +83,7 @@ public class MainActivity extends BaseActivity {
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         textView = findViewById(R.id.textView);
         textView.setText(getCurrentTextViewDate(getYesterdaysCalendar()));
-        myView = findViewById(R.id.recyclerview);
+        myRecyclerView = findViewById(R.id.recyclerview);
         noteTextView = findViewById(R.id.note);
         myValues = new ArrayList<>();
         loadingPanel = findViewById(R.id.loadingPanel);
@@ -93,7 +91,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setUrl(String dateUrl) {
-        myView.setAlpha(0.5f);
+        myRecyclerView.setAlpha(0.5f);
         loadingPanel.setVisibility(View.VISIBLE);
         noteTextView.setVisibility(View.GONE);
 
@@ -113,17 +111,19 @@ public class MainActivity extends BaseActivity {
                                 public void run() {
                                     gameCardsCreater.populateCards();
                                     setCardsCreater();
-                                    myView.setEnabled(true);
-                                    myView.setVisibility(View.VISIBLE);
+                                    myRecyclerView.setEnabled(true);
+                                    myRecyclerView.setVisibility(View.VISIBLE);
                                     loadingPanel.setVisibility(View.GONE);
-                                    myView.setAlpha(1);
+                                    myRecyclerView.setAlpha(1);
+                                    runLayoutAnimation(myRecyclerView);
+
                                 }
                             });
                         }
                     }).start();
                 } else {
-                    myView.setEnabled(false);
-                    myView.setVisibility(View.GONE);
+                    myRecyclerView.setEnabled(false);
+                    myRecyclerView.setVisibility(View.GONE);
                     noteTextView.setVisibility(View.VISIBLE);
                     noteTextView.setText(R.string.no_games_tonight);
                     loadingPanel.setVisibility(View.GONE);
@@ -133,8 +133,8 @@ public class MainActivity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                myView.setEnabled(false);
-                myView.setVisibility(View.GONE);
+                myRecyclerView.setEnabled(false);
+                myRecyclerView.setVisibility(View.GONE);
                 noteTextView.setVisibility(View.VISIBLE);
                 noteTextView.setText(R.string.error_getting_info);
                 loadingPanel.setVisibility(View.GONE);
@@ -160,6 +160,8 @@ public class MainActivity extends BaseActivity {
                     extras.putString("homeTeamWins", gameArrayList.get(position).getHomeTeamWins());
                     extras.putString("awayTeamWins", gameArrayList.get(position).getAwayTeamWins());
                     extras.putBoolean("isGameActivated", gameArrayList.get(position).isGameActive());
+                    extras.putString("homeTeamName", gameArrayList.get(position).getHomeTeamName());
+                    extras.putString("awayTeamName", gameArrayList.get(position).getAwayTeamName());
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     myIntent.putExtras(extras);
                     MainActivity.this.startActivity(myIntent);
@@ -173,11 +175,11 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        myView.setHasFixedSize(true);
-        myView.setAdapter(adapter);
+        myRecyclerView.setHasFixedSize(true);
+        myRecyclerView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        myView.setLayoutManager(llm);
+        myRecyclerView.setLayoutManager(llm);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -285,7 +287,7 @@ public class MainActivity extends BaseActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setListeners() {
-     /*   myView.setOnTouchListener(new OnSwipeTouchListener(this) {
+     /*   myRecyclerView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSwipeLeft() {
@@ -306,7 +308,7 @@ public class MainActivity extends BaseActivity {
                 String myFormat = "yyyyMMdd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 setUrl(sdf.format(MainActivity.myCalendar.getTime()));
-                myView.setVisibility(View.GONE);
+                myRecyclerView.setVisibility(View.GONE);
             }
         });
     }
@@ -341,5 +343,15 @@ public class MainActivity extends BaseActivity {
             activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         }
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 }
