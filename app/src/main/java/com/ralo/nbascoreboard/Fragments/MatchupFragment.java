@@ -58,7 +58,9 @@ public class MatchupFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupViews();
+        if(jsonObject != null) {
+            setupViews();
+        }
     }
 
     private void setupViews() {

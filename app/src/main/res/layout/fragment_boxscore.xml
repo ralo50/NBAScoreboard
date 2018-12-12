@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +73,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/myRecyclerView"
             android:layout_width="match_parent"
-            android:layoutAnimation="@anim/layout_animation_fall_down"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_animation_fall_down" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 

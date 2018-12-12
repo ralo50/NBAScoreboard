@@ -27,7 +27,9 @@
         <activity
             android:name=".Activities.GameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.TeamActivity"></activity>
+        <activity
+            android:name=".Activities.TeamActivity"
+            android:screenOrientation="portrait" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>

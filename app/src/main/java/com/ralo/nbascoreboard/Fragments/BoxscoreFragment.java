@@ -296,7 +296,8 @@ public class BoxscoreFragment extends Fragment {
     }
 
     void stopRefreshingGameStats() {
-        mHandler.removeCallbacks(mStatusChecker);
+        if(mHandler != null)
+            mHandler.removeCallbacks(mStatusChecker);
     }
 
     @Override

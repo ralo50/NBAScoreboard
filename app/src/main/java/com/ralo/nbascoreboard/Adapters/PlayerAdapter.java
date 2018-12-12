@@ -86,11 +86,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
     }
 
-
     @Override
     public int getItemCount() {
         return playerList.size();
     }
-
 }
 
