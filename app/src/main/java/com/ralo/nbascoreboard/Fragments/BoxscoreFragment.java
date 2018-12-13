@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -147,9 +148,13 @@ public class BoxscoreFragment extends Fragment {
         PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Toast.makeText(NbaApp.getCurrentActivity(), "item click, player id: " + String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
                 //TODO setup fragment for player information in current game
                 //TODO maybe add player profile picture
+                PlayerGameDetailsFragment playerGameDetailsFragment = new PlayerGameDetailsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("player", playerArrayList.get(position));
+                playerGameDetailsFragment.setArguments(bundle);
+                playerGameDetailsFragment.show(getChildFragmentManager(), "dialog_fragment");
             }
 
             @Override

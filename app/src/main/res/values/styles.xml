@@ -20,4 +20,14 @@
         <item name="android:windowExitAnimation">@anim/fadeout</item>
     </style>
 
+
+    <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+        <item name="android:windowAnimationStyle">@style/PlayerFragmentGameDetails</item>
+    </style>
+
+    <style name="PlayerFragmentGameDetails" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_grow</item>
+        <item name="android:windowExitAnimation">@anim/anim_shrink</item>
+    </style>
+
 </resources>
