@@ -2,11 +2,14 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -16,12 +19,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,6 +38,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ralo.nbascoreboard.Activities.GameActivity;
+import com.ralo.nbascoreboard.Activities.PlayerActivity;
+import com.ralo.nbascoreboard.Activities.TeamActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
@@ -137,6 +144,11 @@ public class BoxscoreFragment extends Fragment {
 
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
+        if(GameActivity.isGameOver){
+            GameFragment.gameTimeTextView.setText("Final");
+        } else if (GameActivity.isGameActivated){
+            GameFragment.gameTimeTextView.setText("Live");
+        }
         GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
         GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
     }
@@ -148,28 +160,37 @@ public class BoxscoreFragment extends Fragment {
         PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                //TODO setup fragment for player information in current game
-                //TODO maybe add player profile picture
-                PlayerGameDetailsFragment playerGameDetailsFragment = new PlayerGameDetailsFragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("player", playerArrayList.get(position));
-                playerGameDetailsFragment.setArguments(bundle);
-                playerGameDetailsFragment.show(getChildFragmentManager(), "dialog_fragment");
+                setupPlayerGameDetailsFragment(position);
             }
 
             @Override
             public void onItemLongClick(View v, int position) {
-                Toast.makeText(NbaApp.getCurrentActivity(), "long item click, player id: " + String.valueOf(playerArrayList.get(position).getPersonId()), Toast.LENGTH_SHORT).show();
                 //TODO setup fragment for player career information
+                //TODO maybe add player profile picture
+                setupPlayerCareerDetailsFragment(position);
             }
         });
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setAdapter(adapter);
-       // setRecyclerViewSwipeListener(myRecyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
         runLayoutAnimation(myRecyclerView);
+    }
+
+    private void setupPlayerGameDetailsFragment(int position) {
+        PlayerGameDetailsFragment playerGameDetailsFragment = new PlayerGameDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("player", playerArrayList.get(position));
+        playerGameDetailsFragment.setArguments(bundle);
+        playerGameDetailsFragment.show(getChildFragmentManager(), "dialog_fragment");
+    }
+
+    private void setupPlayerCareerDetailsFragment(int position) {
+        Intent intent = new Intent(getActivity(), PlayerActivity.class);
+        intent.putExtra("Player", playerArrayList.get(position));
+        NbaApp.getCurrentActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        startActivity(intent);
     }
 
     private void getTeamNames() {

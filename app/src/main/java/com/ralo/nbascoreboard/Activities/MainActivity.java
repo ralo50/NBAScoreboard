@@ -162,6 +162,7 @@ public class MainActivity extends BaseActivity {
                     extras.putBoolean("isGameActivated", gameArrayList.get(position).isGameActive());
                     extras.putString("homeTeamName", gameArrayList.get(position).getHomeTeamName());
                     extras.putString("awayTeamName", gameArrayList.get(position).getAwayTeamName());
+                    extras.putBoolean("isGameOver", gameArrayList.get(position).isGameOver());
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     myIntent.putExtras(extras);
                     MainActivity.this.startActivity(myIntent);

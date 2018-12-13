@@ -46,7 +46,7 @@ public class GameFragment extends Fragment {
     public static TextView homeTeamScoreTextView;
     private TextView awayTeamWinsTextView;
     private TextView homeTeamWinsTextView;
-    private TextView gameTimeTextView;
+    public static TextView gameTimeTextView;
     private int homeTeamStringId;
     private int awayTeamStringId;
     private JsonPlayerParser playerParser;

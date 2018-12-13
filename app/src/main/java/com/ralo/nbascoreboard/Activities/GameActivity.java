@@ -16,6 +16,7 @@ public class GameActivity extends BaseActivity {
     public static String homeTeamName;
     public static String awayTeamName;
     public static boolean isGameActivated;
+    public static boolean isGameOver;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class GameActivity extends BaseActivity {
         gameDate = extras.getString("gameDate", "");
         gameId = extras.getString("gameId", "");
         isGameActivated = extras.getBoolean("isGameActivated");
+        isGameOver = extras.getBoolean("isGameOver");
         Log.d("gameDate", gameDate);
         Log.d("gameId", gameId);
         homeTeamWins = extras.getString("homeTeamWins");
