@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,17 +49,16 @@ public class MainActivity extends BaseActivity {
     public TextView textView;
     public String url;
     public TextView noteTextView;
+    AdView adView;
+    View dateChooser;
+    View loadingPanel;
     RecyclerView myRecyclerView;
     ArrayList<String> myValues;
     ArrayList<Game> gameArrayList;
     GameCardsCreater gameCardsCreater;
     static Calendar myCalendar;
-    AdView adView;
     SwipeRefreshLayout swipeRefreshLayout;
-    View loadingPanel;
-    ImageView leftArrow;
     JSONObject jsonObject;
-    ImageView calendarImageView;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -81,8 +79,7 @@ public class MainActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setViews() {
-        calendarImageView = findViewById(R.id.calendarImageView);
-        leftArrow = findViewById(R.id.leftArrow);
+        dateChooser = findViewById(R.id.dateChooser);
         myCalendar = getYesterdaysCalendar();
         adView = findViewById(R.id.adView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -121,7 +118,6 @@ public class MainActivity extends BaseActivity {
                                     loadingPanel.setVisibility(View.GONE);
                                     myRecyclerView.setAlpha(1);
                                     runLayoutAnimation(myRecyclerView);
-
                                 }
                             });
                         }
@@ -133,7 +129,6 @@ public class MainActivity extends BaseActivity {
                     noteTextView.setText(R.string.no_games_tonight);
                     loadingPanel.setVisibility(View.GONE);
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -148,12 +143,10 @@ public class MainActivity extends BaseActivity {
         requestQueue.add(objectRequest);
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     public void setCardsCreater() {
         gameArrayList = new ArrayList<>();
         gameArrayList = gameCardsCreater.getGameArrayList();
-
         GameAdapter adapter = new GameAdapter(gameArrayList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -178,7 +171,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onItemLongClick(View v, int position) {
-
             }
         });
         myRecyclerView.setHasFixedSize(true);
@@ -190,7 +182,6 @@ public class MainActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setDatePicker() {
-
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -210,7 +201,7 @@ public class MainActivity extends BaseActivity {
 
         };
 
-        calendarImageView.setOnClickListener(new View.OnClickListener() {
+        dateChooser.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -247,13 +238,13 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private String getCurrentDate() {
-        Calendar myCalendar = Calendar.getInstance();
-        String myFormat = "yyyyMMdd";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        return sdf.format(myCalendar.getTime());
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private String getCurrentDate() {
+//        Calendar myCalendar = Calendar.getInstance();
+//        String myFormat = "yyyyMMdd";
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//        return sdf.format(myCalendar.getTime());
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String getYesterdayDate() {
@@ -284,7 +275,6 @@ public class MainActivity extends BaseActivity {
             case (R.id.leftArrow):
                 changeDateYesterday();
                 break;
-
             case (R.id.rightArrow):
                 changeDateTomorrow();
                 break;
@@ -339,9 +329,7 @@ public class MainActivity extends BaseActivity {
         setUrl(sdf.format(myCalendar.getTime()));
     }
 
-
     public static boolean isNetworkConnected() {
-
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) NbaApp.getCurrentActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = null;
