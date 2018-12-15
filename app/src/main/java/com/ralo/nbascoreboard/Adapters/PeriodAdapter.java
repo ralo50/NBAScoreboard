@@ -1,5 +1,6 @@
 package com.ralo.nbascoreboard.Adapters;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,10 +29,10 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
 
         MyViewHolder(View itemView) {
             super(itemView);
+            itemView.setBackgroundColor(Color.parseColor("#282828"));
             periodCount = itemView.findViewById(R.id.periodCount);
             awayTeamPeriodPoints = itemView.findViewById(R.id.awayTeamPeriodPoints);
             homeTeamPeriodPoints = itemView.findViewById(R.id.homeTeamPeriodPoints);
-            int i = itemView.getWidth();
         }
     }
 
@@ -41,8 +42,6 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_period_scores_card_view, parent, false);
         final PeriodAdapter.MyViewHolder myViewHolder = new PeriodAdapter.MyViewHolder(listItem);
         //TODO fix layout
-        myViewHolder.itemView.getLayoutParams().width = 150;
-        int j = parent.getLayoutParams().width;
         return myViewHolder;
     }
 
@@ -53,7 +52,6 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
         myViewHolder.periodCount.setText(period.getPeriodNumber());
         myViewHolder.awayTeamPeriodPoints.setText(String.valueOf(period.getAwayTeamPeriodScore()));
         myViewHolder.homeTeamPeriodPoints.setText(String.valueOf(period.getHomeTeamPeriodScore()));
-
     }
 
 

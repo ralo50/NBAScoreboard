@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,9 @@ public class MainActivity extends BaseActivity {
     AdView adView;
     SwipeRefreshLayout swipeRefreshLayout;
     View loadingPanel;
+    ImageView leftArrow;
     JSONObject jsonObject;
+    ImageView calendarImageView;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -78,10 +81,12 @@ public class MainActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setViews() {
+        calendarImageView = findViewById(R.id.calendarImageView);
+        leftArrow = findViewById(R.id.leftArrow);
         myCalendar = getYesterdaysCalendar();
         adView = findViewById(R.id.adView);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-        textView = findViewById(R.id.textView);
+        textView = findViewById(R.id.dateTextView);
         textView.setText(getCurrentTextViewDate(getYesterdaysCalendar()));
         myRecyclerView = findViewById(R.id.recyclerview);
         noteTextView = findViewById(R.id.note);
@@ -205,7 +210,7 @@ public class MainActivity extends BaseActivity {
 
         };
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        calendarImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.ralo.nbascoreboard.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,7 @@ public class MatchupFragment extends Fragment {
     PeriodCardsCreater periodCardsCreater;
     ArrayList<Period> periodArrayList;
     RecyclerView myRecyclerView;
-    TextView awayTeamPeriodname;
+    TextView awayTeamPeriodName;
     TextView homeTeamPeriodName;
     JsonTeamParser teamParser;
 
@@ -65,9 +66,9 @@ public class MatchupFragment extends Fragment {
 
     private void setupViews() {
         teamParser = new JsonTeamParser(jsonObject);
-        awayTeamPeriodname = getView().findViewById(R.id.awayTeamPeriodPoints);
+        awayTeamPeriodName = getView().findViewById(R.id.awayTeamPeriodPoints);
         homeTeamPeriodName = getView().findViewById(R.id.homeTeamPeriodPoints);
-        awayTeamPeriodname.setText(teamParser.getTeamName("visitor"));
+        awayTeamPeriodName.setText(teamParser.getTeamName("visitor"));
         homeTeamPeriodName.setText(teamParser.getTeamName("home"));
         myRecyclerView = getView().findViewById(R.id.periodRecyclerView);
         jsonPeriodParser = new JsonPeriodParser(jsonObject);

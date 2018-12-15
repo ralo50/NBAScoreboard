@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/periodCount"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/awayTeamPeriodPoints"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/homeTeamPeriodPoints"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
