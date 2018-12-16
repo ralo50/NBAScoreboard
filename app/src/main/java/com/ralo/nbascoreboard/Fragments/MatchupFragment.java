@@ -85,7 +85,6 @@ public class MatchupFragment extends Fragment {
         myRecyclerView.setHasFixedSize(true);
         myRecyclerView.setNestedScrollingEnabled(false);
         myRecyclerView.setAdapter(adapter);
-        // setRecyclerViewSwipeListener(myRecyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(NbaApp.getCurrentActivity(), periodArrayList.size());
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);

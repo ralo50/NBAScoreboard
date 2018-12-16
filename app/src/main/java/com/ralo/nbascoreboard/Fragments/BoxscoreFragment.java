@@ -91,8 +91,10 @@ public class BoxscoreFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupViews();
-        initialGameRefresh();
+        if(jsonObject != null) {
+            setupViews();
+            initialGameRefresh();
+        }
     }
 
     private void setupViews() {

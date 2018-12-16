@@ -100,7 +100,7 @@ public class GameFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
+                        NbaApp.getCurrentActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 jsonObject = response;
@@ -108,6 +108,7 @@ public class GameFragment extends Fragment {
                                 setupFragments(response);
                             }
                         });
+
                     }
                 }).start();
             }
