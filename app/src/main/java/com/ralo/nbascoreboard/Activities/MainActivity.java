@@ -44,6 +44,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class MainActivity extends BaseActivity {
 
     public TextView textView;
@@ -65,10 +67,19 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setFont();
         setViews();
         setUrl(getYesterdayDate());
         setDatePicker();
         initAd();
+    }
+
+    private void setFont(){
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/DINMedium.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     private void initAd() {

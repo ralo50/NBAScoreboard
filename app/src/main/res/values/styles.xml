@@ -12,7 +12,7 @@
 
     <style name="TextAppearance.CustomFont" parent="android:TextAppearance">
         <!-- Custom Attr-->
-        <item name="fontPath">fonts/Sportscenter.ttf</item>
+        <item name="fontPath">fonts/DINMedium.ttf</item>
     </style>
 
     <style name="Fade">
