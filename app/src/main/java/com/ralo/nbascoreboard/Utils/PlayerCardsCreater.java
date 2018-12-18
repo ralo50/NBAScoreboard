@@ -39,7 +39,7 @@ public class PlayerCardsCreater {
                 player.setThreePointersMade(jsonPlayerParser.getPlayerTeamStatsInt("three_pointers_made", i, homeOrAway));
                 player.setThreePointersAttempted(jsonPlayerParser.getPlayerTeamStatsInt("three_pointers_attempted", i, homeOrAway));
                 player.setMinutesPlayed(jsonPlayerParser.getPlayerTeamStatsInt("minutes", i, homeOrAway));
-                player.setPersonId(jsonPlayerParser.getPlayerTeamStatsInt("person_id", i, homeOrAway));
+                player.setPlayerId(jsonPlayerParser.getPlayerTeamStatsInt("person_id", i, homeOrAway));
 
                 playerArrayList.add(player);
 

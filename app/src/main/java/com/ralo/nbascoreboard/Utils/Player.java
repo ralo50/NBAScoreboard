@@ -7,7 +7,7 @@ public class Player implements Serializable {
     private String firstName;
     private String lastName;
     private int jerseyNumber;
-    private int personId;
+    private int playerId;
     private String playerCode;
     private String positionLong;
     private String position;
@@ -46,8 +46,8 @@ public class Player implements Serializable {
         return jerseyNumber;
     }
 
-    public int getPersonId() {
-        return personId;
+    public int getPlayerId() {
+        return playerId;
     }
 
     public String getPlayerCode() {
@@ -162,8 +162,8 @@ public class Player implements Serializable {
         this.jerseyNumber = jerseyNumber;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     public void setPlayerCode(String playerCode) {

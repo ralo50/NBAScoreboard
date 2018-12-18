@@ -8,15 +8,18 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Player;
+import com.squareup.picasso.Picasso;
 
 
 public class PlayerGameDetailsFragment extends DialogFragment {
 
     TextView playerName;
+    ImageView playerImage;
     Player player;
 
     public PlayerGameDetailsFragment() {
@@ -45,5 +48,8 @@ public class PlayerGameDetailsFragment extends DialogFragment {
         playerName = getView().findViewById(R.id.playerName);
         String playerFullName = player.getFirstName() + " " + player.getLastName();
         playerName.setText(playerFullName);
+        playerImage = getView().findViewById(R.id.playerImage);
+
+        Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + player.getPlayerId() + ".png").into(playerImage);
     }
 }

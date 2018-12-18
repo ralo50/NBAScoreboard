@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Player;
+import com.squareup.picasso.Picasso;
 
 public class PlayerActivity extends BaseActivity {
 
     TextView playerName;
+    ImageView playerImage;
     String playerNameString;
     Intent intent;
     Player player;
@@ -24,15 +27,17 @@ public class PlayerActivity extends BaseActivity {
         setupViews();
     }
 
+    private void getIntents() {
+        intent = getIntent();
+        player = (Player) intent.getSerializableExtra("Player");
+    }
+
     private void setupViews() {
         playerName = findViewById(R.id.playerName);
         playerNameString = player.getFirstName() + " " + player.getLastName();
         playerName.setText(playerNameString);
-    }
-
-    private void getIntents() {
-        intent = getIntent();
-        player = (Player) intent.getSerializableExtra("Player");
+        playerImage = findViewById(R.id.playerImage);
+        Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + player.getPlayerId() + ".png").into(playerImage);
     }
 
     @Override

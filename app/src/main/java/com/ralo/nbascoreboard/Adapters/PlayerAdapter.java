@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.Player;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         private TextView playerThreePointers;
         private TextView playerFreeThrows;
         private TextView minutesPlayed;
+        private ImageView playerImage;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -48,6 +51,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
             playerThreePointers = itemView.findViewById(R.id.player_three_pointers);
             playerFreeThrows = itemView.findViewById(R.id.player_free_throws);
             minutesPlayed = itemView.findViewById(R.id.player_minutes);
+            playerImage = itemView.findViewById(R.id.player_image);
         }
     }
 
@@ -84,6 +88,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.playerThreePointers.setText(String.valueOf(player.getThreePointersMade() + "-" + player.getThreePointersAttempted()));
         myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade() + "-" + player.getFreeThrowsAttempted()));
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
+        Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + player.getPlayerId() + ".png").into(myViewHolder.playerImage);
     }
 
     @Override
