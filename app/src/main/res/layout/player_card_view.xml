@@ -21,7 +21,7 @@
             android:id="@+id/player_image"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="6"/>
+            android:layout_weight="5"/>
 
         <TextView
             android:id="@+id/player_name"
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:gravity="center"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
