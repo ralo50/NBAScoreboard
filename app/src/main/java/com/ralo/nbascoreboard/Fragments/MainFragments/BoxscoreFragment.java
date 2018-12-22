@@ -4,6 +4,7 @@ package com.ralo.nbascoreboard.Fragments.MainFragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -144,6 +145,7 @@ public class BoxscoreFragment extends Fragment {
         if (GameActivity.isGameOver) {
             GameFragment.gameTimeTextView.setText("Final");
         } else if (GameActivity.isGameActivated) {
+            GameFragment.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
             GameFragment.gameTimeTextView.setText("Live");
         }
         GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
