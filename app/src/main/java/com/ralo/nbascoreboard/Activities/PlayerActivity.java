@@ -1,13 +1,11 @@
 package com.ralo.nbascoreboard.Activities;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.Player;
+import com.ralo.nbascoreboard.Utils.DataClasses.Player;
 import com.squareup.picasso.Picasso;
 
 public class PlayerActivity extends BaseActivity {

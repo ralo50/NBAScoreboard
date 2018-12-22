@@ -35,9 +35,9 @@ import com.ralo.nbascoreboard.Adapters.GameAdapter;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.GameCardsCreater;
+import com.ralo.nbascoreboard.Utils.CardCreaters.GameCardsCreater;
 import com.ralo.nbascoreboard.Utils.DatePickerWithReset;
-import com.ralo.nbascoreboard.Utils.Game;
+import com.ralo.nbascoreboard.Utils.DataClasses.Game;
 
 import org.json.JSONObject;
 

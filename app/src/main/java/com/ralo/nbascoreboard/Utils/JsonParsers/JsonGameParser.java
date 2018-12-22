@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.JsonParsers;
 
 import com.ralo.nbascoreboard.R;
 
@@ -15,7 +15,7 @@ public class JsonGameParser {
     private int homeTeamPoint = 0;
     private int awayTeamPoints = 0;
 
-    JsonGameParser(JSONObject object) {
+    public JsonGameParser(JSONObject object) {
         this.jsonObject = object;
         imageId = R.drawable.nba;
     }

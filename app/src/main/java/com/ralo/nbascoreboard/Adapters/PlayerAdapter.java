@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
-import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.Player;
+import com.ralo.nbascoreboard.Utils.DataClasses.Player;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.JsonParsers;
 //http://nbasense.com/nba-api/Stats/Stats/Teams/TeamsYearByYearStats#request-example
 
 import org.json.JSONException;

@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.Game;
-import com.squareup.picasso.Picasso;
+import com.ralo.nbascoreboard.Utils.DataClasses.Game;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.DataClasses;
 
 import java.io.Serializable;
 

@@ -1,32 +1,27 @@
-package com.ralo.nbascoreboard.Fragments;
+package com.ralo.nbascoreboard.Fragments.MainFragments;
 
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -39,15 +34,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ralo.nbascoreboard.Activities.GameActivity;
 import com.ralo.nbascoreboard.Activities.PlayerActivity;
-import com.ralo.nbascoreboard.Activities.TeamActivity;
 import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
+import com.ralo.nbascoreboard.Fragments.AuxiliaryFragments.PlayerGameDetailsFragment;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.Prototype.NbaTabView;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.JsonTeamParser;
-import com.ralo.nbascoreboard.Utils.Player;
-import com.ralo.nbascoreboard.Utils.PlayerCardsCreater;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
+import com.ralo.nbascoreboard.Utils.DataClasses.Player;
+import com.ralo.nbascoreboard.Utils.CardCreaters.PlayerCardsCreater;
 
 import org.json.JSONObject;
 
@@ -91,7 +86,7 @@ public class BoxscoreFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(jsonObject != null) {
+        if (jsonObject != null) {
             setupViews();
             initialGameRefresh();
         }
@@ -146,9 +141,9 @@ public class BoxscoreFragment extends Fragment {
 
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-        if(GameActivity.isGameOver){
+        if (GameActivity.isGameOver) {
             GameFragment.gameTimeTextView.setText("Final");
-        } else if (GameActivity.isGameActivated){
+        } else if (GameActivity.isGameActivated) {
             GameFragment.gameTimeTextView.setText("Live");
         }
         GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
@@ -214,13 +209,13 @@ public class BoxscoreFragment extends Fragment {
         });
     }
 
-    private void initialGameRefresh(){
-        if(GameActivity.isGameActivated)
+    private void initialGameRefresh() {
+        if (GameActivity.isGameActivated)
             startRefreshingGameStats();
     }
 
     private void startRefreshingGameStats() {
-        if(GameActivity.isGameActivated)
+        if (GameActivity.isGameActivated)
             mStatusChecker.run();
         else
             refreshFragment();
@@ -324,7 +319,7 @@ public class BoxscoreFragment extends Fragment {
     }
 
     void stopRefreshingGameStats() {
-        if(mHandler != null)
+        if (mHandler != null)
             mHandler.removeCallbacks(mStatusChecker);
     }
 

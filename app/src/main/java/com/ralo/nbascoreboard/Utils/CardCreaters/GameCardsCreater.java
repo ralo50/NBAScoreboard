@@ -1,4 +1,7 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.CardCreaters;
+
+import com.ralo.nbascoreboard.Utils.DataClasses.Game;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonGameParser;
 
 import org.json.JSONObject;
 import java.util.ArrayList;

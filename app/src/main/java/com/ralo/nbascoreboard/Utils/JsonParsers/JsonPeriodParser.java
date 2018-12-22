@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.JsonParsers;
 
 import org.json.JSONArray;
 import org.json.JSONException;

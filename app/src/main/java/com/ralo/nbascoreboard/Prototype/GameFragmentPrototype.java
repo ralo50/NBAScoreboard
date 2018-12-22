@@ -1,7 +1,5 @@
-package com.ralo.nbascoreboard.Fragments;
+package com.ralo.nbascoreboard.Prototype;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,16 +19,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ralo.nbascoreboard.Activities.GameActivity;
-import com.ralo.nbascoreboard.Fragments.BoxscoreFragment;
-import com.ralo.nbascoreboard.Fragments.MatchupFragment;
-import com.ralo.nbascoreboard.Fragments.PlaybyplayFragment;
-import com.ralo.nbascoreboard.Fragments.TeamDetailFragment;
-import com.ralo.nbascoreboard.NbaApp;
-import com.ralo.nbascoreboard.Prototype.NbaTabView;
+import com.ralo.nbascoreboard.Fragments.MainFragments.BoxscoreFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.MatchupFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.PlaybyplayFragment;
+import com.ralo.nbascoreboard.Fragments.AuxiliaryFragments.TeamDetailFragment;
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.JsonPlayerParser;
-import com.ralo.nbascoreboard.Utils.JsonTeamParser;
-import com.ralo.nbascoreboard.Utils.TeamDetailsTransition;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayerParser;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
 
 import org.json.JSONObject;
 

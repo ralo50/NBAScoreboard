@@ -1,13 +1,13 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.DataClasses;
 
 public class Game {
 
     private String homeTeamName;
     private String awayTeamName;
     private String homeTeamScore = "";
-    private String awayTeamScore= "";
-    private String homeTeamWins= "0";
-    private String awayTeamWins= "0";
+    private String awayTeamScore = "";
+    private String homeTeamWins = "0";
+    private String awayTeamWins = "0";
     private int homeTeamImage;
     private int awayTeamImage;
     private String nugget;
@@ -53,7 +53,7 @@ public class Game {
         this.nugget = nugget;
     }
 
-    public void setGameTime(String gameTime){
+    public void setGameTime(String gameTime) {
         this.gameTime = gameTime;
     }
 
@@ -93,7 +93,7 @@ public class Game {
         return nugget;
     }
 
-    public String getGameTime(){
+    public String getGameTime() {
         return gameTime;
     }
 

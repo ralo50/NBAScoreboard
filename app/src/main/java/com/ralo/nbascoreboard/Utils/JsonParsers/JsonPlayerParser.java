@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.JsonParsers;
 //http://nbasense.com/nba-api/Data/MobileTeams/Player/PlayerCard
 //http://nbasense.com/nba-api/Data/Cms/Game/Boxscore
 

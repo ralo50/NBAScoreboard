@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Utils.DataClasses;
 
 public class Team {
 
@@ -51,7 +51,6 @@ public class Team {
     private float offensiveRating;
     private float defensiveRating;
     private float pace;
-
 
 
     public int getPoints() {

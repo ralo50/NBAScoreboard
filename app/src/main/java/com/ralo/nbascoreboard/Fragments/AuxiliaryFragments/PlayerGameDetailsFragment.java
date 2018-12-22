@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Fragments;
+package com.ralo.nbascoreboard.Fragments.AuxiliaryFragments;
 
 
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.Player;
+import com.ralo.nbascoreboard.Utils.DataClasses.Player;
 import com.squareup.picasso.Picasso;
 
 

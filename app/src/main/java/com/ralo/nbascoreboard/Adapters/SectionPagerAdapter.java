@@ -1,13 +1,13 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Adapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ralo.nbascoreboard.Fragments.BoxscoreFragment;
-import com.ralo.nbascoreboard.Fragments.MatchupFragment;
-import com.ralo.nbascoreboard.Fragments.PlaybyplayFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.BoxscoreFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.MatchupFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.PlaybyplayFragment;
 
 import org.json.JSONObject;
 

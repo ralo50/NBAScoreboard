@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Utils;
+package com.ralo.nbascoreboard.Prototype;
 
 import android.annotation.SuppressLint;
 import android.transition.ChangeBounds;

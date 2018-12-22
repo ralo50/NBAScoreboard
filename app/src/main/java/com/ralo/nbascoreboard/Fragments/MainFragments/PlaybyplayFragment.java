@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Fragments;
+package com.ralo.nbascoreboard.Fragments.MainFragments;
 
 
 import android.os.Bundle;

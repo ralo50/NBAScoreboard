@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ralo.nbascoreboard.R;
-import com.ralo.nbascoreboard.Utils.Period;
+import com.ralo.nbascoreboard.Utils.DataClasses.Period;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.ralo.nbascoreboard.Fragments.GameFragment;
+import com.ralo.nbascoreboard.Fragments.MainFragments.GameFragment;
 import com.ralo.nbascoreboard.R;
 
 public class GameActivity extends BaseActivity {

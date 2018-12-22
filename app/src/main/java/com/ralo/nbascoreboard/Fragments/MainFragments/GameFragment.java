@@ -1,4 +1,4 @@
-package com.ralo.nbascoreboard.Fragments;
+package com.ralo.nbascoreboard.Fragments.MainFragments;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
@@ -28,9 +28,9 @@ import com.ralo.nbascoreboard.Activities.TeamActivity;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CustomViewPager;
-import com.ralo.nbascoreboard.Utils.JsonPlayerParser;
-import com.ralo.nbascoreboard.Utils.JsonTeamParser;
-import com.ralo.nbascoreboard.Utils.SectionPagerAdapter;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayerParser;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
+import com.ralo.nbascoreboard.Adapters.SectionPagerAdapter;
 
 import org.json.JSONObject;
 
