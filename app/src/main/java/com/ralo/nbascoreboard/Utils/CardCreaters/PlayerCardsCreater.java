@@ -19,7 +19,6 @@ public class PlayerCardsCreater {
         this.homeOrAway = homeOrAway;
     }
 
-
     private int getNumberOfPlayers(String homeOrAway) {
         return this.jsonPlayerParser.getNumberOfPlayers(homeOrAway);
     }
@@ -45,7 +44,6 @@ public class PlayerCardsCreater {
                 player.setPlayerId(jsonPlayerParser.getPlayerTeamStatsInt("person_id", i, homeOrAway));
 
                 playerArrayList.add(player);
-
             }
         }
     }

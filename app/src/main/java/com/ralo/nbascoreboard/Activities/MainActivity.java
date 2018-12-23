@@ -51,16 +51,15 @@ public class MainActivity extends BaseActivity {
     public TextView textView;
     public String url;
     public TextView noteTextView;
-    AdView adView;
-    View dateChooser;
-    View loadingPanel;
-    RecyclerView myRecyclerView;
-    ArrayList<String> myValues;
-    ArrayList<Game> gameArrayList;
-    GameCardsCreater gameCardsCreater;
-    static Calendar myCalendar;
-    SwipeRefreshLayout swipeRefreshLayout;
-    JSONObject jsonObject;
+    private AdView adView;
+    private View dateChooser;
+    private View loadingPanel;
+    private RecyclerView myRecyclerView;
+    private ArrayList<Game> gameArrayList;
+    private GameCardsCreater gameCardsCreater;
+    private static Calendar myCalendar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private JSONObject jsonObject;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -74,7 +73,7 @@ public class MainActivity extends BaseActivity {
         initAd();
     }
 
-    private void setFont(){
+    private void setFont() {
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/DINMedium.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -98,7 +97,6 @@ public class MainActivity extends BaseActivity {
         textView.setText(getCurrentTextViewDate(getYesterdaysCalendar()));
         myRecyclerView = findViewById(R.id.recyclerview);
         noteTextView = findViewById(R.id.note);
-        myValues = new ArrayList<>();
         loadingPanel = findViewById(R.id.loadingPanel);
         setListeners();
     }

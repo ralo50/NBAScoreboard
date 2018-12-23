@@ -23,7 +23,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
         this.jsonObject = jsonObject;
         matchupFragment = new MatchupFragment(this.jsonObject);
         boxscoreFragment = new BoxscoreFragment(this.jsonObject);
-        playbyplayFragment = new PlaybyplayFragment();
+        playbyplayFragment = new PlaybyplayFragment(this.jsonObject);
     }
 
     @Override

@@ -20,7 +20,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     private final CustomItemClickListener listener;
     private ArrayList<Game> gameList;
 
-
     public GameAdapter(ArrayList<Game> myValues, CustomItemClickListener listener) {
         this.gameList = myValues;
         this.listener = listener;
@@ -56,19 +55,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_card_view, parent, false);
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_game, parent, false);
         final MyViewHolder myViewHolder = new MyViewHolder(listItem);
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(v, myViewHolder.getAdapterPosition());
-
             }
         });
-
         return myViewHolder;
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {

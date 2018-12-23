@@ -20,11 +20,9 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     private final CustomItemClickListener listener;
     private ArrayList<Player> playerList;
 
-
     public PlayerAdapter(ArrayList<Player> myPlayers, CustomItemClickListener listener) {
         this.playerList = myPlayers;
         this.listener = listener;
-
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +54,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
     @NonNull
     @Override
     public PlayerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_card_view, parent, false);
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_player, parent, false);
         final PlayerAdapter.MyViewHolder myViewHolder = new PlayerAdapter.MyViewHolder(listItem);
         listItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

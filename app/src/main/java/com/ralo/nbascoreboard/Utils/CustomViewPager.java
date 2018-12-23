@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 
 public class CustomViewPager extends ViewPager {
     private FixedSpeedScroller mScroller = null;
+
     public CustomViewPager(@NonNull Context context) {
         super(context);
         init();
@@ -36,9 +37,6 @@ public class CustomViewPager extends ViewPager {
         }
     }
 
-    /*
-     * Set the factor by which the duration will change
-     */
     public void setScrollDuration(int duration) {
         mScroller.setScrollDuration(duration);
     }
@@ -51,7 +49,7 @@ public class CustomViewPager extends ViewPager {
             super(context);
         }
 
-        public FixedSpeedScroller(Context context, Interpolator interpolator) {
+        FixedSpeedScroller(Context context, Interpolator interpolator) {
             super(context, interpolator);
         }
 
@@ -71,7 +69,7 @@ public class CustomViewPager extends ViewPager {
             super.startScroll(startX, startY, dx, dy, mDuration);
         }
 
-        public void setScrollDuration(int duration) {
+        void setScrollDuration(int duration) {
             mDuration = duration;
         }
     }

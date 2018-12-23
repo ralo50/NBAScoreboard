@@ -37,7 +37,7 @@ public class NbaTabView extends FrameLayout {
     public NbaTabView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        parentView = LayoutInflater.from(context).inflate(R.layout.control_game_tab, null, false);
+        parentView = LayoutInflater.from(context).inflate(R.layout.layout_control_game_tab, null, false);
         addView(parentView);
         invalidate();
         setup();

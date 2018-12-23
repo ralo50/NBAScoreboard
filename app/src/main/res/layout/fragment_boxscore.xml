@@ -51,7 +51,7 @@
 
     <include
         android:id="@+id/player_card_view"
-        layout="@layout/player_card_view"
+        layout="@layout/card_view_player"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_marginTop="8dp"

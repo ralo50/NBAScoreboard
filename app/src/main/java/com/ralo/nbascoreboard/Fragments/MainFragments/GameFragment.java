@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.util.Pair;
@@ -28,7 +29,6 @@ import com.ralo.nbascoreboard.Activities.TeamActivity;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CustomViewPager;
-import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayerParser;
 import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
 import com.ralo.nbascoreboard.Adapters.SectionPagerAdapter;
 
@@ -49,8 +49,6 @@ public class GameFragment extends Fragment {
     public static TextView gameTimeTextView;
     private int homeTeamStringId;
     private int awayTeamStringId;
-    private JsonPlayerParser playerParser;
-    private SectionPagerAdapter pagerAdapter;
     private JSONObject jsonObject;
     private CustomViewPager pager;
     private TabLayout tabLayout;
@@ -60,7 +58,7 @@ public class GameFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         gameFragmentView = inflater.inflate(R.layout.fragment_game, container, false);
         findViews();
@@ -126,7 +124,6 @@ public class GameFragment extends Fragment {
 
     private void setViewData(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
-        playerParser = new JsonPlayerParser(jsonObject);
         awayTeamLogoImageView.setImageResource(teamParser.getTeamImage("visitor"));
         homeTeamLogoImageView.setImageResource(teamParser.getTeamImage("home"));
         awayTeamStringId = teamParser.getTeamImage("visitor");
@@ -142,7 +139,7 @@ public class GameFragment extends Fragment {
 
     private void setupFragments(JSONObject jsonObject) {
         tabLayout.setupWithViewPager(pager);
-        pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
+        SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(1);
     }
@@ -157,7 +154,7 @@ public class GameFragment extends Fragment {
                     intent.putExtra("isHome", false);
                     intent.putExtra("awayTeamLogoImageView", awayTeamStringId);
                     Pair[] pairs = new Pair[1];
-                    pairs[0] = new Pair<ImageView, String>(awayTeamLogoImageView, "awayTeamLogoImageView");
+                    pairs[0] = new Pair<>(awayTeamLogoImageView, "awayTeamLogoImageView");
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
                     startActivity(intent, options.toBundle());
                     break;
@@ -166,7 +163,7 @@ public class GameFragment extends Fragment {
                     intent.putExtra("homeTeamLogoImageView", homeTeamStringId);
                     intent.putExtra("isHome", true);
                     pairs = new Pair[1];
-                    pairs[0] = new Pair<ImageView, String>(homeTeamLogoImageView, "homeTeamLogoImageView");
+                    pairs[0] = new Pair<>(homeTeamLogoImageView, "homeTeamLogoImageView");
                     options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
                     startActivity(intent, options.toBundle());
                     break;

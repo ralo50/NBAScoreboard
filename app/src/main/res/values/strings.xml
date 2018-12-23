@@ -6,4 +6,7 @@
     <string name="right_arrow">    &gt;    </string>
     <string name="no_games_tonight">No games on this day</string>
     <string name="error_getting_info">Unable to show information</string>
+    <string name="game_live">Live</string>
+    <string name="game_ended">Final</string>
+    <string name="game_ended_ot">Final OT</string>
 </resources>

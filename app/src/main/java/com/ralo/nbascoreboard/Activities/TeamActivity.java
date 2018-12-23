@@ -7,10 +7,10 @@ import android.widget.ImageView;
 import com.ralo.nbascoreboard.R;
 
 public class TeamActivity extends BaseActivity {
-    ImageView imageView;
-    int awayTeamLogoImageView;
-    int homeTeamLogoImageView;
-    Intent intent;
+    private ImageView imageView;
+    private int awayTeamLogoImageView;
+    private int homeTeamLogoImageView;
+    private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

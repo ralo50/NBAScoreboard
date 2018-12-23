@@ -4,6 +4,7 @@ import com.ralo.nbascoreboard.Utils.DataClasses.Game;
 import com.ralo.nbascoreboard.Utils.JsonParsers.JsonGameParser;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class GameCardsCreater {
@@ -11,18 +12,17 @@ public class GameCardsCreater {
     private ArrayList<Game> gameArrayList;
     private JsonGameParser jsonGameParser;
 
-    public GameCardsCreater(JSONObject response){
+    public GameCardsCreater(JSONObject response) {
         this.jsonGameParser = new JsonGameParser(response);
         gameArrayList = new ArrayList<>();
     }
 
-
-    private int getNumberOfGames(){
+    private int getNumberOfGames() {
         return this.jsonGameParser.getNumberOfGames();
     }
 
-    public void populateCards(){
-        for(int i = 0; i < getNumberOfGames(); i++){
+    public void populateCards() {
+        for (int i = 0; i < getNumberOfGames(); i++) {
             Game game = new Game();
             this.jsonGameParser.setCurrentGame(i);
             game.setHomeTeamName(jsonGameParser.getHomeTeamName());
@@ -44,11 +44,11 @@ public class GameCardsCreater {
         }
     }
 
-    public ArrayList<Game> getGameArrayList(){
+    public ArrayList<Game> getGameArrayList() {
         return gameArrayList;
     }
 
-    public boolean isGameNight(){
+    public boolean isGameNight() {
         return jsonGameParser.isGameNight();
     }
 }

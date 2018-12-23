@@ -1,6 +1,5 @@
 package com.ralo.nbascoreboard.Fragments.MainFragments;
 
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,23 +29,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
 public class MatchupFragment extends Fragment {
 
-    JSONObject jsonObject;
-    JsonPeriodParser jsonPeriodParser;
-    PeriodCardsCreater periodCardsCreater;
-    ArrayList<Period> periodArrayList;
-    RecyclerView periodRecyclerView;
-    TextView awayTeamPeriodName;
-    TextView homeTeamPeriodName;
-    JsonTeamParser jsonTeamParser;
-    GameStatCardsCreater gameStatCardsCreater;
-    ArrayList<GameStat> gameStatArrayList;
-    RecyclerView gameStatRecyclerView;
-    TextView awayTeamGameStatName;
-    TextView homeTeamGameStatName;
-
+    private JSONObject jsonObject;
+    private JsonPeriodParser jsonPeriodParser;
+    private PeriodCardsCreater periodCardsCreater;
+    private ArrayList<Period> periodArrayList;
+    private RecyclerView periodRecyclerView;
+    private TextView awayTeamPeriodName;
+    private TextView homeTeamPeriodName;
+    private JsonTeamParser jsonTeamParser;
+    private GameStatCardsCreater gameStatCardsCreater;
+    private ArrayList<GameStat> gameStatArrayList;
+    private RecyclerView gameStatRecyclerView;
+    private TextView awayTeamGameStatName;
+    private TextView homeTeamGameStatName;
 
     public MatchupFragment() {
     }
@@ -81,7 +78,6 @@ public class MatchupFragment extends Fragment {
         homeTeamGameStatName.setText(jsonTeamParser.getTeamName("home"));
         awayTeamPeriodName.setText(jsonTeamParser.getTeamName("visitor"));
         homeTeamPeriodName.setText(jsonTeamParser.getTeamName("home"));
-
         periodRecyclerView = getView().findViewById(R.id.periodRecyclerView);
         gameStatRecyclerView = getView().findViewById(R.id.gameStatsRecyclerView);
 
@@ -127,5 +123,4 @@ public class MatchupFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         gameStatRecyclerView.setLayoutManager(llm);
     }
-
 }

@@ -18,15 +18,15 @@ import com.squareup.picasso.Picasso;
 
 public class PlayerGameDetailsFragment extends DialogFragment {
 
-    TextView playerName;
-    ImageView playerImage;
-    Player player;
+    private TextView playerName;
+    private ImageView playerImage;
+    private Player player;
 
     public PlayerGameDetailsFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player_game_details, container);
         getDialog().getWindow()

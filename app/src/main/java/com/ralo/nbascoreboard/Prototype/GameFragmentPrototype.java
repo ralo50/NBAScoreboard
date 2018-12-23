@@ -54,7 +54,7 @@ public class GameFragmentPrototype extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        gameFragmentView = inflater.inflate(R.layout.fragment_game2, container, false);
+        gameFragmentView = inflater.inflate(R.layout.prototype_fragment_game, container, false);
         gameActivity = (GameActivity) getActivity();
         setup();
         return gameFragmentView;

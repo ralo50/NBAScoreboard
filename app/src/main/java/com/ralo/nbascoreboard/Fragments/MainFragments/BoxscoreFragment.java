@@ -18,7 +18,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -39,7 +38,6 @@ import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
 import com.ralo.nbascoreboard.Fragments.AuxiliaryFragments.PlayerGameDetailsFragment;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
-import com.ralo.nbascoreboard.Prototype.NbaTabView;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
 import com.ralo.nbascoreboard.Utils.DataClasses.Player;
@@ -50,25 +48,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BoxscoreFragment extends Fragment {
 
-    RadioGroup teamRadioGroup;
-    JSONObject jsonObject;
-    RecyclerView myRecyclerView;
-    ArrayList<Player> playerArrayList;
-    PlayerCardsCreater playerCardsCreater;
-    RadioButton homeRadioButton;
-    RadioButton awayRadioButton;
-    ConstraintLayout constraintLayout;
-    SwipeRefreshLayout swipeRefreshLayout;
-    MyTask myTask;
-    boolean homeTeamSelected;
-    private float x1, x2;
-    static final int MIN_DISTANCE = 150;
-    static final int REFRESH_TIME_DELAY = 15000;
+    private RadioGroup teamRadioGroup;
+    private JSONObject jsonObject;
+    private RecyclerView myRecyclerView;
+    private ArrayList<Player> playerArrayList;
+    private PlayerCardsCreater playerCardsCreater;
+    private RadioButton homeRadioButton;
+    private RadioButton awayRadioButton;
+    private ConstraintLayout constraintLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private MyTask myTask;
+    private boolean homeTeamSelected;
+    private static final int REFRESH_TIME_DELAY = 20000;
     private Handler mHandler;
 
     public BoxscoreFragment() {
@@ -80,12 +73,12 @@ public class BoxscoreFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_boxscore, container, false);
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (jsonObject != null) {
             setupViews();
@@ -116,12 +109,10 @@ public class BoxscoreFragment extends Fragment {
                     case R.id.awayTeamRadioButton:
                         setupAwayPlayersDetails();
                         homeTeamSelected = false;
-                        //something
                         break;
                     case R.id.homeTeamRadioButton:
                         setupHomePlayersDetails();
                         homeTeamSelected = true;
-                        //something
                         break;
                 }
             }
@@ -143,10 +134,10 @@ public class BoxscoreFragment extends Fragment {
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         if (GameActivity.isGameOver) {
-            GameFragment.gameTimeTextView.setText("Final");
+            GameFragment.gameTimeTextView.setText(R.string.game_ended);
         } else if (GameActivity.isGameActivated) {
             GameFragment.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
-            GameFragment.gameTimeTextView.setText("Live");
+            GameFragment.gameTimeTextView.setText(R.string.game_live);
         }
         GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
         GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
@@ -243,6 +234,7 @@ public class BoxscoreFragment extends Fragment {
         myTask.execute();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class MyTask extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -286,38 +278,6 @@ public class BoxscoreFragment extends Fragment {
             Toast.makeText(NbaApp.getCurrentActivity(), "Updated", Toast.LENGTH_SHORT).show();
             setupTeamDetails(jsonObject);
         }
-    }
-
-    private void setRecyclerViewSwipeListener(RecyclerView myRecyclerView) {
-        myRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x1 = motionEvent.getX();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        x2 = motionEvent.getX();
-                        float deltaX = x2 - x1;
-                        if (Math.abs(deltaX) > MIN_DISTANCE) {
-                            if (x2 > x1)
-                                NbaTabView.setPreviousFragment(1);
-                            else
-                                NbaTabView.setNextFragment(1);
-                        }
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean b) {
-            }
-        });
     }
 
     void stopRefreshingGameStats() {

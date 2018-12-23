@@ -10,11 +10,11 @@ import com.squareup.picasso.Picasso;
 
 public class PlayerActivity extends BaseActivity {
 
-    TextView playerName;
-    ImageView playerImage;
-    String playerNameString;
-    Intent intent;
-    Player player;
+    private TextView playerName;
+    private ImageView playerImage;
+    private String playerNameString;
+    private Intent intent;
+    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

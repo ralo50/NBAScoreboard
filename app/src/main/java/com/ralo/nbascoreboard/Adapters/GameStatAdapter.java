@@ -36,9 +36,8 @@ public class GameStatAdapter extends RecyclerView.Adapter<GameStatAdapter.MyView
     @NonNull
     @Override
     public GameStatAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_stat_card_view, parent, false);
-        final GameStatAdapter.MyViewHolder myViewHolder = new GameStatAdapter.MyViewHolder(listItem);
-        return myViewHolder;
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_game_stat, parent, false);
+        return new MyViewHolder(listItem);
     }
 
     @Override

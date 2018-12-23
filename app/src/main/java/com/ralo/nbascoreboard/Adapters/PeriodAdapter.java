@@ -39,12 +39,10 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
     @NonNull
     @Override
     public PeriodAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_period_scores_card_view, parent, false);
-        final PeriodAdapter.MyViewHolder myViewHolder = new PeriodAdapter.MyViewHolder(listItem);
+        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_game_period_scores, parent, false);
         //TODO fix layout
-        return myViewHolder;
+        return new MyViewHolder(listItem);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull PeriodAdapter.MyViewHolder myViewHolder, int position) {
@@ -54,11 +52,8 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
         myViewHolder.homeTeamPeriodPoints.setText(String.valueOf(period.getHomeTeamPeriodScore()));
     }
 
-
     @Override
     public int getItemCount() {
         return periodArrayList.size();
     }
-
-
 }

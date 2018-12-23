@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/gameHeader"
-        layout="@layout/game_header" />
+        layout="@layout/layout_game_header" />
 
     <com.ralo.nbascoreboard.Prototype.NbaTabView
         android:id="@+id/tab_game_details"
