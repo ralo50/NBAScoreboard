@@ -1,6 +1,7 @@
 package com.ralo.nbascoreboard.Utils.CardCreaters;
 
 import com.ralo.nbascoreboard.Utils.DataClasses.GameStat;
+import com.ralo.nbascoreboard.Utils.JsonParsers.JsonGameStatParser;
 import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamParser;
 
 import org.json.JSONObject;
@@ -10,14 +11,12 @@ import java.util.ArrayList;
 public class GameStatCardsCreater {
 
     private ArrayList<GameStat> gameStatArrayList;
-    private JsonTeamParser jsonTeamParser;
-    private String homeOrAway;
+    private JsonGameStatParser jsonGameStatParser;
     private static final int NUMBER_OF_STATS = 9;
 
-    public GameStatCardsCreater(JSONObject response, String homeOrAway) {
-        this.jsonTeamParser = new JsonTeamParser(response);
+    public GameStatCardsCreater(JSONObject response) {
+        this.jsonGameStatParser = new JsonGameStatParser(response);
         gameStatArrayList = new ArrayList<>();
-        this.homeOrAway = homeOrAway;
     }
 
     private int getNumberOfStats() {
@@ -28,9 +27,9 @@ public class GameStatCardsCreater {
         int numberOfStats = getNumberOfStats();
         for (int i = 0; i < numberOfStats; i++) {
             GameStat gameStat = new GameStat();
-            gameStat.setAwayTeamStat("awayTeamStat");
-            gameStat.setStatDescription("statDescription");
-            gameStat.setHomeTeamStat("homeTeamStat");
+            gameStat.setAwayTeamStat(jsonGameStatParser.getCompoundTeamStat("visitor", getGameStatCodes().get(i)));
+            gameStat.setStatDescription(getGameStatNames().get(i));
+            gameStat.setHomeTeamStat(jsonGameStatParser.getCompoundTeamStat("home", getGameStatCodes().get(i)));
 
             gameStatArrayList.add(gameStat);
         }
@@ -40,24 +39,31 @@ public class GameStatCardsCreater {
         return gameStatArrayList;
     }
 
-    public ArrayList<String> getGameStatNames() {
+    private ArrayList<String> getGameStatCodes() {
         ArrayList<String> names = new ArrayList<>();
-        names.add("field_goals_made");
-        names.add("field_goals_attempted");
-        names.add("field_goals_percentage");
-        names.add("free_throws_made");
-        names.add("free_throws_attempted");
-        names.add("free_throws_percentage");
-        names.add("three_pointers_made");
-        names.add("three_pointers_attempted");
-        names.add("three_pointers_percentage");
-        names.add("rebounds_offensive");
-        names.add("rebounds_defensive");
+        names.add("field goals");
+        names.add("free throws");
+        names.add("three pointers");
+        names.add("rebounds");
         names.add("assists");
-        names.add("fouls");
         names.add("steals");
-        names.add("turnovers");
         names.add("blocks");
+        names.add("turnovers");
+        names.add("fouls");
+        return names;
+    }
+
+    private ArrayList<String> getGameStatNames() {
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Field Goals");
+        names.add("Free Throws");
+        names.add("3 pointers");
+        names.add("Rebounds (Off)");
+        names.add("Assists");
+        names.add("Steals");
+        names.add("Blocks");
+        names.add("Turnovers");
+        names.add("Personal Fouls");
         return names;
     }
 }

@@ -26,9 +26,9 @@ public class JsonTeamParser {
         return baseJsonObject;
     }
 
-    public int getTeamImage(String homeOrAway) {
+    public int getTeamImage(String homeOrVisitor) {
         try {
-            newJasonObject = this.getBaseJsonObject(homeOrAway);
+            newJasonObject = this.getBaseJsonObject(homeOrVisitor);
             return JsonGameParser.getImageId(newJasonObject.getString("team_key"));
 
         } catch (JSONException e) {

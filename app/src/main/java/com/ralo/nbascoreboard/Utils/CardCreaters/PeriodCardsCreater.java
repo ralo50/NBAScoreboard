@@ -11,12 +11,10 @@ public class PeriodCardsCreater {
 
     private ArrayList<Period> periodArrayList;
     private JsonPeriodParser jsonPeriodParser;
-    private String homeOrAway;
 
-    public PeriodCardsCreater(JSONObject response, String homeOrAway) {
+    public PeriodCardsCreater(JSONObject response) {
         this.jsonPeriodParser = new JsonPeriodParser(response);
         periodArrayList = new ArrayList<>();
-        this.homeOrAway = homeOrAway;
     }
 
     private int getNumberOfPeriods() {

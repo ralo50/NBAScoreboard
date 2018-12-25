@@ -90,7 +90,7 @@ public class MatchupFragment extends Fragment {
 
     private void setupPeriodRecyclerView() {
         jsonPeriodParser = new JsonPeriodParser(jsonObject);
-        periodCardsCreater = new PeriodCardsCreater(jsonObject, "visitor");
+        periodCardsCreater = new PeriodCardsCreater(jsonObject);
         periodCardsCreater.populateCards();
     }
 
@@ -109,7 +109,7 @@ public class MatchupFragment extends Fragment {
 
     private void setupGameStatsRecyclerView() {
         jsonTeamParser = new JsonTeamParser(jsonObject);
-        gameStatCardsCreater = new GameStatCardsCreater(jsonObject, "visitor");
+        gameStatCardsCreater = new GameStatCardsCreater(jsonObject);
         gameStatCardsCreater.populateCards();
     }
 

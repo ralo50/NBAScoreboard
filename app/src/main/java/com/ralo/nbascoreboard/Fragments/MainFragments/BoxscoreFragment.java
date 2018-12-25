@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,7 +56,6 @@ public class BoxscoreFragment extends Fragment {
     private PlayerCardsCreater playerCardsCreater;
     private RadioButton homeRadioButton;
     private RadioButton awayRadioButton;
-    private ConstraintLayout constraintLayout;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MyTask myTask;
     private boolean homeTeamSelected;
@@ -91,7 +89,6 @@ public class BoxscoreFragment extends Fragment {
         myRecyclerView = getView().findViewById(R.id.myRecyclerView);
         homeRadioButton = getView().findViewById(R.id.homeTeamRadioButton);
         awayRadioButton = getView().findViewById(R.id.awayTeamRadioButton);
-        constraintLayout = getView().findViewById(R.id.constraint_layout);
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshLayout);
         mHandler = new Handler();
         setupPlayerDetails();
@@ -155,8 +152,6 @@ public class BoxscoreFragment extends Fragment {
 
             @Override
             public void onItemLongClick(View v, int position) {
-                //TODO setup fragment for player career information
-                //TODO maybe add player profile picture
                 setupPlayerCareerDetailsFragment(position);
             }
         });

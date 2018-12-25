@@ -42,20 +42,19 @@ public class GameFragment extends Fragment {
     private TextView awayTeamNameTextView;
     private ImageView awayTeamLogoImageView;
     private ImageView homeTeamLogoImageView;
-    public static TextView awayTeamScoreTextView;
-    public static TextView homeTeamScoreTextView;
     private TextView awayTeamWinsTextView;
     private TextView homeTeamWinsTextView;
-    public static TextView gameTimeTextView;
     private int homeTeamStringId;
     private int awayTeamStringId;
     private JSONObject jsonObject;
     private CustomViewPager pager;
     private TabLayout tabLayout;
+    public static TextView awayTeamScoreTextView;
+    public static TextView homeTeamScoreTextView;
+    public static TextView gameTimeTextView;
 
     public GameFragment() {
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -135,7 +134,6 @@ public class GameFragment extends Fragment {
         homeTeamWinsTextView.setText(GameActivity.homeTeamWins);
         awayTeamWinsTextView.setText(GameActivity.awayTeamWins);
     }
-
 
     private void setupFragments(JSONObject jsonObject) {
         tabLayout.setupWithViewPager(pager);
