@@ -13,17 +13,17 @@ import org.json.JSONObject;
 
 
 public class SectionPagerAdapter extends FragmentPagerAdapter {
-    JSONObject jsonObject;
-    public MatchupFragment matchupFragment;
-    public BoxscoreFragment boxscoreFragment;
-    public PlaybyplayFragment playbyplayFragment;
+    private JSONObject jsonObject;
+    private MatchupFragment matchupFragment;
+    private BoxscoreFragment boxscoreFragment;
+    private PlaybyplayFragment playbyplayFragment;
 
     public SectionPagerAdapter(FragmentManager fm, JSONObject jsonObject) {
         super(fm);
         this.jsonObject = jsonObject;
         matchupFragment = new MatchupFragment(this.jsonObject);
         boxscoreFragment = new BoxscoreFragment(this.jsonObject);
-        playbyplayFragment = new PlaybyplayFragment(this.jsonObject);
+        playbyplayFragment = new PlaybyplayFragment();
     }
 
     @Override
