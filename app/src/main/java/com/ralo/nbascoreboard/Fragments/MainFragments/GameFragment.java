@@ -139,6 +139,7 @@ public class GameFragment extends Fragment {
         tabLayout.setupWithViewPager(pager);
         SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager(), jsonObject);
         pager.setAdapter(pagerAdapter);
+        pager.setOffscreenPageLimit(2);
         pager.setCurrentItem(1);
     }
 
