@@ -1,9 +1,8 @@
 package com.ralo.nbascoreboard.Utils.CardCreaters;
 
+
 import com.ralo.nbascoreboard.Utils.DataClasses.Play;
-import com.ralo.nbascoreboard.Utils.DataClasses.Player;
 import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayParser;
-import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayerParser;
 
 import org.json.JSONObject;
 
@@ -25,7 +24,7 @@ public class PlayCardsCreater {
 
     public void populateCards() {
         int numberOfPlays = getNumberOfPlays();
-        for (int i = numberOfPlays-1; i >= 0; i--) {
+        for (int i = numberOfPlays - 1; i >= 0; i--) {
             Play play = new Play();
             play.setHomeScore(jsonPlayParser.getPlayInfoInt("home_score", i));
             play.setVisitorScore(jsonPlayParser.getPlayInfoInt("visitor_score", i));
@@ -35,6 +34,16 @@ public class PlayCardsCreater {
             play.setClockTime(jsonPlayParser.getPlayInfoString("clock", i));
             play.setPlayDescription(jsonPlayParser.getPlayInfoString("description", i));
             play.setTeamCode(jsonPlayParser.getPlayInfoString("team_abr", i));
+            if (i > 0) {
+                if ((jsonPlayParser.getPlayInfoInt("home_score", i) != jsonPlayParser.getPlayInfoInt("home_score", i - 1)) ||
+                        (jsonPlayParser.getPlayInfoInt("visitor_score", i)) != (jsonPlayParser.getPlayInfoInt("visitor_score", i - 1))) {
+                    String playDescription = play.getPlayDescription();
+                    playDescription = playDescription.substring(playDescription.indexOf("]") + 2, playDescription.length());
+                    play.setPlayDescription(playDescription);
+                    play.setShotMade(true);
+                } else
+                    play.setShotMade(false);
+            }
             playArrayList.add(play);
         }
     }

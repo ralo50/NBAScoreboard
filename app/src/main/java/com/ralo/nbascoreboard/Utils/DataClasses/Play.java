@@ -10,6 +10,7 @@ public class Play {
     private String clockTime;
     private String playDescription;
     private String teamCode;
+    private boolean isShotMade;
 
     public int getHomeScore() {
         return homeScore;
@@ -73,5 +74,13 @@ public class Play {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public boolean isShotMade() {
+        return isShotMade;
+    }
+
+    public void setShotMade(boolean shotMade) {
+        isShotMade = shotMade;
     }
 }

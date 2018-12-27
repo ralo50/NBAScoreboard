@@ -50,6 +50,10 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
         myViewHolder.periodCount.setText(period.getPeriodNumber());
         myViewHolder.awayTeamPeriodPoints.setText(String.valueOf(period.getAwayTeamPeriodScore()));
         myViewHolder.homeTeamPeriodPoints.setText(String.valueOf(period.getHomeTeamPeriodScore()));
+        if (period.getAwayTeamPeriodScore() > period.getHomeTeamPeriodScore())
+            myViewHolder.awayTeamPeriodPoints.setTextColor(Color.parseColor("#ffffff"));
+        else if (period.getAwayTeamPeriodScore() < period.getHomeTeamPeriodScore())
+            myViewHolder.homeTeamPeriodPoints.setTextColor(Color.parseColor("#ffffff"));
     }
 
     @Override

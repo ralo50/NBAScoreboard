@@ -12,7 +12,6 @@ public class GameStatCardsCreater {
 
     private ArrayList<GameStat> gameStatArrayList;
     private JsonGameStatParser jsonGameStatParser;
-    private static final int NUMBER_OF_STATS = 9;
 
     public GameStatCardsCreater(JSONObject response) {
         this.jsonGameStatParser = new JsonGameStatParser(response);
@@ -20,7 +19,7 @@ public class GameStatCardsCreater {
     }
 
     private int getNumberOfStats() {
-        return NUMBER_OF_STATS;
+        return getGameStatNames().size();
     }
 
     public void populateCards() {

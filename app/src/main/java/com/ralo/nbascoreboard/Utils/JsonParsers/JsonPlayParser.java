@@ -32,7 +32,8 @@ public class JsonPlayParser {
         int currentPlayInfo = 0;
         try {
             newJasonObject = this.getBaseJsonArray().getJSONObject(playIndex);
-            currentPlayInfo = newJasonObject.getInt(playInfo);
+            if(!newJasonObject.getString(playInfo).isEmpty())
+                currentPlayInfo = newJasonObject.getInt(playInfo);
         } catch (JSONException e) {
             e.printStackTrace();
         }

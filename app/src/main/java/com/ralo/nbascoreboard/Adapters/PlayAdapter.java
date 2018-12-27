@@ -35,7 +35,6 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.MyViewHolder> 
 
         MyViewHolder(View itemView) {
             super(itemView);
-            itemView.setBackgroundColor(Color.parseColor("#282828"));
             playQuarter = itemView.findViewById(R.id.play_quarter);
             playTime = itemView.findViewById(R.id.play_time);
             playCurrentScore = itemView.findViewById(R.id.play_current_score);
@@ -60,7 +59,11 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.MyViewHolder> 
         String score = play.getVisitorScore() + "-" + play.getHomeScore();
         myViewHolder.playCurrentScore.setText(score);
         myViewHolder.playDescription.setText(play.getPlayDescription());
-        if(play.getPersonId() == 0)
+        if (play.isShotMade())
+            myViewHolder.itemView.setBackgroundColor(Color.parseColor("#3d3d3d"));
+        else
+            myViewHolder.itemView.setBackgroundColor(Color.parseColor("#282828"));
+        if (play.getPersonId() == 0)
             myViewHolder.playerImage.setImageResource(JsonGameParser.getImageId(play.getTeamCode()));
         else
             Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + play.getPersonId() + ".png").into(myViewHolder.playerImage);
