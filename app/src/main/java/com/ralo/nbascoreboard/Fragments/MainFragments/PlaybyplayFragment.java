@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,7 @@ public class PlaybyplayFragment extends Fragment {
     private Handler mHandler;
     private static final int REFRESH_TIME_DELAY = 20000;
     private MyTask myTask;
+    private FloatingActionButton floatingActionButton;
 
     public PlaybyplayFragment() {
     }
@@ -65,6 +67,8 @@ public class PlaybyplayFragment extends Fragment {
     private void setupViews() {
         playRecyclerView = getView().findViewById(R.id.play_recycler_view);
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
+        floatingActionButton = getView().findViewById(R.id.floating_action_button);
+        floatingActionButton.setAlpha(0.5f);
         mHandler = new Handler();
         startRefreshingPlayByPlay();
         setRefreshLayoutListener();
