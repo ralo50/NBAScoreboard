@@ -142,15 +142,19 @@ public class BoxscoreFragment extends Fragment {
             gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
             gameTimeTextView.setText(R.string.game_live);
         }
-        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+        int visitorTeamScore = teamParser.getTeamScore("visitor");
+        int homeTeamScore = teamParser.getTeamScore("home");
+        awayTeamScoreTextView.setText(String.valueOf(visitorTeamScore));
+        homeTeamScoreTextView.setText(String.valueOf(homeTeamScore));
+        if(visitorTeamScore > homeTeamScore)
+            awayTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
+        else if(visitorTeamScore < homeTeamScore)
+            homeTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     public void setCardsCreater() {
-        playerArrayList = new ArrayList<>();
-        playerArrayList = playerCardsCreater.getPlayerArrayList();
-        PlayerAdapter adapter = new PlayerAdapter(playerArrayList, new CustomItemClickListener() {
+        PlayerAdapter adapter = new PlayerAdapter(playerCardsCreater.getPlayerArrayList(), playerCardsCreater.getPlayerLeaderStats(), new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 setupPlayerGameDetailsFragment(position);

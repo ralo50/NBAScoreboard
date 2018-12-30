@@ -19,9 +19,14 @@ import java.util.ArrayList;
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHolder> {
     private final CustomItemClickListener listener;
     private ArrayList<Player> playerList;
+    private ArrayList<Integer> playerLeaderStats;
+    private static final int POINTS = 0;
+    private static final int REBOUNDS = 1;
+    private static final int ASSISTS = 2;
 
-    public PlayerAdapter(ArrayList<Player> myPlayers, CustomItemClickListener listener) {
+    public PlayerAdapter(ArrayList<Player> myPlayers, ArrayList<Integer> playerLeaderStats, CustomItemClickListener listener) {
         this.playerList = myPlayers;
+        this.playerLeaderStats = playerLeaderStats;
         this.listener = listener;
     }
 
@@ -85,6 +90,12 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade() + "-" + player.getFreeThrowsAttempted()));
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
         Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + player.getPlayerId() + ".png").into(myViewHolder.playerImage);
+        if(player.getPoints() == playerLeaderStats.get(POINTS))
+            myViewHolder.playerPoints.setTextColor(Color.parseColor("#ffffff"));
+        if(player.getReboundsTotal() == playerLeaderStats.get(REBOUNDS))
+            myViewHolder.playerRebounds.setTextColor(Color.parseColor("#ffffff"));
+        if(player.getAssists() == playerLeaderStats.get(ASSISTS))
+            myViewHolder.playerAssists.setTextColor(Color.parseColor("#ffffff"));
     }
 
     @Override

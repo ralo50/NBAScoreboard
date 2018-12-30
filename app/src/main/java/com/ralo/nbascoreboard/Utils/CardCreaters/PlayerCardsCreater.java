@@ -12,11 +12,16 @@ public class PlayerCardsCreater {
     private ArrayList<Player> playerArrayList;
     private JsonPlayerParser jsonPlayerParser;
     private String homeOrAway;
+    private int pointsLeader = 0;
+    private int reboundsLeader = 0;
+    private int assistsLeader = 0;
+
 
     public PlayerCardsCreater(JSONObject response, String homeOrAway) {
         this.jsonPlayerParser = new JsonPlayerParser(response);
         playerArrayList = new ArrayList<>();
         this.homeOrAway = homeOrAway;
+
     }
 
     private int getNumberOfPlayers(String homeOrAway) {
@@ -42,7 +47,7 @@ public class PlayerCardsCreater {
                 player.setThreePointersAttempted(jsonPlayerParser.getPlayerTeamStatsInt("three_pointers_attempted", i, homeOrAway));
                 player.setMinutesPlayed(jsonPlayerParser.getPlayerTeamStatsInt("minutes", i, homeOrAway));
                 player.setPlayerId(jsonPlayerParser.getPlayerTeamStatsInt("person_id", i, homeOrAway));
-
+                setPlayerLeader(player);
                 playerArrayList.add(player);
             }
         }
@@ -50,6 +55,22 @@ public class PlayerCardsCreater {
 
     public ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
+    }
+
+    public ArrayList<Integer> getPlayerLeaderStats(){
+        ArrayList<Integer> playerLeaderStatsArrayList = new ArrayList<>();
+        playerLeaderStatsArrayList.add(pointsLeader);
+        playerLeaderStatsArrayList.add(reboundsLeader);
+        playerLeaderStatsArrayList.add(assistsLeader);
+        return playerLeaderStatsArrayList;
+    }
+    private void setPlayerLeader(Player player){
+        if(player.getPoints() > pointsLeader)
+            pointsLeader = player.getPoints();
+        if(player.getReboundsTotal() > reboundsLeader)
+            reboundsLeader = player.getReboundsTotal();
+        if(player.getAssists() > assistsLeader)
+            assistsLeader = player.getAssists();
     }
 
 }
