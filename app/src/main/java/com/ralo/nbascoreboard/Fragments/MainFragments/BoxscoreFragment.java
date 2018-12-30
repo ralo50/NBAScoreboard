@@ -146,9 +146,9 @@ public class BoxscoreFragment extends Fragment {
         int homeTeamScore = teamParser.getTeamScore("home");
         awayTeamScoreTextView.setText(String.valueOf(visitorTeamScore));
         homeTeamScoreTextView.setText(String.valueOf(homeTeamScore));
-        if(visitorTeamScore > homeTeamScore)
+        if (visitorTeamScore > homeTeamScore)
             awayTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
-        else if(visitorTeamScore < homeTeamScore)
+        else if (visitorTeamScore < homeTeamScore)
             homeTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
     }
 

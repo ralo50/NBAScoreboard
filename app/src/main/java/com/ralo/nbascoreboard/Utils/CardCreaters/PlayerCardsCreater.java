@@ -57,19 +57,20 @@ public class PlayerCardsCreater {
         return playerArrayList;
     }
 
-    public ArrayList<Integer> getPlayerLeaderStats(){
+    public ArrayList<Integer> getPlayerLeaderStats() {
         ArrayList<Integer> playerLeaderStatsArrayList = new ArrayList<>();
         playerLeaderStatsArrayList.add(pointsLeader);
         playerLeaderStatsArrayList.add(reboundsLeader);
         playerLeaderStatsArrayList.add(assistsLeader);
         return playerLeaderStatsArrayList;
     }
-    private void setPlayerLeader(Player player){
-        if(player.getPoints() > pointsLeader)
+
+    private void setPlayerLeader(Player player) {
+        if (player.getPoints() > pointsLeader)
             pointsLeader = player.getPoints();
-        if(player.getReboundsTotal() > reboundsLeader)
+        if (player.getReboundsTotal() > reboundsLeader)
             reboundsLeader = player.getReboundsTotal();
-        if(player.getAssists() > assistsLeader)
+        if (player.getAssists() > assistsLeader)
             assistsLeader = player.getAssists();
     }
 

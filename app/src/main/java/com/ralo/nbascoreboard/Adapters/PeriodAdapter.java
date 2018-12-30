@@ -40,7 +40,6 @@ public class PeriodAdapter extends RecyclerView.Adapter<PeriodAdapter.MyViewHold
     @Override
     public PeriodAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_game_period_scores, parent, false);
-        //TODO fix layout
         return new MyViewHolder(listItem);
     }
 

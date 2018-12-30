@@ -90,11 +90,11 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.MyViewHold
         myViewHolder.playerFreeThrows.setText(String.valueOf(player.getFreeThrowsMade() + "-" + player.getFreeThrowsAttempted()));
         myViewHolder.minutesPlayed.setText(String.valueOf(player.getMinutesPlayed()));
         Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + player.getPlayerId() + ".png").into(myViewHolder.playerImage);
-        if(player.getPoints() == playerLeaderStats.get(POINTS))
+        if (player.getPoints() == playerLeaderStats.get(POINTS))
             myViewHolder.playerPoints.setTextColor(Color.parseColor("#ffffff"));
-        if(player.getReboundsTotal() == playerLeaderStats.get(REBOUNDS))
+        if (player.getReboundsTotal() == playerLeaderStats.get(REBOUNDS))
             myViewHolder.playerRebounds.setTextColor(Color.parseColor("#ffffff"));
-        if(player.getAssists() == playerLeaderStats.get(ASSISTS))
+        if (player.getAssists() == playerLeaderStats.get(ASSISTS))
             myViewHolder.playerAssists.setTextColor(Color.parseColor("#ffffff"));
     }
 

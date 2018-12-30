@@ -38,15 +38,12 @@ import java.util.ArrayList;
 public class PlaybyplayFragment extends Fragment {
 
     private RecyclerView playRecyclerView;
-    private PlayCardsCreater playCardsCreater;
     private JSONObject jsonObject;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ArrayList<Play> playArrayList;
     private Handler mHandler;
     private static final int REFRESH_TIME_DELAY = 20000;
     private static final int RECYCLERVIEW_POSITION_TRIGGER = 30;
     private static final int RECYCLERVIEW_POSITION_START = 0;
-    private MyTask myTask;
     private FloatingActionButton floatingActionButton;
     private LinearLayoutManager llm;
 
@@ -76,10 +73,9 @@ public class PlaybyplayFragment extends Fragment {
     }
 
     private void setupPlayCardsCreater() {
-        playCardsCreater = new PlayCardsCreater(jsonObject);
+        PlayCardsCreater playCardsCreater = new PlayCardsCreater(jsonObject);
         playCardsCreater.populateCards();
-        playArrayList = new ArrayList<>();
-        playArrayList = playCardsCreater.getPlayArrayList();
+        ArrayList<Play> playArrayList = playCardsCreater.getPlayArrayList();
         PlayAdapter adapter = new PlayAdapter(playArrayList);
         playRecyclerView.setHasFixedSize(true);
         playRecyclerView.setAdapter(adapter);
@@ -123,7 +119,7 @@ public class PlaybyplayFragment extends Fragment {
     }
 
     private void getNewGamePlayByPlay() {
-        myTask = new PlaybyplayFragment.MyTask();
+        MyTask myTask = new MyTask();
         myTask.execute();
     }
 
@@ -187,6 +183,7 @@ public class PlaybyplayFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_POSITION_TRIGGER) {
                     floatingActionButton.show();
+                    floatingActionButton.setAlpha(0.75f);
                 } else {
                     floatingActionButton.hide();
                 }
