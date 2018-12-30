@@ -26,13 +26,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.ralo.nbascoreboard.Activities.GameActivity;
 import com.ralo.nbascoreboard.Adapters.PlayAdapter;
-import com.ralo.nbascoreboard.Adapters.PlayerAdapter;
-import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.NbaApp;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.CardCreaters.PlayCardsCreater;
 import com.ralo.nbascoreboard.Utils.DataClasses.Play;
-import com.ralo.nbascoreboard.Utils.JsonParsers.JsonPlayParser;
 
 import org.json.JSONObject;
 
@@ -47,8 +44,11 @@ public class PlaybyplayFragment extends Fragment {
     private ArrayList<Play> playArrayList;
     private Handler mHandler;
     private static final int REFRESH_TIME_DELAY = 20000;
+    private static final int RECYCLERVIEW_POSITION_TRIGGER = 30;
+    private static final int RECYCLERVIEW_POSITION_START = 0;
     private MyTask myTask;
     private FloatingActionButton floatingActionButton;
+    private LinearLayoutManager llm;
 
     public PlaybyplayFragment() {
     }
@@ -68,10 +68,11 @@ public class PlaybyplayFragment extends Fragment {
         playRecyclerView = getView().findViewById(R.id.play_recycler_view);
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
         floatingActionButton = getView().findViewById(R.id.floating_action_button);
-        floatingActionButton.setAlpha(0.5f);
         mHandler = new Handler();
         startRefreshingPlayByPlay();
         setRefreshLayoutListener();
+        setRecyclerViewScrollListener();
+        setFloatingActionButtonClickListener();
     }
 
     private void setupPlayCardsCreater() {
@@ -82,9 +83,10 @@ public class PlaybyplayFragment extends Fragment {
         PlayAdapter adapter = new PlayAdapter(playArrayList);
         playRecyclerView.setHasFixedSize(true);
         playRecyclerView.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         playRecyclerView.setLayoutManager(llm);
+
     }
 
     private void setRefreshLayoutListener() {
@@ -176,6 +178,29 @@ public class PlaybyplayFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopRefreshingGameStats();
+    }
+
+    public void setRecyclerViewScrollListener() {
+        playRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_POSITION_TRIGGER) {
+                    floatingActionButton.show();
+                } else {
+                    floatingActionButton.hide();
+                }
+            }
+        });
+    }
+
+    public void setFloatingActionButtonClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playRecyclerView.smoothScrollToPosition(RECYCLERVIEW_POSITION_START);
+            }
+        });
     }
 
 }
