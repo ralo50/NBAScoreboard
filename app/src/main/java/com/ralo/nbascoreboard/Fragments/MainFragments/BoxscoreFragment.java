@@ -23,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,6 +50,9 @@ import java.util.ArrayList;
 
 public class BoxscoreFragment extends Fragment {
 
+    private TextView awayTeamScoreTextView;
+    private TextView homeTeamScoreTextView;
+    private TextView gameTimeTextView;
     private RadioGroup teamRadioGroup;
     private JSONObject jsonObject;
     private RecyclerView myRecyclerView;
@@ -57,7 +61,6 @@ public class BoxscoreFragment extends Fragment {
     private RadioButton homeRadioButton;
     private RadioButton awayRadioButton;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private MyTask myTask;
     private boolean homeTeamSelected;
     private static final int REFRESH_TIME_DELAY = 20000;
     private Handler mHandler;
@@ -90,6 +93,9 @@ public class BoxscoreFragment extends Fragment {
         homeRadioButton = getView().findViewById(R.id.homeTeamRadioButton);
         awayRadioButton = getView().findViewById(R.id.awayTeamRadioButton);
         swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshLayout);
+        awayTeamScoreTextView = NbaApp.getCurrentActivity().findViewById(R.id.awayteamscore);
+        homeTeamScoreTextView = NbaApp.getCurrentActivity().findViewById(R.id.hometeamscore);
+        gameTimeTextView = NbaApp.getCurrentActivity().findViewById(R.id.gameTime);
         mHandler = new Handler();
         setupPlayerDetails();
         setRefreshLayoutListener();
@@ -131,13 +137,13 @@ public class BoxscoreFragment extends Fragment {
     private void setupTeamDetails(JSONObject jsonObject) {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         if (GameActivity.isGameOver) {
-            GameFragment.gameTimeTextView.setText(R.string.game_ended);
+            gameTimeTextView.setText(R.string.game_ended);
         } else if (GameActivity.isGameActivated) {
-            GameFragment.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
-            GameFragment.gameTimeTextView.setText(R.string.game_live);
+            gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
+            gameTimeTextView.setText(R.string.game_live);
         }
-        GameFragment.awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-        GameFragment.homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -225,7 +231,7 @@ public class BoxscoreFragment extends Fragment {
     }
 
     private void getNewGameStats() {
-        myTask = new MyTask();
+        MyTask myTask = new MyTask();
         myTask.execute();
     }
 

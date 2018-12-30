@@ -43,9 +43,9 @@ public class GameStatAdapter extends RecyclerView.Adapter<GameStatAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         GameStat gameStat = gameStatArrayList.get(position);
-        myViewHolder.awayTeamStat.setText(gameStat.getAwayTeamStat());                              //TODO
-        myViewHolder.statDescription.setText(gameStat.getStatDescription());                        //TODO
-        myViewHolder.homeTeamStat.setText(gameStat.getHomeTeamStat());                              //TODO
+        myViewHolder.awayTeamStat.setText(gameStat.getAwayTeamStat());
+        myViewHolder.statDescription.setText(gameStat.getStatDescription());
+        myViewHolder.homeTeamStat.setText(gameStat.getHomeTeamStat());
     }
 
     @Override

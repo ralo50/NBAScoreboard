@@ -49,9 +49,9 @@ public class GameFragment extends Fragment {
     private JSONObject jsonObject;
     private CustomViewPager pager;
     private TabLayout tabLayout;
-    public static TextView awayTeamScoreTextView;
-    public static TextView homeTeamScoreTextView;
-    public static TextView gameTimeTextView;
+    public  TextView awayTeamScoreTextView;
+    public  TextView homeTeamScoreTextView;
+    public  TextView gameTimeTextView;
 
     public GameFragment() {
     }

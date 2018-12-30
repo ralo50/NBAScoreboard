@@ -26,7 +26,7 @@ public class JsonGameStatParser {
         return baseJsonObject;
     }
 
-    public String getTeamStat(String homeOrVisitor, String statName) {
+    private String getTeamStat(String homeOrVisitor, String statName) {
         try {
             return getBaseJsonObject(homeOrVisitor).getString(statName);
         } catch (JSONException e) {
@@ -36,27 +36,24 @@ public class JsonGameStatParser {
     }
 
     public String getCompoundTeamStat(String homeOrVisitor, String statName){
-        if(statName.equals("field goals")){
-           return getTeamStat(homeOrVisitor, "field_goals_made")
-                   + "-" + getTeamStat(homeOrVisitor, "field_goals_attempted")
-                   + "   " + getTeamStat(homeOrVisitor, "field_goals_percentage") + "%";
-        }
-        else if(statName.equals("free throws")){
-            return getTeamStat(homeOrVisitor, "free_throws_made")
-                    + "-" + getTeamStat(homeOrVisitor, "free_throws_attempted")
-                    + "   " + getTeamStat(homeOrVisitor, "free_throws_percentage") + "%";
-        }
-        else if(statName.equals("three pointers")){
-            return getTeamStat(homeOrVisitor, "three_pointers_made")
-                    + "-" + getTeamStat(homeOrVisitor, "three_pointers_attempted")
-                    + "   " + getTeamStat(homeOrVisitor, "three_pointers_percentage") + "%";
-        }
-        else if(statName.equals("rebounds")){
-            return getTeamStat(homeOrVisitor, "rebounds_defensive")
-                    + " (" + getTeamStat(homeOrVisitor, "rebounds_offensive") + ")";
-        }
-        else{
-            return getTeamStat(homeOrVisitor, statName);
+        switch (statName) {
+            case "field goals":
+                return getTeamStat(homeOrVisitor, "field_goals_made")
+                        + "-" + getTeamStat(homeOrVisitor, "field_goals_attempted")
+                        + "   " + getTeamStat(homeOrVisitor, "field_goals_percentage") + "%";
+            case "free throws":
+                return getTeamStat(homeOrVisitor, "free_throws_made")
+                        + "-" + getTeamStat(homeOrVisitor, "free_throws_attempted")
+                        + "   " + getTeamStat(homeOrVisitor, "free_throws_percentage") + "%";
+            case "three pointers":
+                return getTeamStat(homeOrVisitor, "three_pointers_made")
+                        + "-" + getTeamStat(homeOrVisitor, "three_pointers_attempted")
+                        + "   " + getTeamStat(homeOrVisitor, "three_pointers_percentage") + "%";
+            case "rebounds":
+                return getTeamStat(homeOrVisitor, "rebounds_defensive")
+                        + " (" + getTeamStat(homeOrVisitor, "rebounds_offensive") + ")";
+            default:
+                return getTeamStat(homeOrVisitor, statName);
         }
     }
 }
