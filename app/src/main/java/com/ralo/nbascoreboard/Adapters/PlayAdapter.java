@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.MyViewHolder> {
 
     private ArrayList<Play> playList;
+    private final static int PLAYER_ID_THRESHOLD = 1500000000;
 
     public PlayAdapter(ArrayList<Play> myPlays) {
         this.playList = myPlays;
@@ -63,7 +64,7 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.MyViewHolder> 
             myViewHolder.itemView.setBackgroundColor(Color.parseColor("#3d3d3d"));
         else
             myViewHolder.itemView.setBackgroundColor(Color.parseColor("#282828"));
-        if (play.getPersonId() == 0)
+        if (play.getPersonId() == 0 || play.getPersonId() > PLAYER_ID_THRESHOLD)
             myViewHolder.playerImage.setImageResource(JsonGameParser.getImageId(play.getTeamCode()));
         else
             Picasso.get().load("https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + play.getPersonId() + ".png").into(myViewHolder.playerImage);

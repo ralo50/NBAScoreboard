@@ -129,8 +129,8 @@ public class GameFragment extends Fragment {
         homeTeamStringId = teamParser.getTeamImage("home");
         awayTeamNameTextView.setText(teamParser.getTeamName("visitor"));
         homeTeamNameTextView.setText(teamParser.getTeamName("home"));
-        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
-        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
+//        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
+//        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
         homeTeamWinsTextView.setText(GameActivity.homeTeamWins);
         awayTeamWinsTextView.setText(GameActivity.awayTeamWins);
     }

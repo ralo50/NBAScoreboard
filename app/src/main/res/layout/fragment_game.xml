@@ -17,17 +17,25 @@
             android:id="@+id/gameHeader"
             layout="@layout/layout_game_header" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorGravity="top" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <com.ralo.nbascoreboard.Utils.CustomViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:elevation="8dp"
+                app:tabIndicatorGravity="top"
+                app:tabIndicatorHeight="1dp" />
+
+            <com.ralo.nbascoreboard.Utils.CustomViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
 

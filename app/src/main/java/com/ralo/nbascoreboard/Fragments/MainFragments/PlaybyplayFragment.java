@@ -135,28 +135,7 @@ public class PlaybyplayFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/pbp_all.json";
-            final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
-
-            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    jsonObject = response;
-                    setupPlayCardsCreater();
-                    if(GameActivity.isGameActivated) {
-                        gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
-                        String gameTime = "Q" + playCardsCreater.getPlayArrayList().get(0).getPeriod() + "\n" + playCardsCreater.getPlayArrayList().get(0).getClockTime();
-                        gameTimeTextView.setText(gameTime);
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
-                    mHandler.removeCallbacks(mStatusChecker);
-                }
-            });
-            requestQueue.add(objectRequest);
+            getJsonObject();
             return "";
         }
 
@@ -170,6 +149,31 @@ public class PlaybyplayFragment extends Fragment {
             super.onPostExecute(result);
             Toast.makeText(NbaApp.getCurrentActivity(), "Updated playbyplay", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getJsonObject() {
+        String url = "http://data.nba.net/json/cms/noseason/game/" + GameActivity.gameDate + "/" + GameActivity.gameId + "/pbp_all.json";
+        final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                jsonObject = response;
+                setupPlayCardsCreater();
+                if(GameActivity.isGameActivated) {
+                    gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
+                    String gameTime = "Q" + playCardsCreater.getPlayArrayList().get(0).getPeriod() + "\n" + playCardsCreater.getPlayArrayList().get(0).getClockTime();
+                    gameTimeTextView.setText(gameTime);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
+                mHandler.removeCallbacks(mStatusChecker);
+            }
+        });
+        requestQueue.add(objectRequest);
     }
 
     private void setupPlayCardsCreater() {
