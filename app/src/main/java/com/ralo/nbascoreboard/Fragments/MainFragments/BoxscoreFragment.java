@@ -138,9 +138,6 @@ public class BoxscoreFragment extends Fragment {
         JsonTeamParser teamParser = new JsonTeamParser(jsonObject);
         if (GameActivity.isGameOver) {
             gameTimeTextView.setText(R.string.game_ended);
-        } else if (GameActivity.isGameActivated) {
-            gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
-            gameTimeTextView.setText(R.string.game_live);
         }
         int visitorTeamScore = teamParser.getTeamScore("visitor");
         int homeTeamScore = teamParser.getTeamScore("home");
@@ -154,7 +151,9 @@ public class BoxscoreFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     public void setCardsCreater() {
-        PlayerAdapter adapter = new PlayerAdapter(playerCardsCreater.getPlayerArrayList(), playerCardsCreater.getPlayerLeaderStats(), new CustomItemClickListener() {
+        playerArrayList = new ArrayList<>();
+        playerArrayList = playerCardsCreater.getPlayerArrayList();
+        PlayerAdapter adapter = new PlayerAdapter(playerArrayList, playerCardsCreater.getPlayerLeaderStats(), new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 setupPlayerGameDetailsFragment(position);
@@ -170,7 +169,6 @@ public class BoxscoreFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
-        runLayoutAnimation(myRecyclerView);
     }
 
     private void setupPlayerGameDetailsFragment(int position) {
@@ -203,6 +201,7 @@ public class BoxscoreFragment extends Fragment {
             public void onRefresh() {
                 startRefreshingGameStats();
                 swipeRefreshLayout.setRefreshing(false);
+                runLayoutAnimation(myRecyclerView);
             }
         });
     }
@@ -256,6 +255,21 @@ public class BoxscoreFragment extends Fragment {
                 @Override
                 public void onResponse(JSONObject response) {
                     jsonObject = response;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NbaApp.getCurrentActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (homeTeamSelected)
+                                        setupHomePlayersDetails();
+                                    else
+                                        setupAwayPlayersDetails();
+                                    setupTeamDetails(jsonObject);
+                                }
+                            });
+                        }
+                    }).start();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -276,12 +290,7 @@ public class BoxscoreFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (homeTeamSelected)
-                setupHomePlayersDetails();
-            else
-                setupAwayPlayersDetails();
             Toast.makeText(NbaApp.getCurrentActivity(), "Updated", Toast.LENGTH_SHORT).show();
-            setupTeamDetails(jsonObject);
         }
     }
 
@@ -296,7 +305,7 @@ public class BoxscoreFragment extends Fragment {
         stopRefreshingGameStats();
     }
 
-    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
         final LayoutAnimationController controller =
                 AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
