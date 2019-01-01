@@ -4,12 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -41,7 +37,9 @@ import com.ralo.nbascoreboard.Utils.DataClasses.Game;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -61,7 +59,6 @@ public class MainActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private JSONObject jsonObject;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +84,6 @@ public class MainActivity extends BaseActivity {
         adView.loadAd(adRequest);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setViews() {
         dateChooser = findViewById(R.id.dateChooser);
         myCalendar = getYesterdaysCalendar();
@@ -189,7 +185,6 @@ public class MainActivity extends BaseActivity {
         myRecyclerView.setLayoutManager(llm);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setDatePicker() {
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -247,7 +242,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
 //    private String getCurrentDate() {
 //        Calendar myCalendar = Calendar.getInstance();
 //        String myFormat = "yyyyMMdd";
@@ -255,7 +249,6 @@ public class MainActivity extends BaseActivity {
 //        return sdf.format(myCalendar.getTime());
 //    }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private String getYesterdayDate() {
         Calendar myCalendar = Calendar.getInstance();
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
@@ -264,21 +257,18 @@ public class MainActivity extends BaseActivity {
         return sdf.format(myCalendar.getTime());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private String getCurrentTextViewDate(Calendar calendar) {
         String myFormat = "dd/MMM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         return "Date: " + sdf.format(calendar.getTime());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private Calendar getYesterdaysCalendar() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         return calendar;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDate(View view) {
         switch (view.getId()) {
             case (R.id.leftArrow):
@@ -293,12 +283,10 @@ public class MainActivity extends BaseActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void setListeners() {
      /*   myRecyclerView.setOnTouchListener(new OnSwipeTouchListener(this) {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSwipeLeft() {
                 changeDateTomorrow();
             }
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSwipeRight(){
                 changeDateYesterday();
@@ -306,7 +294,6 @@ public class MainActivity extends BaseActivity {
         });
     */
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
@@ -318,7 +305,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateYesterday() {
         noteTextView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, -1);
@@ -328,7 +314,6 @@ public class MainActivity extends BaseActivity {
         setUrl(sdf.format(myCalendar.getTime()));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void changeDateTomorrow() {
         noteTextView.setVisibility(View.GONE);
         myCalendar.add(Calendar.DAY_OF_YEAR, 1);

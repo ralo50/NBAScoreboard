@@ -169,6 +169,7 @@ public class BoxscoreFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(llm);
+        runLayoutAnimation(myRecyclerView);
     }
 
     private void setupPlayerGameDetailsFragment(int position) {
@@ -201,7 +202,6 @@ public class BoxscoreFragment extends Fragment {
             public void onRefresh() {
                 startRefreshingGameStats();
                 swipeRefreshLayout.setRefreshing(false);
-                runLayoutAnimation(myRecyclerView);
             }
         });
     }
