@@ -207,7 +207,7 @@ public class PlaybyplayFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playRecyclerView.smoothScrollToPosition(RECYCLERVIEW_POSITION_START);
+                playRecyclerView.scrollToPosition(RECYCLERVIEW_POSITION_START);
             }
         });
     }

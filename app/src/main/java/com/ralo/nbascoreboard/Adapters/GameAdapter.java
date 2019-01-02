@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ralo.nbascoreboard.Listeners.CustomItemClickListener;
 import com.ralo.nbascoreboard.R;
 import com.ralo.nbascoreboard.Utils.DataClasses.Game;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -71,11 +72,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         Game game = gameList.get(position);
         holder.homeTeamNameTextView.setText(game.getHomeTeamName());
         holder.awayTeamNameTextView.setText(game.getAwayTeamName());
-        //https://www.nba.com/assets/logos/teams/primary/web/BOS.svg
-//        Picasso.get().load("https://www.nba.com/assets/logos/teams/primary/web/" + game.getAwayTeamName().toUpperCase() + ".png").into(holder.awayTeamLogoImageView);
-        holder.awayTeamLogoImageView.setImageResource(game.getAwayTeamImage());
-//        Picasso.get().load("https://www.nba.com/assets/logos/teams/primary/web/" + game.getHomeTeamName().toUpperCase() + ".png").into(holder.homeTeamLogoImageView);
-        holder.homeTeamLogoImageView.setImageResource(game.getHomeTeamImage());
+        Picasso.get().load(game.getAwayTeamImage()).into(holder.awayTeamLogoImageView);
+        Picasso.get().load(game.getHomeTeamImage()).into(holder.homeTeamLogoImageView);
         holder.awayTeamScoreTextView.setText(game.getAwayTeamScore());
         holder.homeTeamScoreTextView.setText(game.getHomeTeamScore());
         holder.awayTeamWinsTextView.setText(game.getAwayTeamWins());
