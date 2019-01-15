@@ -46,12 +46,15 @@ public class GameFragment extends Fragment {
     private TextView homeTeamWinsTextView;
     private int homeTeamStringId;
     private int awayTeamStringId;
+    private int homeTeamId;
+    private int awayTeamId;
     private JSONObject jsonObject;
     private CustomViewPager pager;
     private TabLayout tabLayout;
     public TextView awayTeamScoreTextView;
     public TextView homeTeamScoreTextView;
     public TextView gameTimeTextView;
+
 
     public GameFragment() {
     }
@@ -129,6 +132,8 @@ public class GameFragment extends Fragment {
         homeTeamStringId = teamParser.getTeamImage("home");
         awayTeamNameTextView.setText(teamParser.getTeamName("visitor"));
         homeTeamNameTextView.setText(teamParser.getTeamName("home"));
+        awayTeamId = teamParser.getTeamId("visitor");
+        homeTeamId = teamParser.getTeamId("home");
 //        awayTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("visitor")));
 //        homeTeamScoreTextView.setText(String.valueOf(teamParser.getTeamScore("home")));
         homeTeamWinsTextView.setText(GameActivity.homeTeamWins);
@@ -152,6 +157,7 @@ public class GameFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), TeamActivity.class);
                     intent.putExtra("isHome", false);
                     intent.putExtra("awayTeamLogoImageView", awayTeamStringId);
+                    intent.putExtra("teamId", awayTeamId);
                     Pair[] pairs = new Pair[1];
                     pairs[0] = new Pair<>(awayTeamLogoImageView, "awayTeamLogoImageView");
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);
@@ -161,6 +167,7 @@ public class GameFragment extends Fragment {
                     intent = new Intent(getActivity(), TeamActivity.class);
                     intent.putExtra("homeTeamLogoImageView", homeTeamStringId);
                     intent.putExtra("isHome", true);
+                    intent.putExtra("teamId", homeTeamId);
                     pairs = new Pair[1];
                     pairs[0] = new Pair<>(homeTeamLogoImageView, "homeTeamLogoImageView");
                     options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs[0]);

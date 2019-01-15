@@ -2,6 +2,7 @@ package com.ralo.nbascoreboard.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.ralo.nbascoreboard.R;
@@ -10,6 +11,8 @@ public class TeamActivity extends BaseActivity {
     private ImageView imageView;
     private int awayTeamLogoImageView;
     private int homeTeamLogoImageView;
+    private int teamId;
+
     private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class TeamActivity extends BaseActivity {
 
     private void getIntents() {
         intent = getIntent();
+        teamId = intent.getIntExtra("teamId", 0);
         awayTeamLogoImageView = intent.getIntExtra("awayTeamLogoImageView", 0);
         homeTeamLogoImageView = intent.getIntExtra("homeTeamLogoImageView", 0);
     }
