@@ -97,22 +97,21 @@ public class MainActivity extends BaseActivity {
         setListeners();
     }
 
-    private void setUrl(String dateUrl) {
+    private void setUrl(final String dateUrl) {
         myRecyclerView.setAlpha(0.5f);
         loadingPanel.setVisibility(View.VISIBLE);
         noteTextView.setVisibility(View.GONE);
-
-        url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(JSONObject response) {
-                jsonObject = response;
-                gameCardsCreater = new GameCardsCreater(jsonObject);
-                if (gameCardsCreater.isGameNight()) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+            public void run() {
+                url = "http://data.nba.net/10s/prod/v1/" + dateUrl + "/scoreboard.json";
+                final RequestQueue requestQueue = Volley.newRequestQueue(NbaApp.getCurrentActivity());
+                JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        jsonObject = response;
+                        gameCardsCreater = new GameCardsCreater(jsonObject);
+                        if (gameCardsCreater.isGameNight()) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -125,27 +124,27 @@ public class MainActivity extends BaseActivity {
                                     runLayoutAnimation(myRecyclerView);
                                 }
                             });
+                        } else {
+                            myRecyclerView.setEnabled(false);
+                            myRecyclerView.setVisibility(View.GONE);
+                            noteTextView.setVisibility(View.VISIBLE);
+                            noteTextView.setText(R.string.no_games_tonight);
+                            loadingPanel.setVisibility(View.GONE);
                         }
-                    }).start();
-                } else {
-                    myRecyclerView.setEnabled(false);
-                    myRecyclerView.setVisibility(View.GONE);
-                    noteTextView.setVisibility(View.VISIBLE);
-                    noteTextView.setText(R.string.no_games_tonight);
-                    loadingPanel.setVisibility(View.GONE);
-                }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        myRecyclerView.setEnabled(false);
+                        myRecyclerView.setVisibility(View.GONE);
+                        noteTextView.setVisibility(View.VISIBLE);
+                        noteTextView.setText(R.string.error_getting_info);
+                        loadingPanel.setVisibility(View.GONE);
+                    }
+                });
+                requestQueue.add(objectRequest);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                myRecyclerView.setEnabled(false);
-                myRecyclerView.setVisibility(View.GONE);
-                noteTextView.setVisibility(View.VISIBLE);
-                noteTextView.setText(R.string.error_getting_info);
-                loadingPanel.setVisibility(View.GONE);
-            }
-        });
-        requestQueue.add(objectRequest);
+        }).start();
     }
 
     @SuppressLint("ClickableViewAccessibility")
