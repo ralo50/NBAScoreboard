@@ -4,9 +4,20 @@
 NBA Scoreboard is a sports app for live scores, play-by-plays and detailed stats for every game, team and player in the NBA.
 
 
+
+<p float="left">
+  <img src="https://i.imgur.com/cabWvND.jpg" alt="Games in a day" width="210"/>
+  <img src="https://i.imgur.com/DlTHE8G.jpg" alt="Player details" width="210"/>
+  <img src="https://i.imgur.com/j4TCfwt.jpg" alt="Teams details" width="210"/>
+  <img src="https://i.imgur.com/syMHpOj.jpg" alt="Play-by-play" width="210"/>
+</p>
+
+
 Soon available on the Play store.
 
+
 <a href='https://github.com/ralo50/NBAScoreboard'><img alt='Soon on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
+
 
 ## Joining the Beta
 Want to live life on the bleeding edge and help me out with testing and further development?
@@ -76,4 +87,4 @@ and remain the property of their respective owners.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ralo50/NBAScoreboard/blob/master/LICENSE) file for details.
