@@ -33,12 +33,20 @@
         android:id="@+id/team_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/teamLogoAway"
         app:layout_constraintStart_toEndOf="@id/teamLogoAway"
         app:layout_constraintTop_toTopOf="@+id/teamLogoAway" />
+
+    <TextView
+        android:id="@+id/team_season_wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/teamLogoAway"
+        app:layout_constraintTop_toBottomOf="@+id/team_name" />
 
 </android.support.constraint.ConstraintLayout>

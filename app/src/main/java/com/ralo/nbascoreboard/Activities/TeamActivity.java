@@ -19,6 +19,8 @@ import com.ralo.nbascoreboard.Utils.JsonParsers.JsonTeamStatParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+
 public class TeamActivity extends BaseActivity {
     private ImageView imageView;
     private int awayTeamLogoImageView;
@@ -28,6 +30,7 @@ public class TeamActivity extends BaseActivity {
     private JSONObject teamDetailsJsonObject;
     private JsonTeamStatParser jsonTeamStatParser;
     private TextView teamNameTextField;
+    private TextView teamSeasonWinsTextField;
 
     private static final int TEAM_ID = 0;
     private static final int TEAM_CITY = 1;
@@ -82,6 +85,7 @@ public class TeamActivity extends BaseActivity {
 
     private void setupViews() {
         teamNameTextField = findViewById(R.id.team_name);
+        teamSeasonWinsTextField = findViewById(R.id.team_season_wins);
         if (intent.getBooleanExtra("isHome", false)) {
             imageView = findViewById(R.id.teamLogoHome);
             imageView.setImageResource(homeTeamLogoImageView);
@@ -122,6 +126,11 @@ public class TeamActivity extends BaseActivity {
 
     private void populateHeaderDetails(JsonTeamStatParser jsonTeamStatParser) {
         String teamNameString = jsonTeamStatParser.getTeamStat(TEAM_CITY) + " " + jsonTeamStatParser.getTeamStat(TEAM_NAME);
+        float winsPercent = Float.parseFloat(jsonTeamStatParser.getTeamStat(WIN_PCT)) * 100;
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        winsPercent = Float.valueOf(decimalFormat.format(winsPercent));
+        String teamSeasonWinsString = "W: " + jsonTeamStatParser.getTeamStat(WINS) + "\nL: " + jsonTeamStatParser.getTeamStat(LOSSES) + "\n" + winsPercent + "%";
         teamNameTextField.setText(teamNameString);
+        teamSeasonWinsTextField.setText(teamSeasonWinsString);
     }
 }
