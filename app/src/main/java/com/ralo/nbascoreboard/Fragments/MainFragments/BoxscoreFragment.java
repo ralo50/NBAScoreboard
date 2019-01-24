@@ -274,7 +274,7 @@ public class BoxscoreFragment extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
                     mHandler.removeCallbacks(mStatusChecker);
                 }
             });
@@ -290,7 +290,7 @@ public class BoxscoreFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(NbaApp.getCurrentActivity(), "Updated", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(NbaApp.getCurrentActivity(), "Updated", Toast.LENGTH_SHORT).show();
         }
     }
 

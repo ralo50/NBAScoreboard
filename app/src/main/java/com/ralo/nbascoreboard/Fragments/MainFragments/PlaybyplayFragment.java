@@ -147,7 +147,7 @@ public class PlaybyplayFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(NbaApp.getCurrentActivity(), "Updated playbyplay", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(NbaApp.getCurrentActivity(), "Updated playbyplay", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,14 +162,18 @@ public class PlaybyplayFragment extends Fragment {
                 setupPlayCardsCreater();
                 if(GameActivity.isGameActivated) {
                     gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
-                    String gameTime = "Q" + playCardsCreater.getPlayArrayList().get(0).getPeriod() + "\n" + playCardsCreater.getPlayArrayList().get(0).getClockTime();
+                    String gameTime;
+                    if(playCardsCreater.getPlayArrayList().get(0).getPeriod() > 4)
+                        gameTime = "OT" + (playCardsCreater.getPlayArrayList().get(0).getPeriod()-4) + "\n" + playCardsCreater.getPlayArrayList().get(0).getClockTime();
+                    else
+                        gameTime = "Q" + playCardsCreater.getPlayArrayList().get(0).getPeriod() + "\n" + playCardsCreater.getPlayArrayList().get(0).getClockTime();
                     gameTimeTextView.setText(gameTime);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(NbaApp.getCurrentActivity(), "Error updating stats", Toast.LENGTH_SHORT).show();
                 mHandler.removeCallbacks(mStatusChecker);
             }
         });

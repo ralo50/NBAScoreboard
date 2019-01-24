@@ -54,7 +54,11 @@ public class PlayAdapter extends RecyclerView.Adapter<PlayAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         Play play = playList.get(position);
-        String period = "Q" + play.getPeriod();
+        String period;
+        if(play.getPeriod() > 4)
+            period = "OT" + (play.getPeriod()-4);
+        else
+            period = "Q" + play.getPeriod();
         myViewHolder.playQuarter.setText(period);
         myViewHolder.playTime.setText(play.getClockTime());
         String score = play.getVisitorScore() + "-" + play.getHomeScore();
