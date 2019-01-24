@@ -85,6 +85,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.gameTimeTextView.setText(game.getGameTime());
         if (game.isGameActive())
             holder.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
+        else
+            holder.gameTimeTextView.setTextColor(Color.parseColor("#B4B4B4"));
     }
 
     @Override
