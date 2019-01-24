@@ -87,6 +87,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
             holder.gameTimeTextView.setTextColor(Color.parseColor("#ff0000"));
         else
             holder.gameTimeTextView.setTextColor(Color.parseColor("#B4B4B4"));
+        if (!game.getHomeTeamScore().isEmpty() && !game.getAwayTeamScore().isEmpty()) {
+            if (Integer.parseInt(game.getHomeTeamScore()) > Integer.parseInt(game.getAwayTeamScore())) {
+                holder.homeTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
+                holder.awayTeamScoreTextView.setTextColor(Color.parseColor("#B4B4B4"));
+            } else if (Integer.parseInt(game.getHomeTeamScore()) < Integer.parseInt(game.getAwayTeamScore())) {
+                holder.homeTeamScoreTextView.setTextColor(Color.parseColor("#B4B4B4"));
+                holder.awayTeamScoreTextView.setTextColor(Color.parseColor("#ffffff"));
+            } else {
+                holder.homeTeamScoreTextView.setTextColor(Color.parseColor("#B4B4B4"));
+                holder.awayTeamScoreTextView.setTextColor(Color.parseColor("#B4B4B4"));
+            }
+        }
+
     }
 
     @Override
