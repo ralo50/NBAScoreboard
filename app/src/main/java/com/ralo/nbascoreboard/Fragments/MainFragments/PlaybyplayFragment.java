@@ -45,7 +45,8 @@ public class PlaybyplayFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler mHandler;
     private static final int REFRESH_TIME_DELAY = 20000;
-    private static final int RECYCLERVIEW_POSITION_TRIGGER = 30;
+    private static final int RECYCLERVIEW_INSTANT_POSITION_TRIGGER = 60;
+    private static final int RECYCLERVIEW_SMOOTH_POSITION_TRIGGER = 30;
     private static final int RECYCLERVIEW_POSITION_START = 0;
     private FloatingActionButton floatingActionButton;
     private LinearLayoutManager llm;
@@ -197,7 +198,7 @@ public class PlaybyplayFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_POSITION_TRIGGER) {
+                if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_SMOOTH_POSITION_TRIGGER) {
                     floatingActionButton.show();
                     floatingActionButton.setAlpha(0.75f);
                 } else {
@@ -211,7 +212,11 @@ public class PlaybyplayFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playRecyclerView.scrollToPosition(RECYCLERVIEW_POSITION_START);
+                if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_SMOOTH_POSITION_TRIGGER) {
+                    if (llm.findLastVisibleItemPosition() > RECYCLERVIEW_INSTANT_POSITION_TRIGGER)
+                        playRecyclerView.scrollToPosition(RECYCLERVIEW_POSITION_START);
+                    playRecyclerView.smoothScrollToPosition(RECYCLERVIEW_POSITION_START);
+                }
             }
         });
     }
